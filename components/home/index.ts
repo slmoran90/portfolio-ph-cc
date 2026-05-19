@@ -1,0 +1,5 @@
+export { HeroSection } from "./hero-section"
+export { FeaturedGallery } from "./featured-gallery"
+export { AboutPreview } from "./about-preview"
+export { TestimonialsSection } from "./testimonials-section"
+export { CTASection } from "./cta-section"
