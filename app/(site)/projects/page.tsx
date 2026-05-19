@@ -4,7 +4,7 @@ import { motion } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
 import { useSearchParams } from "next/navigation"
-import { Header, Footer, Section, Container } from "@/components/layout"
+import { Section, Container } from "@/components/layout"
 import { projects, categories } from "@/lib/projects-data"
 import { ArrowUpRight } from "lucide-react"
 import { Suspense } from "react"
@@ -81,9 +81,7 @@ function ProjectsContent() {
 
 export default function ProjectsPage() {
   return (
-    <>
-      <Header />
-      <main className="pt-20">
+    <motion.div className="pt-20">
         {/* Hero Section */}
         <Section className="bg-cream">
           <Container>
@@ -114,8 +112,6 @@ export default function ProjectsPage() {
             </Suspense>
           </Container>
         </Section>
-      </main>
-      <Footer />
-    </>
+    </motion.div>
   )
 }

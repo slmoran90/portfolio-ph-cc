@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion"
 import Image from "next/image"
-import { Header, Footer, Section, Container } from "@/components/layout"
+import { Section, Container } from "@/components/layout"
 import { useState } from "react"
 
 const galleryImages = [
@@ -37,8 +37,7 @@ export default function GalleryPage() {
 
   return (
     <>
-      <Header />
-      <main className="pt-20">
+    <motion.div className="pt-20">
         {/* Hero Section */}
         <Section className="bg-cream">
           <Container>
@@ -110,8 +109,7 @@ export default function GalleryPage() {
             </div>
           </Container>
         </Section>
-      </main>
-      <Footer />
+    </motion.div>
 
       {/* Lightbox */}
       {lightboxImage && (

@@ -4,7 +4,7 @@ import { motion } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
 import { notFound, useParams } from "next/navigation"
-import { Header, Footer, Section, Container } from "@/components/layout"
+import { Section, Container } from "@/components/layout"
 import { getProjectById, getRelatedProjects, categories } from "@/lib/projects-data"
 import { ArrowLeft, ArrowUpRight, Calendar, MapPin } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -24,8 +24,7 @@ export default function SingleProjectPage() {
 
   return (
     <>
-      <Header />
-      <main className="pt-20">
+    <motion.div className="pt-20">
         {/* Back Button */}
         <Section className="pb-0">
           <Container>
@@ -191,8 +190,7 @@ export default function SingleProjectPage() {
             </Container>
           </Section>
         )}
-      </main>
-      <Footer />
+    </motion.div>
 
       {/* Lightbox */}
       {lightboxImage && (

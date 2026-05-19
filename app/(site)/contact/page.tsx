@@ -1,7 +1,7 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { Header, Footer, Section, Container } from "@/components/layout"
+import { Section, Container } from "@/components/layout"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -58,9 +58,7 @@ export default function ContactPage() {
   }
 
   return (
-    <>
-      <Header />
-      <main className="pt-20">
+    <motion.div className="pt-20">
         {/* Hero Section */}
         <Section className="bg-cream">
           <Container size="narrow">
@@ -281,8 +279,6 @@ export default function ContactPage() {
             </div>
           </Container>
         </Section>
-      </main>
-      <Footer />
-    </>
+    </motion.div>
   )
 }
