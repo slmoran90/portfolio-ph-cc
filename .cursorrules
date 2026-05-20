@@ -1,0 +1,9 @@
+- Use Next.js App Router conventions
+- Prefer React Server Components
+- Avoid unnecessary client components
+- Do not refactor unrelated files
+- Keep diffs minimal
+- Respect existing route groups
+- Use TypeScript strict mode
+- Prefer server actions over API routes when possible
+- Keep commits small and reversible
