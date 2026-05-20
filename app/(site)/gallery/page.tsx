@@ -3,6 +3,7 @@
 import { motion } from "framer-motion"
 import Image from "next/image"
 import { Section, Container } from "@/components/layout"
+import { PageHero, CategoryFilter, ImageLightbox } from "@/components/site"
 import { useState } from "react"
 
 const galleryImages = [
@@ -37,50 +38,23 @@ export default function GalleryPage() {
 
   return (
     <>
-    <motion.div className="pt-20">
-        {/* Hero Section */}
-        <Section className="bg-cream">
-          <Container>
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="text-center max-w-3xl mx-auto"
-            >
-              <span className="inline-block text-xs tracking-[0.3em] uppercase text-dusty-rose font-medium mb-4">
-                Gallery
-              </span>
-              <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-medium text-foreground leading-tight mb-6 text-balance">
-                A Visual Journey
-              </h1>
-              <p className="text-lg text-muted-foreground leading-relaxed">
-                Browse through our collection of captured moments. Each image tells a story of love, joy, and celebration.
-              </p>
-            </motion.div>
-          </Container>
-        </Section>
+      <motion.div className="pt-20">
+        <PageHero
+          label="Gallery"
+          title="A Visual Journey"
+          description="Browse through our collection of captured moments. Each image tells a story of love, joy, and celebration."
+        />
 
-        {/* Gallery Section */}
         <Section>
           <Container size="wide">
-            {/* Filters */}
-            <div className="flex flex-wrap justify-center gap-3 mb-12">
-              {filters.map((filter) => (
-                <button
-                  key={filter.value}
-                  onClick={() => setActiveFilter(filter.value)}
-                  className={`px-6 py-3 rounded-full text-sm tracking-wider transition-all duration-300 ${
-                    activeFilter === filter.value
-                      ? "bg-foreground text-background"
-                      : "bg-secondary text-muted-foreground hover:bg-secondary/80 hover:text-foreground"
-                  }`}
-                >
-                  {filter.label}
-                </button>
-              ))}
-            </div>
+            <CategoryFilter
+              mode="button"
+              options={filters}
+              activeValue={activeFilter}
+              onChange={setActiveFilter}
+              className="mb-12"
+            />
 
-            {/* Masonry Grid */}
             <div className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
               {filteredImages.map((image, index) => (
                 <motion.div
@@ -109,37 +83,13 @@ export default function GalleryPage() {
             </div>
           </Container>
         </Section>
-    </motion.div>
+      </motion.div>
 
-      {/* Lightbox */}
-      {lightboxImage && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          className="fixed inset-0 z-50 bg-foreground/95 flex items-center justify-center p-4"
-          onClick={() => setLightboxImage(null)}
-        >
-          <button
-            onClick={() => setLightboxImage(null)}
-            className="absolute top-6 right-6 text-background hover:text-background/80 transition-colors"
-            aria-label="Close lightbox"
-          >
-            <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
-          <div className="relative max-w-5xl max-h-[90vh] w-full h-full">
-            <Image
-              src={lightboxImage}
-              alt="Gallery image"
-              fill
-              className="object-contain"
-              sizes="90vw"
-            />
-          </div>
-        </motion.div>
-      )}
+      <ImageLightbox
+        imageSrc={lightboxImage}
+        onClose={() => setLightboxImage(null)}
+        alt="Gallery image"
+      />
     </>
   )
 }

@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion"
 import { Section, Container } from "@/components/layout"
+import { PageHero } from "@/components/site"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -59,27 +60,13 @@ export default function ContactPage() {
 
   return (
     <motion.div className="pt-20">
-        {/* Hero Section */}
-        <Section className="bg-cream">
-          <Container size="narrow">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="text-center"
-            >
-              <span className="inline-block text-xs tracking-[0.3em] uppercase text-dusty-rose font-medium mb-4">
-                Get In Touch
-              </span>
-              <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-medium text-foreground leading-tight mb-6 text-balance">
-                Let&apos;s Create Something Beautiful
-              </h1>
-              <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-                I&apos;d love to hear about your upcoming celebration. Whether you have questions or are ready to book, reach out and let&apos;s start planning your perfect session.
-              </p>
-            </motion.div>
-          </Container>
-        </Section>
+      <PageHero
+        label="Get In Touch"
+        title="Let&apos;s Create Something Beautiful"
+        description="I&apos;d love to hear about your upcoming celebration. Whether you have questions or are ready to book, reach out and let&apos;s start planning your perfect session."
+        containerSize="narrow"
+        descriptionClassName="max-w-2xl mx-auto"
+      />
 
         {/* Contact Form & Info */}
         <Section>
