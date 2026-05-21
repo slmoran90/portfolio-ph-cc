@@ -7,17 +7,36 @@ import { Camera, Eye, EyeOff } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { createClient } from '@/lib/supabase/browser'
 
 export default function AdminLoginPage() {
   const router = useRouter()
   const [showPassword, setShowPassword] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [error, setError] = useState<string | null>(null)
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    setIsLoading(true)
-    document.cookie = 'admin-session=1; path=/; SameSite=Lax'
+    setLoading(true)
+    setError(null)
+
+    const supabase = createClient()
+    const { error: authError } = await supabase.auth.signInWithPassword({
+      email,
+      password
+    })
+
+    if (authError) {
+      setError(authError.message)
+      setLoading(false)
+      return
+    }
+
     router.push('/admin')
+    router.refresh()
+    setLoading(false)
   }
 
   return (
@@ -37,14 +56,14 @@ export default function AdminLoginPage() {
             Carla
           </h1>
           <p className='text-muted-foreground mt-2'>
-            Sign in to your admin panel
+            Inicia sesión en tu panel de administración
           </p>
         </div>
 
         {/* Login Form */}
         <div className='bg-card rounded-2xl p-8 shadow-sm border border-border/50'>
           <form
-            onSubmit={handleSubmit}
+            onSubmit={handleLogin}
             className='space-y-6'
           >
             <div className='space-y-2'>
@@ -52,14 +71,15 @@ export default function AdminLoginPage() {
                 htmlFor='email'
                 className='text-sm font-medium'
               >
-                Email Address
+                Email
               </Label>
               <Input
                 id='email'
                 name='email'
                 type='email'
                 required
-                defaultValue='admin@luminara.com'
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className='h-12 bg-background border-border/50 focus:border-dusty-rose'
               />
             </div>
@@ -69,7 +89,7 @@ export default function AdminLoginPage() {
                 htmlFor='password'
                 className='text-sm font-medium'
               >
-                Password
+                Contraseña
               </Label>
               <div className='relative'>
                 <Input
@@ -77,7 +97,8 @@ export default function AdminLoginPage() {
                   name='password'
                   type={showPassword ? 'text' : 'password'}
                   required
-                  defaultValue='password123'
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   className='h-12 bg-background border-border/50 focus:border-dusty-rose pr-12'
                 />
                 <button
@@ -91,6 +112,8 @@ export default function AdminLoginPage() {
               </div>
             </div>
 
+            {error && <div className='text-red-500 text-sm'>{error}</div>}
+
             <div className='flex items-center justify-between'>
               <label className='flex items-center gap-2 cursor-pointer'>
                 <input
@@ -98,32 +121,27 @@ export default function AdminLoginPage() {
                   className='w-4 h-4 rounded border-border text-dusty-rose focus:ring-dusty-rose'
                 />
                 <span className='text-sm text-muted-foreground'>
-                  Remember me
+                  Recordarme
                 </span>
               </label>
               <a
                 href='#'
                 className='text-sm text-dusty-rose hover:text-dusty-rose/80 transition-colors'
               >
-                Forgot password?
+                Olvidaste tu contraseña?
               </a>
             </div>
 
             <Button
               type='submit'
               size='lg'
-              className='w-full text-sm tracking-wider uppercase'
-              disabled={isLoading}
+              disabled={loading}
+              className='w-full h-12 disabled:opacity-50'
             >
-              {isLoading ? 'Signing in...' : 'Sign In'}
+              {loading ? 'Iniciando...' : 'Iniciar sesión'}
             </Button>
           </form>
         </div>
-
-        {/* Demo Notice */}
-        <p className='text-center text-sm text-muted-foreground mt-6'>
-          Demo credentials are pre-filled. Just click Sign In.
-        </p>
       </motion.div>
     </div>
   )
