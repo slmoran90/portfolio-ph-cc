@@ -5,26 +5,20 @@ import Image from "next/image"
 import { Section, Container } from "@/components/layout"
 import { PageHero, CategoryFilter, ImageLightbox } from "@/components/site"
 import { useState } from "react"
+import { categories as filters } from "@/lib/data/projects.constants"
 
 const galleryImages = [
-  { src: "/images/hero-baby-shower.jpg", category: "baby-shower" },
-  { src: "/images/featured-birthday.jpg", category: "birthday" },
-  { src: "/images/featured-baptism.jpg", category: "baptism" },
-  { src: "/images/gallery/gallery-1.jpg", category: "baby-shower" },
-  { src: "/images/gallery/gallery-2.jpg", category: "birthday" },
-  { src: "/images/gallery/gallery-3.jpg", category: "baptism" },
-  { src: "/images/gallery/gallery-4.jpg", category: "baby-shower" },
-  { src: "/images/gallery/gallery-5.jpg", category: "birthday" },
-  { src: "/images/gallery/gallery-6.jpg", category: "baptism" },
-  { src: "/images/photographer-portrait.jpg", category: "portrait" },
-  { src: "/images/about-studio.jpg", category: "studio" },
-]
-
-const filters = [
-  { value: "all", label: "All" },
-  { value: "baby-shower", label: "Baby Showers" },
-  { value: "birthday", label: "Birthdays" },
-  { value: "baptism", label: "Baptisms" },
+  { src: "/images/hero-baby-shower.jpg", category: "babyshowers" },
+  { src: "/images/featured-birthday.jpg", category: "events" },
+  { src: "/images/featured-baptism.jpg", category: "events" },
+  { src: "/images/gallery/gallery-1.jpg", category: "babyshowers" },
+  { src: "/images/gallery/gallery-2.jpg", category: "events" },
+  { src: "/images/gallery/gallery-3.jpg", category: "events" },
+  { src: "/images/gallery/gallery-4.jpg", category: "babyshowers" },
+  { src: "/images/gallery/gallery-5.jpg", category: "events" },
+  { src: "/images/gallery/gallery-6.jpg", category: "events" },
+  { src: "/images/photographer-portrait.jpg", category: "business" },
+  { src: "/images/about-studio.jpg", category: "business" },
 ]
 
 export default function GalleryPage() {

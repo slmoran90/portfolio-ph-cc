@@ -8,22 +8,22 @@ import { Section, SectionHeader, Container } from "@/components/layout"
 
 const categories = [
   {
-    title: "Baby Showers",
-    description: "Celebrating the joy of new beginnings with elegance and warmth.",
+    title: "Baby Shower",
+    description: "Celebramos la llegada de nuevas vidas con ternura y elegancia.",
     image: "/images/hero-baby-shower.jpg",
-    href: "/projects?category=baby-shower",
+    href: "/projects?category=babyshowers",
   },
   {
-    title: "Kids Birthdays",
-    description: "Capturing the magic and wonder of childhood celebrations.",
+    title: "Eventos",
+    description: "Capturamos la magia de cada celebración especial.",
     image: "/images/featured-birthday.jpg",
-    href: "/projects?category=birthday",
+    href: "/projects?category=events",
   },
   {
-    title: "Baptisms",
-    description: "Preserving sacred moments of faith and family.",
-    image: "/images/featured-baptism.jpg",
-    href: "/projects?category=baptism",
+    title: "Emprendimientos / Empresas",
+    description: "Fotografía profesional para marcas, locales y emprendimientos.",
+    image: "/images/photographer-portrait.jpg",
+    href: "/projects?category=business",
   },
 ]
 
