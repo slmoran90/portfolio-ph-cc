@@ -5,7 +5,7 @@ export interface Project {
   short_description: string | null
   content: string | null
   category: string
-  coverImage: string | null
+  cover_image: string | null
   published: boolean
   created_at: string
 }

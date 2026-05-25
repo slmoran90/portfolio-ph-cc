@@ -30,7 +30,7 @@ export async function generateMetadata({
     description: project.short_description ?? undefined,
     openGraph: {
       title: project.title,
-      images: project.coverImage ? [project.coverImage] : []
+      images: project.cover_image ? [project.cover_image] : []
     }
   }
 }
