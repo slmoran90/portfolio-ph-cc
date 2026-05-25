@@ -22,9 +22,14 @@ export function ProjectDetailClient({
 }: ProjectDetailClientProps) {
   const [lightboxImage, setLightboxImage] = useState<string | null>(null)
 
-  const coverImage = project.coverImage
+  const coverImage = project.cover_image
   const categoryLabel = categories.find((c) => c.value === project.category)?.label
-  const formattedDate = new Date(project.created_at).toLocaleDateString()
+  const formattedDate = new Intl.DateTimeFormat('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    timeZone: 'UTC'
+  }).format(new Date(project.created_at))
 
   return (
     <>
@@ -145,7 +150,7 @@ export function ProjectDetailClient({
                     >
                       <div className='relative aspect-[4/5] overflow-hidden rounded-xl mb-4'>
                         <Image
-                          src={relatedProject.coverImage || '/placeholder.jpg'}
+                          src={relatedProject.cover_image || '/placeholder.jpg'}
                           alt={relatedProject.title}
                           fill
                           className='object-cover image-premium transition-transform duration-700 group-hover:scale-105'

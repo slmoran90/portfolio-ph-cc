@@ -16,10 +16,15 @@ export function mapProjectToCardProject(project: Project): ProjectCardProject {
     slug: project.slug,
     title: project.title,
     category: project.category,
-    coverImage: project.coverImage || '/placeholder.jpg',
+    coverImage: project.cover_image || '/placeholder.jpg',
     date: project.created_at
-  ? new Date(project.created_at).toLocaleDateString()
-  : '',
+      ? new Intl.DateTimeFormat('en-US', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+          timeZone: 'UTC'
+        }).format(new Date(project.created_at))
+      : '',
     location: 'Tucumán'
   }
 }
