@@ -4,10 +4,10 @@ import { motion } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowUpRight } from 'lucide-react'
-import type { Project } from '@/lib/projects-data.mock'
+import type { ProjectCardProject } from '@/lib/data/project-mappers'
 
 interface ProjectCardProps {
-  project: Pick<Project, 'id' | 'title' | 'coverImage' | 'date' | 'location'>
+  project: ProjectCardProject
   categoryLabel?: string
   variant?: 'grid' | 'related'
   index?: number
@@ -39,7 +39,7 @@ export function ProjectCard({
   return (
     <motion.div {...motionProps}>
       <Link
-        href={`/projects/${project.id}`}
+        href={`/projects/${project.slug}`}
         className='group block'
       >
         <div

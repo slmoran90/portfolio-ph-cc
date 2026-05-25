@@ -37,3 +37,21 @@ export async function getProjectBySlug(slug: string) {
 
   return data as Project
 }
+
+export async function getRelatedProjects(
+  category: string,
+  excludeSlug: string,
+  limit = 3
+): Promise<Project[]> {
+  const supabase = await createClient()
+
+  const { data } = await supabase
+    .from('projects')
+    .select('*')
+    .eq('published', true)
+    .eq('category', category)
+    .neq('slug', excludeSlug)
+    .limit(limit)
+
+  return (data as Project[]) ?? []
+}
