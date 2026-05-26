@@ -5,6 +5,6 @@ export const config = {
   matcher: ['/admin/:path*']
 }
 
-export async function proxy(request: NextRequest) {
+export async function middleware(request: NextRequest) {
   return await updateSession(request)
 }
