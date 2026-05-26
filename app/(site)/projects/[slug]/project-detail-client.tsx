@@ -123,6 +123,25 @@ export function ProjectDetailClient({
           </Container>
         </Section>
 
+        {/* Full Description */}
+        {project.description && (
+          <Section>
+            <Container>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+                viewport={{ once: true }}
+                className='max-w-2xl mx-auto'
+              >
+                <p className='text-foreground leading-relaxed whitespace-pre-line'>
+                  {project.description}
+                </p>
+              </motion.div>
+            </Container>
+          </Section>
+        )}
+
         {/* Related Projects */}
         {relatedProjects.length > 0 && (
           <Section>

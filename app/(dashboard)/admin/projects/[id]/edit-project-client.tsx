@@ -11,12 +11,14 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { categories } from '@/lib/data/projects.constants'
 import { uploadProjectImage } from '@/lib/supabase/storage'
-import { createProject } from '@/lib/actions/projects'
+import { updateProject, deleteProject } from '@/lib/actions/projects'
+import type { Project } from '@/lib/data/projects.types'
 import {
   ArrowLeft,
   Upload,
   X,
   Save,
+  Trash2,
   Star,
   Loader2,
   Image as ImageIcon
@@ -29,31 +31,45 @@ type UploadState = {
   error?: string
 }
 
-export default function NewProjectPage() {
+function projectToUploadStates(project: Project): UploadState[] {
+  return (project.images ?? []).map((url) => ({
+    localPreview: url,
+    url,
+    status: 'done'
+  }))
+}
+
+export default function EditProjectClient({
+  project
+}: {
+  project: Project
+}) {
   const router = useRouter()
   const fileInputRef = useRef<HTMLInputElement>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isDeleting, setIsDeleting] = useState(false)
+  const [confirmDelete, setConfirmDelete] = useState(false)
   const [submitError, setSubmitError] = useState<string | null>(null)
-  const [uploadedImages, setUploadedImages] = useState<UploadState[]>([])
-  const [coverImageUrl, setCoverImageUrl] = useState<string | null>(null)
+  const [uploadedImages, setUploadedImages] = useState<UploadState[]>(() =>
+    projectToUploadStates(project)
+  )
+  const [coverImageUrl, setCoverImageUrl] = useState<string | null>(
+    project.cover_image
+  )
   const [dragOver, setDragOver] = useState(false)
   const [uploadSessionId] = useState(() => crypto.randomUUID())
 
   const processFiles = useCallback(
     async (files: FileList | File[]) => {
       const fileArray = Array.from(files)
+      const startIndex = uploadedImages.length
       const initial: UploadState[] = fileArray.map((file) => ({
         localPreview: URL.createObjectURL(file),
         url: '',
         status: 'uploading'
       }))
 
-      setUploadedImages((prev) => {
-        const next = [...prev, ...initial]
-        return next
-      })
-
-      const startIndex = uploadedImages.length
+      setUploadedImages((prev) => [...prev, ...initial])
 
       await Promise.all(
         fileArray.map(async (file, i) => {
@@ -118,7 +134,11 @@ export default function NewProjectPage() {
       if (coverImageUrl && removed.url === coverImageUrl) {
         setCoverImageUrl(null)
       }
-      URL.revokeObjectURL(removed.localPreview)
+      if (!removed.url || removed.url === removed.localPreview) {
+        // skip revoking existing DB URLs
+      } else {
+        URL.revokeObjectURL(removed.localPreview)
+      }
       return prev.filter((_, i) => i !== index)
     })
   }
@@ -131,20 +151,17 @@ export default function NewProjectPage() {
       .filter((img) => img.status === 'done')
       .map((img) => img.url)
 
+    const rawEventDate = (
+      formEl.elements.namedItem('event_date') as HTMLInputElement
+    ).value
+
     setIsSubmitting(true)
     try {
-      const result = await createProject({
+      const result = await updateProject(project.id, project.slug, {
         title: (formEl.elements.namedItem('title') as HTMLInputElement).value,
         category: (formEl.elements.namedItem('category') as HTMLSelectElement)
           .value,
-        event_date:
-          (
-            (formEl.elements.namedItem('event_date') as HTMLInputElement)
-              .value + '-01'
-          ).length > 3
-            ? (formEl.elements.namedItem('event_date') as HTMLInputElement)
-                .value + '-01'
-            : null,
+        event_date: rawEventDate ? rawEventDate + '-01' : null,
         location:
           (formEl.elements.namedItem('location') as HTMLInputElement).value ||
           null,
@@ -164,7 +181,7 @@ export default function NewProjectPage() {
         cover_image: coverImageUrl
       })
 
-      if ('error' in result) {
+      if (result.error) {
         setSubmitError(result.error)
         return
       }
@@ -175,13 +192,44 @@ export default function NewProjectPage() {
     }
   }
 
+  const handleDelete = async () => {
+    if (!confirmDelete) {
+      setConfirmDelete(true)
+      return
+    }
+
+    setIsDeleting(true)
+    const allImageUrls = [
+      ...uploadedImages.filter((i) => i.status === 'done').map((i) => i.url),
+      ...(project.cover_image &&
+      !uploadedImages.some((i) => i.url === project.cover_image)
+        ? [project.cover_image]
+        : [])
+    ]
+
+    const result = await deleteProject(project.id, project.slug, allImageUrls)
+    setIsDeleting(false)
+
+    if (result.error) {
+      setSubmitError(result.error)
+      setConfirmDelete(false)
+      return
+    }
+
+    router.push('/admin/projects')
+  }
+
   const doneCount = uploadedImages.filter((i) => i.status === 'done').length
+
+  const defaultEventDate = project.event_date
+    ? project.event_date.slice(0, 7)
+    : ''
 
   return (
     <>
       <AdminHeader
-        title='New Project'
-        description='Create a new photography project'
+        title='Edit Project'
+        description={project.title}
       />
 
       <main className='flex-1 p-6 overflow-auto'>
@@ -209,7 +257,7 @@ export default function NewProjectPage() {
                       id='title'
                       name='title'
                       required
-                      placeholder="e.g., Emma's Garden Baby Shower"
+                      defaultValue={project.title}
                       className='h-12 bg-background border-border/50'
                     />
                   </div>
@@ -226,9 +274,9 @@ export default function NewProjectPage() {
                         id='category'
                         name='category'
                         required
+                        defaultValue={project.category ?? ''}
                         className='w-full h-12 px-4 rounded-lg border border-border/50 bg-background text-foreground focus:border-dusty-rose focus:outline-none focus:ring-1 focus:ring-dusty-rose'
                       >
-                        <option value=''>Select a category</option>
                         {categories.slice(1).map((category) => (
                           <option
                             key={category.value}
@@ -250,6 +298,7 @@ export default function NewProjectPage() {
                         id='event_date'
                         name='event_date'
                         type='month'
+                        defaultValue={defaultEventDate}
                         className='h-12 bg-background border-border/50'
                       />
                     </div>
@@ -265,6 +314,7 @@ export default function NewProjectPage() {
                     <Input
                       id='location'
                       name='location'
+                      defaultValue={project.location ?? ''}
                       placeholder='e.g., Botanical Gardens, City Center'
                       className='h-12 bg-background border-border/50'
                     />
@@ -281,6 +331,7 @@ export default function NewProjectPage() {
                       id='short_description'
                       name='short_description'
                       rows={3}
+                      defaultValue={project.short_description ?? ''}
                       placeholder='Brief summary shown on project cards...'
                       className='w-full px-4 py-3 rounded-lg border border-border/50 bg-background text-foreground placeholder:text-muted-foreground focus:border-dusty-rose focus:outline-none focus:ring-1 focus:ring-dusty-rose resize-none'
                     />
@@ -297,6 +348,7 @@ export default function NewProjectPage() {
                       id='description'
                       name='description'
                       rows={6}
+                      defaultValue={project.description ?? ''}
                       placeholder='Full story, details, and description of the project...'
                       className='w-full px-4 py-3 rounded-lg border border-border/50 bg-background text-foreground placeholder:text-muted-foreground focus:border-dusty-rose focus:outline-none focus:ring-1 focus:ring-dusty-rose resize-none'
                     />
@@ -367,7 +419,7 @@ export default function NewProjectPage() {
                         >
                           <Image
                             src={image.localPreview}
-                            alt={`Upload ${index + 1}`}
+                            alt={`Image ${index + 1}`}
                             fill
                             className='object-cover'
                             sizes='150px'
@@ -434,6 +486,7 @@ export default function NewProjectPage() {
                     <Label className='text-sm font-medium'>Status</Label>
                     <select
                       name='published'
+                      defaultValue={project.published ? 'published' : 'draft'}
                       className='w-full h-10 px-3 rounded-lg border border-border/50 bg-background text-foreground text-sm'
                     >
                       <option value='draft'>Draft</option>
@@ -475,35 +528,15 @@ export default function NewProjectPage() {
 
               <AdminCard title='Preview'>
                 <div className='space-y-3'>
-                  <div className='aspect-[4/5] rounded-lg bg-secondary/50 flex items-center justify-center overflow-hidden'>
+                  <div className='aspect-[4/5] rounded-lg bg-secondary/50 overflow-hidden flex items-center justify-center'>
                     {coverImageUrl ? (
                       <Image
                         src={coverImageUrl}
                         alt='Cover preview'
                         width={200}
                         height={250}
-                        className='w-full h-full object-cover rounded-lg'
+                        className='w-full h-full object-cover'
                       />
-                    ) : uploadedImages.find(
-                        (i) => i.status === 'done'
-                      )?.localPreview ? (
-                      <div className='w-full h-full relative'>
-                        <Image
-                          src={
-                            uploadedImages.find((i) => i.status === 'done')!
-                              .localPreview
-                          }
-                          alt='First image preview'
-                          fill
-                          className='object-cover rounded-lg opacity-50'
-                          sizes='200px'
-                        />
-                        <div className='absolute inset-0 flex items-center justify-center'>
-                          <p className='text-xs text-muted-foreground bg-background/80 px-2 py-1 rounded'>
-                            No cover set
-                          </p>
-                        </div>
-                      </div>
                     ) : (
                       <div className='flex flex-col items-center gap-2'>
                         <ImageIcon className='w-8 h-8 text-muted-foreground' />
@@ -514,9 +547,53 @@ export default function NewProjectPage() {
                     )}
                   </div>
                   <p className='text-sm text-muted-foreground'>
-                    {doneCount} image{doneCount !== 1 ? 's' : ''} uploaded
+                    {doneCount} image{doneCount !== 1 ? 's' : ''} in gallery
                   </p>
                 </div>
+              </AdminCard>
+
+              <AdminCard title='Danger Zone'>
+                {confirmDelete ? (
+                  <div className='space-y-3'>
+                    <p className='text-sm text-destructive font-medium'>
+                      This will permanently delete the project and its images.
+                    </p>
+                    <div className='flex gap-2'>
+                      <Button
+                        type='button'
+                        variant='outline'
+                        className='flex-1'
+                        onClick={() => setConfirmDelete(false)}
+                        disabled={isDeleting}
+                      >
+                        Cancel
+                      </Button>
+                      <Button
+                        type='button'
+                        variant='destructive'
+                        className='flex-1'
+                        onClick={handleDelete}
+                        disabled={isDeleting}
+                      >
+                        {isDeleting ? (
+                          <Loader2 className='w-4 h-4 animate-spin' />
+                        ) : (
+                          'Yes, delete'
+                        )}
+                      </Button>
+                    </div>
+                  </div>
+                ) : (
+                  <Button
+                    type='button'
+                    variant='outline'
+                    className='w-full text-destructive border-destructive/50 hover:bg-destructive/10'
+                    onClick={() => setConfirmDelete(true)}
+                  >
+                    <Trash2 className='w-4 h-4 mr-2' />
+                    Delete Project
+                  </Button>
+                )}
               </AdminCard>
             </div>
           </div>
