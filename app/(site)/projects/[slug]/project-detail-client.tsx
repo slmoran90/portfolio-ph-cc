@@ -24,12 +24,14 @@ export function ProjectDetailClient({
 
   const coverImage = project.cover_image
   const categoryLabel = categories.find((c) => c.value === project.category)?.label
-  const formattedDate = new Intl.DateTimeFormat('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-    timeZone: 'UTC'
-  }).format(new Date(project.created_at))
+  const formattedDate = project.created_at
+    ? new Intl.DateTimeFormat('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        timeZone: 'UTC'
+      }).format(new Date(project.created_at))
+    : ''
 
   return (
     <>

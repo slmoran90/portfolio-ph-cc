@@ -6,6 +6,8 @@ export interface Project {
   content: string | null
   category: string
   cover_image: string | null
-  published: boolean
-  created_at: string
+  published: boolean | null
+  created_at: string | null
+  updated_at: string | null
+  images: string[]
 }
