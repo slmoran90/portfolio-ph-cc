@@ -8,45 +8,23 @@ import { Button } from '@/components/ui/button'
 import {
   FolderOpen,
   Image as ImageIcon,
-  MessageSquare,
-  Eye,
-  Plus,
-  ArrowRight
+  ArrowRight,
+  Star
 } from 'lucide-react'
 import type { Project } from '@/lib/data/projects.types'
-
-const recentMessages = [
-  {
-    id: 1,
-    name: 'Sarah Johnson',
-    email: 'sarah@email.com',
-    subject: 'Baby Shower Inquiry',
-    date: '2 hours ago',
-    read: false
-  },
-  {
-    id: 2,
-    name: 'Michael Chen',
-    email: 'michael@email.com',
-    subject: 'Birthday Party Quote',
-    date: '5 hours ago',
-    read: false
-  },
-  {
-    id: 3,
-    name: 'Emily Davis',
-    email: 'emily@email.com',
-    subject: 'Baptism Availability',
-    date: '1 day ago',
-    read: true
-  }
-]
+import type { GalleryImage } from '@/lib/data/gallery.types'
 
 export default function DashboardClient({
-  projects
+  projects,
+  galleryCount,
+  recentGallery
 }: {
   projects: Project[]
+  galleryCount: number
+  recentGallery: GalleryImage[]
 }) {
+  const publishedCount = projects.filter((p) => p.published).length
+
   return (
     <>
       <AdminHeader
@@ -55,47 +33,35 @@ export default function DashboardClient({
       />
 
       <main className='flex-1 p-6 overflow-auto'>
-        <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8'>
+        <div className='grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8'>
           <StatCard
             title='Total Projects'
             value={projects.length}
-            change='+2 this month'
+            change={`${publishedCount} published`}
             changeType='positive'
             icon={FolderOpen}
           />
           <StatCard
-            title='Gallery Images'
-            value={projects.reduce((acc, p) => acc + (p.images?.length ?? 0), 0)}
-            change='+24 this week'
-            changeType='positive'
-            icon={ImageIcon}
-          />
-          <StatCard
-            title='New Messages'
-            value='12'
-            change='3 unread'
+            title='Published Projects'
+            value={publishedCount}
+            change={`${projects.length - publishedCount} drafts`}
             changeType='neutral'
-            icon={MessageSquare}
+            icon={FolderOpen}
           />
           <StatCard
-            title='Site Views'
-            value='2,847'
-            change='+18% from last month'
-            changeType='positive'
-            icon={Eye}
+            title='Gallery Images'
+            value={galleryCount}
+            icon={ImageIcon}
           />
         </div>
 
         <div className='grid grid-cols-1 lg:grid-cols-2 gap-6'>
+          {/* Recent Projects */}
           <AdminCard
             title='Recent Projects'
             description='Your latest photography projects'
             action={
-              <Button
-                asChild
-                variant='outline'
-                size='sm'
-              >
+              <Button asChild variant='outline' size='sm'>
                 <Link href='/admin/projects'>
                   View All
                   <ArrowRight className='w-4 h-4 ml-2' />
@@ -112,7 +78,7 @@ export default function DashboardClient({
                   transition={{ duration: 0.3, delay: index * 0.1 }}
                   className='flex items-center gap-4 p-3 rounded-xl hover:bg-secondary/50 transition-colors'
                 >
-                  <div className='relative w-14 h-14 rounded-lg overflow-hidden shrink-0'>
+                  <div className='relative w-14 h-14 rounded-lg overflow-hidden shrink-0 bg-secondary'>
                     {project.cover_image ? (
                       <Image
                         src={project.cover_image}
@@ -122,7 +88,7 @@ export default function DashboardClient({
                         sizes='56px'
                       />
                     ) : (
-                      <div className='w-full h-full bg-secondary flex items-center justify-center'>
+                      <div className='w-full h-full flex items-center justify-center'>
                         <ImageIcon className='w-4 h-4 text-muted-foreground' />
                       </div>
                     )}
@@ -141,11 +107,7 @@ export default function DashboardClient({
                         : '—'}
                     </p>
                   </div>
-                  <Button
-                    asChild
-                    variant='ghost'
-                    size='sm'
-                  >
+                  <Button asChild variant='ghost' size='sm'>
                     <Link href={`/admin/projects/${project.id}`}>Edit</Link>
                   </Button>
                 </motion.div>
@@ -158,16 +120,13 @@ export default function DashboardClient({
             </div>
           </AdminCard>
 
+          {/* Recent Gallery Uploads */}
           <AdminCard
-            title='Recent Messages'
-            description='Latest contact form submissions'
+            title='Recent Gallery Uploads'
+            description='Latest images added to the gallery'
             action={
-              <Button
-                asChild
-                variant='outline'
-                size='sm'
-              >
-                <Link href='/admin/messages'>
+              <Button asChild variant='outline' size='sm'>
+                <Link href='/admin/gallery'>
                   View All
                   <ArrowRight className='w-4 h-4 ml-2' />
                 </Link>
@@ -175,85 +134,51 @@ export default function DashboardClient({
             }
           >
             <div className='space-y-4'>
-              {recentMessages.map((message, index) => (
+              {recentGallery.map((image, index) => (
                 <motion.div
-                  key={message.id}
+                  key={image.id}
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.3, delay: index * 0.1 }}
-                  className={`flex items-start gap-4 p-3 rounded-xl transition-colors ${
-                    !message.read ? 'bg-champagne/20' : 'hover:bg-secondary/50'
-                  }`}
+                  className='flex items-center gap-4 p-3 rounded-xl hover:bg-secondary/50 transition-colors'
                 >
-                  <div className='w-10 h-10 bg-cream rounded-full flex items-center justify-center shrink-0'>
-                    <span className='text-sm font-medium text-foreground'>
-                      {message.name
-                        .split(' ')
-                        .map((n) => n[0])
-                        .join('')}
-                    </span>
+                  <div className='relative w-14 h-14 rounded-lg overflow-hidden shrink-0 bg-secondary'>
+                    <Image
+                      src={image.image_url}
+                      alt={image.title ?? 'Gallery image'}
+                      fill
+                      className='object-cover'
+                      sizes='56px'
+                    />
                   </div>
                   <div className='flex-1 min-w-0'>
-                    <div className='flex items-center gap-2'>
+                    <div className='flex items-center gap-1.5'>
                       <p className='font-medium text-foreground truncate'>
-                        {message.name}
+                        {image.title ?? 'Untitled'}
                       </p>
-                      {!message.read && (
-                        <span className='w-2 h-2 bg-dusty-rose rounded-full shrink-0' />
+                      {image.featured && (
+                        <Star className='w-3 h-3 text-amber-400 fill-amber-400 shrink-0' />
                       )}
                     </div>
-                    <p className='text-sm text-muted-foreground truncate'>
-                      {message.subject}
-                    </p>
-                    <p className='text-xs text-muted-foreground mt-1'>
-                      {message.date}
+                    <p className='text-sm text-muted-foreground'>
+                      {new Intl.DateTimeFormat('en-US', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                        timeZone: 'UTC'
+                      }).format(new Date(image.created_at))}
                     </p>
                   </div>
                 </motion.div>
               ))}
+              {recentGallery.length === 0 && (
+                <p className='text-sm text-muted-foreground text-center py-4'>
+                  No gallery images yet.
+                </p>
+              )}
             </div>
           </AdminCard>
         </div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4, delay: 0.3 }}
-          className='mt-6 p-6 bg-cream rounded-2xl'
-        >
-          <h3 className='font-serif text-lg font-medium text-foreground mb-4'>
-            Quick Actions
-          </h3>
-          <div className='flex flex-wrap gap-3'>
-            <Button asChild>
-              <Link href='/admin/projects/new'>
-                <Plus className='w-4 h-4 mr-2' />
-                New Project
-              </Link>
-            </Button>
-            <Button
-              asChild
-              variant='outline'
-            >
-              <Link href='/admin/gallery'>
-                <ImageIcon className='w-4 h-4 mr-2' />
-                Upload Images
-              </Link>
-            </Button>
-            <Button
-              asChild
-              variant='outline'
-            >
-              <Link
-                href='/'
-                target='_blank'
-              >
-                <Eye className='w-4 h-4 mr-2' />
-                View Site
-              </Link>
-            </Button>
-          </div>
-        </motion.div>
       </main>
     </>
   )
