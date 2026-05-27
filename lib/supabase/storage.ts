@@ -22,3 +22,24 @@ export async function uploadProjectImage(
 
   return data.publicUrl
 }
+
+export async function uploadGalleryImage(
+  sessionId: string,
+  file: File
+): Promise<string> {
+  const supabase = createClient()
+  const sanitizedName = file.name.replace(/[^a-zA-Z0-9._-]/g, '-')
+  const path = `${sessionId}/${Date.now()}-${sanitizedName}`
+
+  const { error } = await supabase.storage
+    .from('gallery-images')
+    .upload(path, file, { upsert: false })
+
+  if (error) throw new Error(error.message)
+
+  const { data } = supabase.storage
+    .from('gallery-images')
+    .getPublicUrl(path)
+
+  return data.publicUrl
+}
