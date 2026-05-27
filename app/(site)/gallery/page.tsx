@@ -23,12 +23,14 @@ const galleryImages = [
 
 export default function GalleryPage() {
   const [activeFilter, setActiveFilter] = useState("all")
-  const [lightboxImage, setLightboxImage] = useState<string | null>(null)
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
 
   const filteredImages =
     activeFilter === "all"
       ? galleryImages
       : galleryImages.filter((img) => img.category === activeFilter)
+
+  const lightboxImageUrls = filteredImages.map((i) => i.src)
 
   return (
     <>
@@ -60,7 +62,7 @@ export default function GalleryPage() {
                 >
                   <div
                     className="relative overflow-hidden rounded-xl cursor-pointer group"
-                    onClick={() => setLightboxImage(image.src)}
+                    onClick={() => setLightboxIndex(index)}
                   >
                     <Image
                       src={image.src}
@@ -80,8 +82,15 @@ export default function GalleryPage() {
       </motion.div>
 
       <ImageLightbox
-        imageSrc={lightboxImage}
-        onClose={() => setLightboxImage(null)}
+        images={lightboxImageUrls}
+        currentIndex={lightboxIndex}
+        onClose={() => setLightboxIndex(null)}
+        onPrev={() => setLightboxIndex((i) => (i !== null && i > 0 ? i - 1 : i))}
+        onNext={() =>
+          setLightboxIndex((i) =>
+            i !== null && i < lightboxImageUrls.length - 1 ? i + 1 : i
+          )
+        }
         alt="Gallery image"
       />
     </>

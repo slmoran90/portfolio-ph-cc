@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -20,7 +20,8 @@ export function ProjectDetailClient({
   project,
   relatedProjects
 }: ProjectDetailClientProps) {
-  const [lightboxImage, setLightboxImage] = useState<string | null>(null)
+  const [lightboxImages, setLightboxImages] = useState<string[]>([])
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
 
   const coverImage = project.cover_image
   const categoryLabel = categories.find((c) => c.value === project.category)?.label
@@ -32,6 +33,23 @@ export function ProjectDetailClient({
         timeZone: 'UTC'
       }).format(new Date(project.created_at))
     : ''
+
+  const galleryImages = useMemo(
+    () => (project.images ?? []).filter((url) => url !== project.cover_image),
+    [project.images, project.cover_image]
+  )
+
+  const openCover = () => {
+    if (coverImage) {
+      setLightboxImages([coverImage])
+      setLightboxIndex(0)
+    }
+  }
+
+  const openGallery = (index: number) => {
+    setLightboxImages(galleryImages)
+    setLightboxIndex(index)
+  }
 
   return (
     <>
@@ -67,8 +85,8 @@ export function ProjectDetailClient({
               >
                 {coverImage && (
                   <div
-                    className='relative aspect-[4/5] rounded-2xl overflow-hidden cursor-pointer'
-                    onClick={() => setLightboxImage(coverImage)}
+                    className='relative aspect-[4/5] rounded-2xl overflow-hidden cursor-pointer bg-secondary/30'
+                    onClick={openCover}
                   >
                     <Image
                       src={coverImage}
@@ -76,6 +94,7 @@ export function ProjectDetailClient({
                       fill
                       className='object-cover image-premium hover:scale-105 transition-transform duration-700'
                       priority
+                      loading='eager'
                       sizes='(max-width: 1024px) 100vw, 50vw'
                     />
                   </div>
@@ -142,6 +161,44 @@ export function ProjectDetailClient({
           </Section>
         )}
 
+        {/* Gallery */}
+        {galleryImages.length > 0 && (
+          <Section>
+            <Container>
+              <div className='columns-1 sm:columns-2 lg:columns-3 gap-4'>
+                {galleryImages.map((url, index) => (
+                  <motion.div
+                    key={url}
+                    className='break-inside-avoid mb-4'
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{
+                      duration: 0.5,
+                      delay: Math.min(index * 0.05, 0.3)
+                    }}
+                    viewport={{ once: true }}
+                  >
+                    <div
+                      className='relative overflow-hidden rounded-xl cursor-pointer group bg-secondary/30'
+                      onClick={() => openGallery(index)}
+                    >
+                      <Image
+                        src={url}
+                        alt={`${project.title} — ${index + 1}`}
+                        width={800}
+                        height={600}
+                        className='w-full h-auto object-cover image-premium transition-transform duration-700 group-hover:scale-105'
+                        sizes='(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw'
+                      />
+                      <div className='absolute inset-0 bg-foreground/0 group-hover:bg-foreground/20 transition-colors duration-300' />
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </Container>
+          </Section>
+        )}
+
         {/* Related Projects */}
         {relatedProjects.length > 0 && (
           <Section>
@@ -169,7 +226,7 @@ export function ProjectDetailClient({
                       href={`/projects/${relatedProject.slug}`}
                       className='group block'
                     >
-                      <div className='relative aspect-[4/5] overflow-hidden rounded-xl mb-4'>
+                      <div className='relative aspect-[4/5] overflow-hidden rounded-xl mb-4 bg-secondary/30'>
                         <Image
                           src={relatedProject.cover_image || '/placeholder.jpg'}
                           alt={relatedProject.title}
@@ -194,8 +251,17 @@ export function ProjectDetailClient({
       </motion.div>
 
       <ImageLightbox
-        imageSrc={lightboxImage}
-        onClose={() => setLightboxImage(null)}
+        images={lightboxImages}
+        currentIndex={lightboxIndex}
+        onClose={() => setLightboxIndex(null)}
+        onPrev={() =>
+          setLightboxIndex((i) => (i !== null && i > 0 ? i - 1 : i))
+        }
+        onNext={() =>
+          setLightboxIndex((i) =>
+            i !== null && i < lightboxImages.length - 1 ? i + 1 : i
+          )
+        }
         alt={project.title}
       />
     </>
