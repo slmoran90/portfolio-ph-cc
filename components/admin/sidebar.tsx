@@ -7,6 +7,7 @@ import {
   LayoutDashboard,
   FolderOpen,
   Image as ImageIcon,
+  Layers,
   MessageSquare,
   Settings,
   LogOut,
@@ -20,6 +21,7 @@ const sidebarLinks = [
   { href: "/admin", icon: LayoutDashboard, label: "Dashboard" },
   { href: "/admin/projects", icon: FolderOpen, label: "Projects" },
   { href: "/admin/gallery", icon: ImageIcon, label: "Gallery" },
+  { href: "/admin/services", icon: Layers, label: "Services" },
   { href: "/admin/messages", icon: MessageSquare, label: "Messages" },
   { href: "/admin/settings", icon: Settings, label: "Settings" },
 ]

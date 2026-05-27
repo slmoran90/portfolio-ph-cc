@@ -5,12 +5,15 @@ import {
   TestimonialsSection,
   CTASection,
 } from "@/components/home"
+import { getServices } from "@/lib/data/services"
 
-export default function HomePage() {
+export default async function HomePage() {
+  const services = await getServices()
+
   return (
     <>
       <HeroSection />
-      <FeaturedGallery />
+      <FeaturedGallery services={services} />
       <AboutPreview />
       <TestimonialsSection />
       <CTASection />
