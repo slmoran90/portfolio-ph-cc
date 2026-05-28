@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useCallback, useRef, useEffect } from 'react'
+import { useState, useCallback, useRef, useEffect, useMemo } from 'react'
 import { motion } from 'framer-motion'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
@@ -51,14 +51,18 @@ export default function GalleryClient({
     }
   }, [initialImages])
 
-  const filteredImages = images.filter((img) => {
-    const q = searchQuery.toLowerCase()
-    return (
-      !q ||
-      img.title?.toLowerCase().includes(q) ||
-      img.category?.toLowerCase().includes(q)
-    )
-  })
+  const filteredImages = useMemo(
+    () =>
+      images.filter((img) => {
+        const q = searchQuery.toLowerCase()
+        return (
+          !q ||
+          img.title?.toLowerCase().includes(q) ||
+          img.category?.toLowerCase().includes(q)
+        )
+      }),
+    [images, searchQuery]
+  )
 
   function validateFile(file: File): string | null {
     if (!ACCEPTED_MIME.includes(file.type)) return 'Unsupported format (JPEG, PNG, WebP, AVIF only)'
@@ -317,11 +321,12 @@ export default function GalleryClient({
                         </p>
                         <button
                           className='mt-2 text-xs text-white/70 underline'
-                          onClick={() =>
+                          onClick={() => {
+                            URL.revokeObjectURL(item.previewUrl)
                             setUploadQueue((prev) =>
                               prev.filter((u) => u.tempId !== item.tempId)
                             )
-                          }
+                          }}
                         >
                           Dismiss
                         </button>
