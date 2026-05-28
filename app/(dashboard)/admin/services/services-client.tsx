@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useMemo, type RefObject } from 'react'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
@@ -59,6 +59,72 @@ function draftFromService(s: Service): ServiceDraft {
   }
 }
 
+function ServiceImageField({
+  imageUrl,
+  fileRef,
+  onFileSelect,
+  imageUploading
+}: {
+  imageUrl: string | null
+  fileRef: RefObject<HTMLInputElement | null>
+  onFileSelect: (file: File) => void
+  imageUploading: boolean
+}) {
+  return (
+    <div>
+      <Label className='text-sm font-medium mb-1.5 block'>Image</Label>
+      <div className='flex items-center gap-3'>
+        <div className='relative w-20 h-20 rounded-lg overflow-hidden shrink-0 bg-secondary border border-border/50'>
+          {imageUrl ? (
+            <Image
+              src={imageUrl}
+              alt='Service image'
+              fill
+              className='object-cover'
+              sizes='80px'
+            />
+          ) : (
+            <div className='w-full h-full flex items-center justify-center'>
+              <ImageIcon className='w-5 h-5 text-muted-foreground' />
+            </div>
+          )}
+          {imageUploading && (
+            <div className='absolute inset-0 bg-background/70 flex items-center justify-center'>
+              <Loader2 className='w-4 h-4 animate-spin text-dusty-rose' />
+            </div>
+          )}
+        </div>
+        <div>
+          <Button
+            type='button'
+            variant='outline'
+            size='sm'
+            onClick={() => fileRef.current?.click()}
+            disabled={imageUploading}
+          >
+            <Upload className='w-3.5 h-3.5 mr-1.5' />
+            {imageUrl ? 'Change Image' : 'Upload Image'}
+          </Button>
+          <p className='text-xs text-muted-foreground mt-1'>
+            JPEG, PNG, WebP, AVIF · max 10 MB
+          </p>
+        </div>
+        <input
+          ref={fileRef}
+          type='file'
+          accept='image/jpeg,image/png,image/webp,image/avif'
+          className='hidden'
+          onChange={(e) => {
+            const file = e.target.files?.[0]
+            if (file) onFileSelect(file)
+            e.target.value = ''
+          }}
+        />
+      </div>
+    </div>
+  )
+}
+
 export default function ServicesClient({
   initialServices
 }: {
@@ -82,10 +148,13 @@ export default function ServicesClient({
     setServices(initialServices)
   }, [initialServices])
 
-  const filtered = services.filter((s) => {
-    const q = searchQuery.toLowerCase()
-    return !q || s.title.toLowerCase().includes(q)
-  })
+  const filtered = useMemo(
+    () =>
+      services.filter(
+        (s) => !searchQuery || s.title.toLowerCase().includes(searchQuery.toLowerCase())
+      ),
+    [services, searchQuery]
+  )
 
   function validateFile(file: File): string | null {
     if (!ACCEPTED_MIME.includes(file.type))
@@ -228,81 +297,6 @@ export default function ServicesClient({
     router.refresh()
   }
 
-  function ServiceImageField({
-    imageUrl,
-    fileRef,
-    onFileSelect
-  }: {
-    imageUrl: string | null
-    fileRef: React.RefObject<HTMLInputElement | null>
-    onFileSelect: (file: File) => void
-  }) {
-    return (
-      <div>
-        <Label className='text-sm font-medium mb-1.5 block'>Image</Label>
-        <div className='flex items-center gap-3'>
-          <div className='relative w-20 h-20 rounded-lg overflow-hidden shrink-0 bg-secondary border border-border/50'>
-            {imageUrl ? (
-              <Image
-                src={imageUrl}
-                alt='Service image'
-                fill
-                className='object-cover'
-                sizes='80px'
-              />
-            ) : (
-              <div className='w-full h-full flex items-center justify-center'>
-                <ImageIcon className='w-5 h-5 text-muted-foreground' />
-              </div>
-            )}
-            {imageUploading && (
-              <div className='absolute inset-0 bg-background/70 flex items-center justify-center'>
-                <Loader2 className='w-4 h-4 animate-spin text-dusty-rose' />
-              </div>
-            )}
-          </div>
-          <div>
-            <Button
-              type='button'
-              variant='outline'
-              size='sm'
-              onClick={() => fileRef.current?.click()}
-              disabled={imageUploading}
-            >
-              <Upload className='w-3.5 h-3.5 mr-1.5' />
-              {imageUrl ? 'Change Image' : 'Upload Image'}
-            </Button>
-            {imageUrl && (
-              <button
-                type='button'
-                className='ml-2 text-xs text-muted-foreground hover:text-destructive transition-colors'
-                onClick={() => {
-                  /* handled by parent via setDraft */
-                }}
-              >
-                Remove
-              </button>
-            )}
-            <p className='text-xs text-muted-foreground mt-1'>
-              JPEG, PNG, WebP, AVIF · max 10 MB
-            </p>
-          </div>
-          <input
-            ref={fileRef}
-            type='file'
-            accept='image/jpeg,image/png,image/webp,image/avif'
-            className='hidden'
-            onChange={(e) => {
-              const file = e.target.files?.[0]
-              if (file) onFileSelect(file)
-              e.target.value = ''
-            }}
-          />
-        </div>
-      </div>
-    )
-  }
-
   return (
     <>
       <AdminHeader
@@ -326,6 +320,7 @@ export default function ServicesClient({
               imageUrl={createDraft.image_url}
               fileRef={createFileRef}
               onFileSelect={handleCreateImageSelect}
+              imageUploading={imageUploading}
             />
 
             <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
@@ -480,6 +475,7 @@ export default function ServicesClient({
                         imageUrl={editDraft.image_url}
                         fileRef={editFileRef}
                         onFileSelect={handleEditImageSelect}
+                        imageUploading={imageUploading}
                       />
 
                       <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>

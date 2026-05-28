@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
 import { Section, Container } from '@/components/layout'
@@ -16,12 +16,18 @@ export default function GalleryClient({
   const [activeFilter, setActiveFilter] = useState('all')
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
 
-  const filteredImages =
-    activeFilter === 'all'
-      ? images
-      : images.filter((img) => img.category === activeFilter)
+  const filteredImages = useMemo(
+    () =>
+      activeFilter === 'all'
+        ? images
+        : images.filter((img) => img.category === activeFilter),
+    [images, activeFilter]
+  )
 
-  const lightboxImageUrls = filteredImages.map((i) => i.image_url)
+  const lightboxImageUrls = useMemo(
+    () => filteredImages.map((i) => i.image_url),
+    [filteredImages]
+  )
 
   return (
     <>
