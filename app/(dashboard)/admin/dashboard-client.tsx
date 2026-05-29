@@ -13,23 +13,31 @@ import {
 } from 'lucide-react'
 import type { Project } from '@/lib/data/projects.types'
 import type { GalleryImage } from '@/lib/data/gallery.types'
+import type { SiteSettings } from '@/lib/data/site-settings.types'
 
 export default function DashboardClient({
   projects,
   galleryCount,
-  recentGallery
+  recentGallery,
+  siteSettings
 }: {
   projects: Project[]
   galleryCount: number
   recentGallery: GalleryImage[]
+  siteSettings: SiteSettings | null
 }) {
   const publishedCount = projects.filter((p) => p.published).length
+
+  const firstName = siteSettings?.full_name?.split(/\s+/)[0] || null
+  const greeting = firstName
+    ? `Welcome back, ${firstName}. Here's what's happening.`
+    : "Welcome back. Here's what's happening."
 
   return (
     <>
       <AdminHeader
         title='Dashboard'
-        description="Welcome back, Sofia. Here's what's happening."
+        description={greeting}
       />
 
       <main className='flex-1 p-6 overflow-auto'>

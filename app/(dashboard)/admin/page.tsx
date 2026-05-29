@@ -1,12 +1,14 @@
 import { getAdminProjects } from '@/lib/data/projects'
 import { getGalleryImagesCount, getRecentGalleryImages } from '@/lib/data/gallery'
+import { getSiteSettings } from '@/lib/data/site-settings'
 import DashboardClient from './dashboard-client'
 
 export default async function AdminDashboard() {
-  const [projects, galleryCount, recentGallery] = await Promise.all([
+  const [projects, galleryCount, recentGallery, siteSettings] = await Promise.all([
     getAdminProjects(),
     getGalleryImagesCount(),
-    getRecentGalleryImages(4)
+    getRecentGalleryImages(4),
+    getSiteSettings()
   ])
 
   return (
@@ -14,6 +16,7 @@ export default async function AdminDashboard() {
       projects={projects}
       galleryCount={galleryCount}
       recentGallery={recentGallery}
+      siteSettings={siteSettings}
     />
   )
 }
