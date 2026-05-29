@@ -1,7 +1,8 @@
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { AdminSidebar } from '@/components/admin/sidebar'
-import { LogoutButton } from '@/components/admin/logout-button'
+import { getSiteSettings } from '@/lib/data/site-settings'
+import type { SiteSettings } from '@/lib/data/site-settings.types'
 
 export default async function DashboardLayout({
   children
@@ -18,16 +19,14 @@ export default async function DashboardLayout({
     redirect('/admin/login')
   }
 
+  const siteSettings = await getSiteSettings()
+
   return (
     <div className='min-h-screen bg-cream flex'>
-      <AdminSidebar />
+      <AdminSidebar siteSettings={siteSettings} />
 
-      <main className='flex-1 lg:ml-64'>
-        <header className='h-16 border-b border-border/50 bg-background/80 backdrop-blur-sm flex items-center justify-end px-6'>
-          <LogoutButton />
-        </header>
-
-        <div className='p-6'>{children}</div>
+      <main className='flex-1 flex flex-col'>
+        <div className='flex-1 p-6'>{children}</div>
       </main>
     </div>
   )

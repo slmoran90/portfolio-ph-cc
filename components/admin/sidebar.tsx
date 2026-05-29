@@ -2,21 +2,21 @@
 
 import { motion } from "framer-motion"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import {
   LayoutDashboard,
   FolderOpen,
   Image as ImageIcon,
   Layers,
   Star,
-  MessageSquare,
   Settings,
   LogOut,
   Menu,
   X,
-  Camera,
 } from "lucide-react"
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { createClient } from "@/lib/supabase/browser"
+import type { SiteSettings } from "@/lib/data/site-settings.types"
 
 const sidebarLinks = [
   { href: "/admin", icon: LayoutDashboard, label: "Dashboard" },
@@ -24,18 +24,44 @@ const sidebarLinks = [
   { href: "/admin/gallery", icon: ImageIcon, label: "Gallery" },
   { href: "/admin/services", icon: Layers, label: "Services" },
   { href: "/admin/testimonials", icon: Star, label: "Testimonials" },
-  { href: "/admin/messages", icon: MessageSquare, label: "Messages" },
   { href: "/admin/settings", icon: Settings, label: "Settings" },
 ]
 
-export function AdminSidebar() {
+function getInitials(fullName: string | null): string {
+  if (!fullName) return "L"
+  const words = fullName.trim().split(/\s+/)
+  const initials = words.slice(0, 2).map((w) => w[0].toUpperCase()).join("")
+  return initials || "L"
+}
+
+export function AdminSidebar({ siteSettings }: { siteSettings: SiteSettings | null }) {
   const pathname = usePathname()
+  const router = useRouter()
   const [isMobileOpen, setIsMobileOpen] = useState(false)
+  const [isDesktop, setIsDesktop] = useState(true)
+
+  useEffect(() => {
+    const checkDesktop = () => setIsDesktop(window.innerWidth >= 1024)
+    checkDesktop()
+    window.addEventListener("resize", checkDesktop)
+    return () => window.removeEventListener("resize", checkDesktop)
+  }, [])
 
   const isActive = (href: string) => {
     if (href === "/admin") return pathname === "/admin"
     return pathname.startsWith(href)
   }
+
+  const handleLogout = async () => {
+    const supabase = createClient()
+    await supabase.auth.signOut()
+    router.refresh()
+    router.push("/admin/login")
+  }
+
+  const fullName = siteSettings?.full_name || null
+  const initials = getInitials(fullName)
+  const profileImageUrl = siteSettings?.profile_image_url || null
 
   return (
     <>
@@ -59,19 +85,29 @@ export function AdminSidebar() {
       {/* Sidebar */}
       <motion.aside
         initial={{ x: -280 }}
-        animate={{ x: isMobileOpen ? 0 : -280 }}
-        className={`fixed lg:static inset-y-0 left-0 z-40 w-64 bg-sidebar border-r border-sidebar-border flex flex-col lg:translate-x-0 transition-transform lg:transition-none`}
+        animate={{ x: isDesktop ? 0 : (isMobileOpen ? 0 : -280) }}
+        className={`fixed lg:static inset-y-0 left-0 z-40 w-64 bg-sidebar border-r border-sidebar-border flex flex-col transition-transform`}
       >
-        {/* Logo */}
+        {/* Profile Header */}
         <div className="p-6 border-b border-sidebar-border">
           <Link href="/admin" className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-champagne/30 rounded-lg flex items-center justify-center">
-              <Camera className="w-5 h-5 text-dusty-rose" />
-            </div>
-            <div>
-              <span className="font-serif text-lg font-medium text-sidebar-foreground">
-                Luminara
-              </span>
+            {profileImageUrl ? (
+              <div className="w-12 h-12 rounded-full overflow-hidden shrink-0 bg-secondary border border-border/50">
+                <img
+                  src={profileImageUrl}
+                  alt="Profile"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            ) : (
+              <div className="w-12 h-12 bg-champagne rounded-full flex items-center justify-center shrink-0">
+                <span className="font-medium text-foreground text-lg">{initials}</span>
+              </div>
+            )}
+            <div className="flex-1 min-w-0">
+              <p className="font-serif text-lg font-medium text-sidebar-foreground truncate">
+                {fullName || "Luminara"}
+              </p>
               <p className="text-xs text-muted-foreground">Admin Panel</p>
             </div>
           </Link>
@@ -96,28 +132,15 @@ export function AdminSidebar() {
           ))}
         </nav>
 
-        {/* User & Logout */}
+        {/* Logout Footer */}
         <div className="p-4 border-t border-sidebar-border">
-          <div className="flex items-center gap-3 mb-4 px-4">
-            <div className="w-10 h-10 bg-champagne rounded-full flex items-center justify-center">
-              <span className="font-medium text-foreground">SM</span>
-            </div>
-            <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium text-sidebar-foreground truncate">
-                Sofia Martinez
-              </p>
-              <p className="text-xs text-muted-foreground truncate">
-                hello@luminara.com
-              </p>
-            </div>
-          </div>
-          <Link
-            href="/"
-            className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-muted-foreground hover:bg-destructive/10 hover:text-destructive transition-all duration-200"
+          <button
+            onClick={handleLogout}
+            className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-muted-foreground hover:bg-destructive/10 hover:text-destructive transition-all duration-200 w-full"
           >
             <LogOut className="w-5 h-5" />
-            Log Out
-          </Link>
+            Cerrar sesión
+          </button>
         </div>
       </motion.aside>
     </>
