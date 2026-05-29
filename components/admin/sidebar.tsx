@@ -34,7 +34,7 @@ function getInitials(fullName: string | null): string {
   return initials || "L"
 }
 
-export function AdminSidebar({ siteSettings }: { siteSettings: SiteSettings | null }) {
+export function AdminSidebar({ siteSettings, demoMode }: { siteSettings: SiteSettings | null; demoMode: boolean }) {
   const pathname = usePathname()
   const router = useRouter()
   const [isMobileOpen, setIsMobileOpen] = useState(false)

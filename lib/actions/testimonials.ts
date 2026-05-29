@@ -3,6 +3,10 @@
 import { revalidatePath } from 'next/cache'
 import { createClient } from '@/lib/supabase/server'
 
+const DEMO_ADMIN_OPEN = process.env.DEMO_ADMIN_OPEN === 'true'
+
+const DEMO_ERROR = 'This action is disabled in demo mode.'
+
 export type TestimonialMutationInput = {
   client_name: string
   quote: string
@@ -17,6 +21,7 @@ export type TestimonialMutationInput = {
 export async function createTestimonial(
   input: TestimonialMutationInput
 ): Promise<{ id: string } | { error: string }> {
+  if (DEMO_ADMIN_OPEN) return { error: DEMO_ERROR }
   const supabase = await createClient()
   const {
     data: { user }
@@ -53,6 +58,7 @@ export async function updateTestimonial(
   id: string,
   input: TestimonialMutationInput
 ): Promise<{ error?: string }> {
+  if (DEMO_ADMIN_OPEN) return { error: DEMO_ERROR }
   const supabase = await createClient()
   const {
     data: { user }
@@ -89,6 +95,7 @@ export async function deleteTestimonial(
   id: string,
   avatarUrl: string | null
 ): Promise<{ error?: string }> {
+  if (DEMO_ADMIN_OPEN) return { error: DEMO_ERROR }
   const supabase = await createClient()
   const {
     data: { user }

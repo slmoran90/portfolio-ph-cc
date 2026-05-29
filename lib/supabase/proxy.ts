@@ -1,6 +1,8 @@
 import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
 
+const DEMO_ADMIN_OPEN = process.env.DEMO_ADMIN_OPEN === 'true'
+
 export async function updateSession(request: NextRequest) {
   let response = NextResponse.next({
     request
@@ -31,6 +33,7 @@ export async function updateSession(request: NextRequest) {
   } = await supabase.auth.getUser()
 
   if (
+    !DEMO_ADMIN_OPEN &&
     !user &&
     request.nextUrl.pathname.startsWith('/admin') &&
     request.nextUrl.pathname !== '/admin/login'

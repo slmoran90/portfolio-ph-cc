@@ -3,6 +3,10 @@
 import { revalidatePath } from 'next/cache'
 import { createClient } from '@/lib/supabase/server'
 
+const DEMO_ADMIN_OPEN = process.env.DEMO_ADMIN_OPEN === 'true'
+
+const DEMO_ERROR = 'This action is disabled in demo mode.'
+
 export type GalleryMutationInput = {
   title: string | null
   category: string | null
@@ -14,6 +18,7 @@ export async function createGalleryImage(
   imageUrl: string,
   input: GalleryMutationInput
 ): Promise<{ id: string } | { error: string }> {
+  if (DEMO_ADMIN_OPEN) return { error: DEMO_ERROR }
   const supabase = await createClient()
   const {
     data: { user }
@@ -48,6 +53,7 @@ export async function updateGalleryImage(
   id: string,
   input: GalleryMutationInput
 ): Promise<{ error?: string }> {
+  if (DEMO_ADMIN_OPEN) return { error: DEMO_ERROR }
   const supabase = await createClient()
   const {
     data: { user }
@@ -80,6 +86,7 @@ export async function deleteGalleryImage(
   id: string,
   imageUrl: string
 ): Promise<{ error?: string }> {
+  if (DEMO_ADMIN_OPEN) return { error: DEMO_ERROR }
   const supabase = await createClient()
   const {
     data: { user }

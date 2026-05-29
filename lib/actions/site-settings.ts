@@ -3,6 +3,10 @@
 import { revalidatePath } from 'next/cache'
 import { createClient } from '@/lib/supabase/server'
 
+const DEMO_ADMIN_OPEN = process.env.DEMO_ADMIN_OPEN === 'true'
+
+const DEMO_ERROR = 'This action is disabled in demo mode.'
+
 const STORAGE_BASE = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/gallery-images/`
 
 function stripStoragePath(url: string): string | null {
@@ -16,6 +20,7 @@ export async function updateProfileSettings(input: {
   bio: string | null
   profile_image_url: string | null
 }): Promise<{ error?: string }> {
+  if (DEMO_ADMIN_OPEN) return { error: DEMO_ERROR }
   const supabase = await createClient()
   const {
     data: { user }
@@ -63,6 +68,7 @@ export async function updateContactSettings(input: {
   email: string | null
   instagram: string | null
 }): Promise<{ error?: string }> {
+  if (DEMO_ADMIN_OPEN) return { error: DEMO_ERROR }
   const supabase = await createClient()
   const {
     data: { user }
@@ -94,6 +100,7 @@ export async function updatePassword(input: {
   currentPassword: string
   newPassword: string
 }): Promise<{ error?: string }> {
+  if (DEMO_ADMIN_OPEN) return { error: DEMO_ERROR }
   const supabase = await createClient()
   const {
     data: { user }

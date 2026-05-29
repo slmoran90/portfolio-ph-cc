@@ -3,6 +3,10 @@
 import { revalidatePath } from 'next/cache'
 import { createClient } from '@/lib/supabase/server'
 
+const DEMO_ADMIN_OPEN = process.env.DEMO_ADMIN_OPEN === 'true'
+
+const DEMO_ERROR = 'This action is disabled in demo mode.'
+
 export type ServiceMutationInput = {
   title: string
   description: string | null
@@ -41,6 +45,7 @@ async function resolveUniqueSlug(
 export async function createService(
   input: ServiceMutationInput
 ): Promise<{ id: string; slug: string } | { error: string }> {
+  if (DEMO_ADMIN_OPEN) return { error: DEMO_ERROR }
   const supabase = await createClient()
   const {
     data: { user }
@@ -78,6 +83,7 @@ export async function updateService(
   id: string,
   input: ServiceMutationInput
 ): Promise<{ error?: string }> {
+  if (DEMO_ADMIN_OPEN) return { error: DEMO_ERROR }
   const supabase = await createClient()
   const {
     data: { user }
@@ -111,6 +117,7 @@ export async function deleteService(
   id: string,
   imageUrl: string | null
 ): Promise<{ error?: string }> {
+  if (DEMO_ADMIN_OPEN) return { error: DEMO_ERROR }
   const supabase = await createClient()
   const {
     data: { user }
