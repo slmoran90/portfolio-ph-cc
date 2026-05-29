@@ -8,6 +8,7 @@ import {
   FolderOpen,
   Image as ImageIcon,
   Layers,
+  Star,
   MessageSquare,
   Settings,
   LogOut,
@@ -22,6 +23,7 @@ const sidebarLinks = [
   { href: "/admin/projects", icon: FolderOpen, label: "Projects" },
   { href: "/admin/gallery", icon: ImageIcon, label: "Gallery" },
   { href: "/admin/services", icon: Layers, label: "Services" },
+  { href: "/admin/testimonials", icon: Star, label: "Testimonials" },
   { href: "/admin/messages", icon: MessageSquare, label: "Messages" },
   { href: "/admin/settings", icon: Settings, label: "Settings" },
 ]
