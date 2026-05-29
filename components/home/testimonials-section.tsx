@@ -1,31 +1,171 @@
 "use client"
 
-import { motion } from "framer-motion"
+import { useEffect, useMemo, useRef } from "react"
+import { motion, useReducedMotion } from "framer-motion"
+import Image from "next/image"
 import { Star, Quote } from "lucide-react"
 import { Section, SectionHeader, Container } from "@/components/layout"
+import type { Testimonial } from "@/lib/data/testimonials.types"
 
-const testimonials = [
-  {
-    name: "Emily & James Thompson",
-    event: "Baby Shower",
-    content: "Sofia captured our baby shower so beautifully. Every photo tells a story and brings back all the emotions from that special day. We couldn't be happier with the results.",
-    rating: 5,
-  },
-  {
-    name: "Maria Rodriguez",
-    event: "Birthday Party",
-    content: "The photos from my daughter's 5th birthday are absolutely magical. Sofia has an incredible talent for capturing the joy and wonder in children's eyes. These memories will last forever.",
-    rating: 5,
-  },
-  {
-    name: "The Anderson Family",
-    event: "Baptism Ceremony",
-    content: "We were blown away by the professionalism and artistry Sofia brought to our son's baptism. The images are timeless, elegant, and full of meaning. Highly recommend!",
-    rating: 5,
-  },
-]
+const SLIDE_DURATION_MS = 5000
 
-export function TestimonialsSection() {
+function StarRating({ rating }: { rating: number }) {
+  return (
+    <div className="flex gap-1 mb-4">
+      {Array.from({ length: 5 }).map((_, i) => (
+        <Star
+          key={i}
+          className={`w-4 h-4 ${
+            i < rating ? "fill-champagne text-champagne" : "text-border"
+          }`}
+        />
+      ))}
+    </div>
+  )
+}
+
+function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
+  return (
+    <div className="bg-card rounded-2xl p-8 shadow-sm border border-border/50 h-full flex flex-col">
+      <div className="w-12 h-12 bg-champagne/30 rounded-full flex items-center justify-center mb-6 shrink-0">
+        <Quote className="w-5 h-5 text-dusty-rose" />
+      </div>
+
+      <StarRating rating={testimonial.rating} />
+
+      <p className="text-foreground leading-relaxed mb-6 flex-1">
+        &ldquo;{testimonial.quote}&rdquo;
+      </p>
+
+      <div className="pt-6 border-t border-border/50 flex items-center gap-3 shrink-0">
+        {testimonial.avatar_url ? (
+          <div className="relative w-10 h-10 rounded-full overflow-hidden shrink-0">
+            <Image
+              src={testimonial.avatar_url}
+              alt={testimonial.client_name}
+              fill
+              className="object-cover"
+              sizes="40px"
+            />
+          </div>
+        ) : (
+          <div className="w-10 h-10 shrink-0" aria-hidden="true" />
+        )}
+        <div>
+          <p className="font-medium text-foreground">{testimonial.client_name}</p>
+          <p className="text-sm text-muted-foreground min-h-[1.25rem]">
+            {testimonial.service?.title}
+          </p>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function TestimonialsGrid({
+  testimonials,
+}: {
+  testimonials: Testimonial[]
+}) {
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+      {testimonials.map((testimonial, index) => (
+        <motion.div
+          key={testimonial.id}
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: index * 0.15 }}
+          viewport={{ once: true }}
+        >
+          <TestimonialCard testimonial={testimonial} />
+        </motion.div>
+      ))}
+    </div>
+  )
+}
+
+function TestimonialsCarousel({
+  testimonials,
+}: {
+  testimonials: Testimonial[]
+}) {
+  const shouldReduceMotion = useReducedMotion()
+  const trackRef = useRef<HTMLDivElement>(null)
+  const xRef = useRef(0)
+  const rafRef = useRef<number | null>(null)
+  const pausedRef = useRef(false)
+
+  const slides = useMemo(
+    () => [...testimonials, ...testimonials],
+    [testimonials]
+  )
+
+  useEffect(() => {
+    if (shouldReduceMotion) return
+    const track = trackRef.current
+    if (!track) return
+
+    xRef.current = 0
+    let lastTime: number | null = null
+    const slideCount = testimonials.length
+
+    function tick(timestamp: number) {
+      const delta = lastTime !== null ? timestamp - lastTime : 0
+      lastTime = timestamp
+
+      if (!pausedRef.current) {
+        const half = track!.scrollWidth / 2
+        if (half > 0) {
+          const speed = half / (slideCount * SLIDE_DURATION_MS)
+          xRef.current -= speed * delta
+          if (-xRef.current >= half) xRef.current += half
+          track!.style.transform = `translateX(${xRef.current}px)`
+        }
+      }
+
+      rafRef.current = requestAnimationFrame(tick)
+    }
+
+    rafRef.current = requestAnimationFrame(tick)
+    return () => {
+      if (rafRef.current !== null) {
+        cancelAnimationFrame(rafRef.current)
+        rafRef.current = null
+      }
+    }
+  }, [shouldReduceMotion, testimonials])
+
+  if (shouldReduceMotion) {
+    return <TestimonialsGrid testimonials={testimonials} />
+  }
+
+  return (
+    <div
+      className="overflow-hidden"
+      onMouseEnter={() => { pausedRef.current = true }}
+      onMouseLeave={() => { pausedRef.current = false }}
+    >
+      <div ref={trackRef} className="flex will-change-transform">
+        {slides.map((testimonial, index) => (
+          <div
+            key={`${testimonial.id}-${index}`}
+            className="flex-[0_0_100%] min-w-0 px-3 md:flex-[0_0_50%] lg:flex-[0_0_33.333%]"
+          >
+            <TestimonialCard testimonial={testimonial} />
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+export function TestimonialsSection({
+  testimonials,
+}: {
+  testimonials: Testimonial[]
+}) {
+  if (testimonials.length === 0) return null
+
   return (
     <Section className="bg-secondary/50">
       <Container>
@@ -34,42 +174,12 @@ export function TestimonialsSection() {
           title="Words From Our Families"
           description="The greatest reward is seeing families cherish the memories we create together."
         />
-        
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
-          {testimonials.map((testimonial, index) => (
-            <motion.div
-              key={testimonial.name}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.15 }}
-              viewport={{ once: true }}
-              className="bg-card rounded-2xl p-8 shadow-sm border border-border/50"
-            >
-              {/* Quote Icon */}
-              <div className="w-12 h-12 bg-champagne/30 rounded-full flex items-center justify-center mb-6">
-                <Quote className="w-5 h-5 text-dusty-rose" />
-              </div>
-              
-              {/* Rating */}
-              <div className="flex gap-1 mb-4">
-                {Array.from({ length: testimonial.rating }).map((_, i) => (
-                  <Star key={i} className="w-4 h-4 fill-champagne text-champagne" />
-                ))}
-              </div>
-              
-              {/* Content */}
-              <p className="text-foreground leading-relaxed mb-6">
-                &ldquo;{testimonial.content}&rdquo;
-              </p>
-              
-              {/* Author */}
-              <div className="pt-6 border-t border-border/50">
-                <p className="font-medium text-foreground">{testimonial.name}</p>
-                <p className="text-sm text-muted-foreground">{testimonial.event}</p>
-              </div>
-            </motion.div>
-          ))}
-        </div>
+
+        {testimonials.length > 3 ? (
+          <TestimonialsCarousel testimonials={testimonials} />
+        ) : (
+          <TestimonialsGrid testimonials={testimonials} />
+        )}
       </Container>
     </Section>
   )
