@@ -145,12 +145,12 @@ function AvatarImageField({
             />
           ) : (
             <div className='w-full h-full flex items-center justify-center'>
-              <User className='w-5 h-5 text-muted-foreground' />
+              <User className='w-5 h-5 text-foreground-muted' />
             </div>
           )}
           {imageUploading && (
             <div className='absolute inset-0 bg-background/70 flex items-center justify-center'>
-              <Loader2 className='w-3.5 h-3.5 animate-spin text-dusty-rose' />
+              <Loader2 className='w-3.5 h-3.5 animate-spin text-primary-soft' />
             </div>
           )}
         </div>
@@ -180,7 +180,7 @@ function AvatarImageField({
               </Button>
             )}
           </div>
-          <p className='text-xs text-muted-foreground'>
+          <p className='text-xs text-foreground-muted'>
             JPEG, PNG, WebP, AVIF · max 5 MB
           </p>
         </div>

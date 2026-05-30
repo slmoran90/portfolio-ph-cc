@@ -226,7 +226,7 @@ export default function NewProjectPage() {
                         id='category'
                         name='category'
                         required
-                        className='w-full h-12 px-4 rounded-lg border border-border/50 bg-background text-foreground focus:border-dusty-rose focus:outline-none focus:ring-1 focus:ring-dusty-rose'
+                        className='w-full h-12 px-4 rounded-lg border border-border/50 bg-background text-foreground focus:border-primary-soft focus:outline-none focus:ring-1 focus:ring-primary-soft'
                       >
                         <option value=''>Select a category</option>
                         {categories.slice(1).map((category) => (
@@ -282,7 +282,7 @@ export default function NewProjectPage() {
                       name='short_description'
                       rows={3}
                       placeholder='Brief summary shown on project cards...'
-                      className='w-full px-4 py-3 rounded-lg border border-border/50 bg-background text-foreground placeholder:text-muted-foreground focus:border-dusty-rose focus:outline-none focus:ring-1 focus:ring-dusty-rose resize-none'
+                      className='w-full px-4 py-3 rounded-lg border border-border/50 bg-background text-foreground placeholder:text-foreground-muted focus:border-primary-soft focus:outline-none focus:ring-1 focus:ring-primary-soft resize-none'
                     />
                   </div>
 
@@ -298,7 +298,7 @@ export default function NewProjectPage() {
                       name='description'
                       rows={6}
                       placeholder='Full story, details, and description of the project...'
-                      className='w-full px-4 py-3 rounded-lg border border-border/50 bg-background text-foreground placeholder:text-muted-foreground focus:border-dusty-rose focus:outline-none focus:ring-1 focus:ring-dusty-rose resize-none'
+                      className='w-full px-4 py-3 rounded-lg border border-border/50 bg-background text-foreground placeholder:text-foreground-muted focus:border-primary-soft focus:outline-none focus:ring-1 focus:ring-primary-soft resize-none'
                     />
                   </div>
                 </div>
@@ -324,17 +324,17 @@ export default function NewProjectPage() {
                   onDragLeave={handleDragLeave}
                   className={`border-2 border-dashed rounded-xl p-8 text-center transition-all ${
                     dragOver
-                      ? 'border-dusty-rose bg-champagne/10'
+                      ? 'border-primary-soft bg-champagne/10'
                       : 'border-border/50 hover:border-border'
                   }`}
                 >
-                  <div className='w-14 h-14 mx-auto bg-cream rounded-full flex items-center justify-center mb-4'>
-                    <Upload className='w-6 h-6 text-dusty-rose' />
+                  <div className='w-14 h-14 mx-auto bg-surface-alt rounded-full flex items-center justify-center mb-4'>
+                    <Upload className='w-6 h-6 text-primary-soft' />
                   </div>
                   <p className='text-foreground font-medium mb-2'>
                     Drag and drop images here
                   </p>
-                  <p className='text-sm text-muted-foreground mb-4'>
+                  <p className='text-sm text-foreground-muted mb-4'>
                     or click to browse from your computer
                   </p>
                   <Button
@@ -348,9 +348,9 @@ export default function NewProjectPage() {
 
                 {uploadedImages.length > 0 && (
                   <div className='mt-6'>
-                    <p className='text-sm text-muted-foreground mb-4'>
+                    <p className='text-sm text-foreground-muted mb-4'>
                       Click{' '}
-                      <Star className='w-3 h-3 inline text-dusty-rose fill-dusty-rose' />{' '}
+                      <Star className='w-3 h-3 inline text-primary-soft fill-primary-soft' />{' '}
                       to set the cover image.
                     </p>
                     <div className='grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4'>
@@ -361,7 +361,7 @@ export default function NewProjectPage() {
                           animate={{ opacity: 1, scale: 1 }}
                           className={`relative aspect-square rounded-lg overflow-hidden group ${
                             coverImageUrl === image.url && image.status === 'done'
-                              ? 'ring-2 ring-dusty-rose'
+                              ? 'ring-2 ring-primary-soft'
                               : ''
                           }`}
                         >
@@ -374,7 +374,7 @@ export default function NewProjectPage() {
                           />
                           {image.status === 'uploading' && (
                             <div className='absolute inset-0 bg-background/60 flex items-center justify-center'>
-                              <Loader2 className='w-6 h-6 text-dusty-rose animate-spin' />
+                              <Loader2 className='w-6 h-6 text-primary-soft animate-spin' />
                             </div>
                           )}
                           {image.status === 'error' && (
@@ -393,7 +393,7 @@ export default function NewProjectPage() {
                                 title='Set as cover'
                                 className={`absolute top-2 left-2 w-8 h-8 rounded-lg flex items-center justify-center transition-opacity ${
                                   coverImageUrl === image.url
-                                    ? 'opacity-100 bg-dusty-rose'
+                                    ? 'opacity-100 bg-primary-soft'
                                     : 'opacity-0 group-hover:opacity-100 bg-background'
                                 }`}
                               >
@@ -401,12 +401,12 @@ export default function NewProjectPage() {
                                   className={`w-4 h-4 ${
                                     coverImageUrl === image.url
                                       ? 'text-white fill-white'
-                                      : 'text-dusty-rose'
+                                      : 'text-primary-soft'
                                   }`}
                                 />
                               </button>
                               {coverImageUrl === image.url && (
-                                <div className='absolute bottom-2 left-2 px-2 py-1 bg-dusty-rose rounded text-xs font-medium text-white'>
+                                <div className='absolute bottom-2 left-2 px-2 py-1 bg-primary-soft rounded text-xs font-medium text-white'>
                                   Cover
                                 </div>
                               )}
