@@ -17,7 +17,7 @@ const cormorant = Cormorant_Garamond({
 })
 
 export const metadata: Metadata = {
-  title: "Luminara Photography | Capturing Life's Precious Moments",
+  title: "Carla Cáceres Photography | Capturing Life's Precious Moments",
   description:
     'Professional photography studio specializing in baby showers, kids birthdays, and baptisms. Elegant, emotional, and timeless photography.',
   generator: 'v0.app',

@@ -31,7 +31,7 @@ export function Footer() {
           <div className="space-y-6">
             <Link href="/">
               <span className="font-serif text-3xl font-medium tracking-wide text-foreground">
-                Luminara
+                Carla Cáceres
               </span>
             </Link>
             <p className="text-foreground-muted leading-relaxed max-w-xs">
@@ -83,7 +83,7 @@ export function Footer() {
         <div className="mt-16 pt-8 border-t border-border/50">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <p className="text-sm text-foreground-muted">
-              &copy; {new Date().getFullYear()} Luminara Photography. All rights reserved.
+              &copy; {new Date().getFullYear()} Carla Cáceres Photography. All rights reserved.
             </p>
             <div className="flex gap-6">
               <Link href="/privacy" className="text-sm text-foreground-muted hover:text-foreground transition-colors">
