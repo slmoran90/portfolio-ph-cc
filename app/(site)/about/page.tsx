@@ -51,7 +51,7 @@ export default function AboutPage() {
                 </h1>
                 <div className="space-y-4 text-foreground-muted leading-relaxed">
                   <p>
-                    Hello, I&apos;m Sofia Martinez, a professional event photographer based in the heart of the city. For over a decade, I&apos;ve had the privilege of documenting life&apos;s most precious celebrations.
+                    Hello, I&apos;m Carla Cáceres, a professional event photographer based in the heart of the city. For over a decade, I&apos;ve had the privilege of documenting life&apos;s most precious celebrations.
                   </p>
                   <p>
                     My journey into photography began with a simple desire: to freeze time and preserve the emotions that make moments meaningful. From the anticipation at a baby shower to the pure joy of a child&apos;s birthday, each event offers a unique story waiting to be told.
@@ -71,7 +71,7 @@ export default function AboutPage() {
                 <div className="relative aspect-[4/5] rounded-2xl overflow-hidden">
                   <Image
                     src="/images/photographer-portrait.jpg"
-                    alt="Sofia Martinez - Professional Photographer"
+                    alt="Carla Cáceres - Professional Photographer"
                     fill
                     className="object-cover image-premium"
                     priority
@@ -126,7 +126,7 @@ export default function AboutPage() {
                 <div className="relative aspect-[4/3] rounded-2xl overflow-hidden">
                   <Image
                     src="/images/about-studio.jpg"
-                    alt="Luminara Photography Studio"
+                    alt="Carla Cáceres Photography Studio"
                     fill
                     className="object-cover image-premium"
                     sizes="(max-width: 1024px) 100vw, 50vw"

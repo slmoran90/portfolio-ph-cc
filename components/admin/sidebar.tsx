@@ -28,10 +28,10 @@ const sidebarLinks = [
 ]
 
 function getInitials(fullName: string | null): string {
-  if (!fullName) return "L"
+  if (!fullName) return "C"
   const words = fullName.trim().split(/\s+/)
   const initials = words.slice(0, 2).map((w) => w[0].toUpperCase()).join("")
-  return initials || "L"
+  return initials || "C"
 }
 
 export function AdminSidebar({ siteSettings }: { siteSettings: SiteSettings | null }) {
@@ -106,7 +106,7 @@ export function AdminSidebar({ siteSettings }: { siteSettings: SiteSettings | nu
             )}
             <div className="flex-1 min-w-0">
               <p className="font-serif text-lg font-medium text-sidebar-foreground truncate">
-                {fullName || "Luminara"}
+                {fullName || "Carla Cáceres"}
               </p>
               <p className="text-xs text-foreground-muted">Admin Panel</p>
             </div>
