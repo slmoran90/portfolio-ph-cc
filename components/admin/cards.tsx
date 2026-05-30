@@ -31,8 +31,8 @@ export function StatCard({ title, value, change, changeType = "neutral", icon: I
           <CardTitle className="text-sm font-medium text-muted-foreground">
             {title}
           </CardTitle>
-          <div className="w-10 h-10 bg-cream rounded-lg flex items-center justify-center">
-            <Icon className="w-5 h-5 text-dusty-rose" />
+          <div className="w-10 h-10 bg-cream rounded-md flex items-center justify-center">
+            <Icon className="w-5 h-5 text-primary-soft" />
           </div>
         </CardHeader>
         <CardContent>
@@ -93,7 +93,7 @@ export function EmptyState({ icon: Icon, title, description, action }: EmptyStat
   return (
     <div className="flex flex-col items-center justify-center py-12 px-4 text-center">
       <div className="w-16 h-16 bg-cream rounded-full flex items-center justify-center mb-4">
-        <Icon className="w-8 h-8 text-dusty-rose" />
+        <Icon className="w-8 h-8 text-primary-soft" />
       </div>
       <h3 className="font-serif text-lg font-medium text-foreground mb-2">
         {title}
