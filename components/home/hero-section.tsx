@@ -12,17 +12,12 @@ export function HeroSection() {
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768
 
   // Parallax for background image (disabled on mobile and with reduced motion)
-  const y = useTransform(scrollY, [0, 500], [0, shouldReduceMotion || isMobile ? 0 : 100], {
+  const y = useTransform(scrollY, [0, 500], [0, shouldReduceMotion || isMobile ? 0 : 40], {
     clamp: true
   })
 
   // Gradient overlay opacity enhancement
   const gradientOpacity = useTransform(scrollY, [0, 300], [0.3, 0.5], {
-    clamp: true
-  })
-
-  // Content fade on scroll
-  const contentOpacity = useTransform(scrollY, [0, 300], [1, 0.6], {
     clamp: true
   })
 
@@ -35,7 +30,14 @@ export function HeroSection() {
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
-        <motion.div style={{ y: shouldReduceMotion || isMobile ? 0 : y }}>
+        <motion.div 
+          style={{ 
+            y: shouldReduceMotion || isMobile ? 0 : y,
+            height: '120%',
+            top: '-10%'
+          }}
+          className="absolute inset-0"
+        >
           <Image
             src="/images/hero-baby-shower.jpg"
             alt="Beautiful baby shower photography"
@@ -53,10 +55,7 @@ export function HeroSection() {
       </div>
 
       {/* Content */}
-      <motion.div 
-        className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 pt-32 pb-16"
-        style={{ opacity: contentOpacity }}
-      >
+      <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 pt-32 pb-16">
         <div className="max-w-3xl">
           <motion.span
             initial={{ opacity: 0, y: 20 }}
@@ -104,7 +103,7 @@ export function HeroSection() {
             </Button>
           </motion.div>
         </div>
-      </motion.div>
+      </div>
 
       {/* Scroll Indicator */}
       <motion.div
