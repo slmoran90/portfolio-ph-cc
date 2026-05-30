@@ -46,7 +46,7 @@ export function FeaturedGallery({ services }: { services: Service[] }) {
                   {service.title}
                 </h3>
                 {service.description && (
-                  <p className="text-foreground-muted leading-relaxed">
+                  <p className="text-sm text-foreground-muted leading-relaxed">
                     {service.description}
                   </p>
                 )}
