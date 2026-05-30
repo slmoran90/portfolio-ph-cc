@@ -7,4 +7,5 @@ export interface SiteSettings {
   profile_image_url: string | null
   email: string | null
   instagram: string | null
+  whatsapp: string | null
 }

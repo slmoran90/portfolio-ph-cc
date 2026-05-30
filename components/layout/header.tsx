@@ -11,7 +11,7 @@ const navLinks = [
   { href: "/about", label: "About" },
   { href: "/projects", label: "Projects" },
   { href: "/gallery", label: "Gallery" },
-  { href: "/contact", label: "Contact" },
+  { href: "/#contact", label: "Contact" },
 ]
 
 export function Header() {
@@ -38,6 +38,14 @@ export function Header() {
   const shadowOpacity = useTransform(scrollY, [0, scrollThreshold], [0, 0.1], {
     clamp: true
   })
+
+  const handleContactClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault()
+    const contactSection = document.getElementById('contact')
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: 'smooth' })
+    }
+  }
 
   return (
     <motion.header
@@ -72,10 +80,12 @@ export function Header() {
           <div className="hidden md:flex items-center gap-10">
             {navLinks.map((link) => {
               const isActive = pathname === link.href
+              const isContact = link.href === '/#contact'
               return (
                 <Link
                   key={link.href}
                   href={link.href}
+                  onClick={isContact ? handleContactClick : undefined}
                   className="relative text-sm tracking-widest uppercase text-muted-foreground hover:text-foreground transition-colors duration-300 group"
                 >
                   {link.label}
@@ -121,22 +131,30 @@ export function Header() {
               className="md:hidden py-6 border-t border-border/50 overflow-hidden"
             >
               <div className="flex flex-col gap-6">
-                {navLinks.map((link, index) => (
-                  <motion.div
-                    key={link.href}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.2, delay: index * 0.05 }}
-                  >
-                    <Link
-                      href={link.href}
-                      onClick={() => setIsOpen(false)}
-                      className="text-sm tracking-widest uppercase text-muted-foreground hover:text-foreground transition-colors"
+                {navLinks.map((link, index) => {
+                  const isContact = link.href === '/#contact'
+                  return (
+                    <motion.div
+                      key={link.href}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.2, delay: index * 0.05 }}
                     >
-                      {link.label}
-                    </Link>
-                  </motion.div>
-                ))}
+                      <Link
+                        href={link.href}
+                        onClick={(e) => {
+                          if (isContact) {
+                            handleContactClick(e)
+                          }
+                          setIsOpen(false)
+                        }}
+                        className="text-sm tracking-widest uppercase text-muted-foreground hover:text-foreground transition-colors"
+                      >
+                        {link.label}
+                      </Link>
+                    </motion.div>
+                  )
+                })}
               </div>
             </motion.div>
           )}
