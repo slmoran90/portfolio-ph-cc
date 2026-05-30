@@ -29,7 +29,7 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="inline-block text-xs tracking-[0.3em] uppercase text-dusty-rose font-medium mb-6"
+            className="inline-block text-xs tracking-[0.3em] uppercase text-primary-soft font-medium mb-6"
           >
             Professional Photography Studio
           </motion.span>
@@ -47,7 +47,7 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-lg md:text-xl text-muted-foreground leading-relaxed mb-10 max-w-xl"
+            className="text-lg md:text-xl text-foreground-muted leading-relaxed mb-10 max-w-xl"
           >
             Specializing in baby showers, birthdays, and baptisms. Creating timeless memories with elegance and artistry.
           </motion.p>

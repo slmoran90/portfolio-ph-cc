@@ -31,7 +31,7 @@ function filterButtonClassName(isActive: boolean) {
     "px-6 py-3 rounded-full text-sm tracking-wider transition-all duration-300",
     isActive
       ? "bg-foreground text-background"
-      : "bg-secondary text-muted-foreground hover:bg-secondary/80 hover:text-foreground"
+      : "bg-secondary text-foreground-muted hover:bg-secondary/80 hover:text-foreground"
   )
 }
 

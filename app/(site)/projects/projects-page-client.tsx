@@ -72,7 +72,7 @@ export default function ProjectsPageClient({
         <Container>
           <Suspense
             fallback={
-              <div className='text-center text-muted-foreground'>
+              <div className='text-center text-foreground-muted'>
                 Loading projects...
               </div>
             }
