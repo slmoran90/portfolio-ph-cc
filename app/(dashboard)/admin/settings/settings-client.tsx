@@ -174,7 +174,7 @@ export default function SettingsClient({
           description='Manage your account and preferences'
         />
         <main className='flex-1 p-6 flex items-center justify-center'>
-          <p className='text-muted-foreground text-sm'>
+          <p className='text-foreground-muted text-sm'>
             Settings row not found. Please insert an initial row into the{' '}
             <code className='text-foreground'>site_settings</code> table.
           </p>
@@ -203,7 +203,7 @@ export default function SettingsClient({
                     className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all ${
                       activeTab === tab.id
                         ? 'bg-champagne/30 text-foreground'
-                        : 'text-muted-foreground hover:bg-secondary/50 hover:text-foreground'
+                        : 'text-foreground-muted hover:bg-secondary/50 hover:text-foreground'
                     }`}
                   >
                     <tab.icon className='w-5 h-5' />
@@ -239,12 +239,12 @@ export default function SettingsClient({
                         />
                       ) : (
                         <div className='w-full h-full flex items-center justify-center'>
-                          <User className='w-8 h-8 text-muted-foreground' />
+                          <User className='w-8 h-8 text-foreground-muted' />
                         </div>
                       )}
                       {imageUploading && (
                         <div className='absolute inset-0 bg-background/70 flex items-center justify-center'>
-                          <Loader2 className='w-5 h-5 animate-spin text-dusty-rose' />
+                          <Loader2 className='w-5 h-5 animate-spin text-primary-soft' />
                         </div>
                       )}
                     </div>
@@ -258,7 +258,7 @@ export default function SettingsClient({
                         <Upload className='w-4 h-4 mr-2' />
                         {profileImageUrl ? 'Change Photo' : 'Upload Photo'}
                       </Button>
-                      <p className='text-xs text-muted-foreground mt-2'>
+                      <p className='text-xs text-foreground-muted mt-2'>
                         JPEG, PNG, WebP, AVIF · max 10 MB
                       </p>
                     </div>
@@ -291,7 +291,7 @@ export default function SettingsClient({
                         value={bio}
                         onChange={(e) => setBio(e.target.value)}
                         placeholder='A short bio shown on the about page'
-                        className='w-full px-4 py-3 rounded-lg border border-border/50 bg-background text-sm text-foreground placeholder:text-muted-foreground focus:border-dusty-rose focus:outline-none focus:ring-1 focus:ring-dusty-rose resize-none'
+                        className='w-full px-4 py-3 rounded-lg border border-border/50 bg-background text-sm text-foreground placeholder:text-foreground-muted focus:border-primary-soft focus:outline-none focus:ring-1 focus:ring-primary-soft resize-none'
                       />
                     </div>
                   </div>

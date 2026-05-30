@@ -85,12 +85,12 @@ function ServiceImageField({
             />
           ) : (
             <div className='w-full h-full flex items-center justify-center'>
-              <ImageIcon className='w-5 h-5 text-muted-foreground' />
+              <ImageIcon className='w-5 h-5 text-foreground-muted' />
             </div>
           )}
           {imageUploading && (
             <div className='absolute inset-0 bg-background/70 flex items-center justify-center'>
-              <Loader2 className='w-4 h-4 animate-spin text-dusty-rose' />
+              <Loader2 className='w-4 h-4 animate-spin text-primary-soft' />
             </div>
           )}
         </div>
@@ -105,7 +105,7 @@ function ServiceImageField({
             <Upload className='w-3.5 h-3.5 mr-1.5' />
             {imageUrl ? 'Change Image' : 'Upload Image'}
           </Button>
-          <p className='text-xs text-muted-foreground mt-1'>
+          <p className='text-xs text-foreground-muted mt-1'>
             JPEG, PNG, WebP, AVIF · max 10 MB
           </p>
         </div>
@@ -367,7 +367,7 @@ export default function ServicesClient({
                   }))
                 }
                 placeholder='Short description visible on the homepage'
-                className='w-full rounded-lg border border-border/50 bg-background px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring resize-none'
+                className='w-full rounded-lg border border-border/50 bg-background px-3 py-2 text-sm text-foreground placeholder:text-foreground-muted focus:outline-none focus:ring-2 focus:ring-ring resize-none'
               />
             </div>
 
@@ -380,7 +380,7 @@ export default function ServicesClient({
                 className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium border transition-colors ${
                   createDraft.enabled
                     ? 'bg-green-50 border-green-200 text-green-700'
-                    : 'bg-secondary border-border/50 text-muted-foreground'
+                    : 'bg-secondary border-border/50 text-foreground-muted'
                 }`}
               >
                 {createDraft.enabled ? (
@@ -432,7 +432,7 @@ export default function ServicesClient({
         >
           {services.length > 0 && (
             <div className='relative mb-4'>
-              <Search className='absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground' />
+              <Search className='absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-foreground-muted' />
               <Input
                 type='search'
                 placeholder='Search services...'
@@ -525,7 +525,7 @@ export default function ServicesClient({
                               d ? { ...d, description: e.target.value } : d
                             )
                           }
-                          className='w-full rounded-lg border border-border/50 bg-background px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring resize-none'
+                          className='w-full rounded-lg border border-border/50 bg-background px-3 py-2 text-sm text-foreground placeholder:text-foreground-muted focus:outline-none focus:ring-2 focus:ring-ring resize-none'
                         />
                       </div>
 
@@ -540,7 +540,7 @@ export default function ServicesClient({
                           className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium border transition-colors ${
                             editDraft.enabled
                               ? 'bg-green-50 border-green-200 text-green-700'
-                              : 'bg-secondary border-border/50 text-muted-foreground'
+                              : 'bg-secondary border-border/50 text-foreground-muted'
                           }`}
                         >
                           {editDraft.enabled ? (
@@ -593,7 +593,7 @@ export default function ServicesClient({
                           />
                         ) : (
                           <div className='w-full h-full flex items-center justify-center'>
-                            <ImageIcon className='w-5 h-5 text-muted-foreground' />
+                            <ImageIcon className='w-5 h-5 text-foreground-muted' />
                           </div>
                         )}
                       </div>
@@ -608,19 +608,19 @@ export default function ServicesClient({
                             className={`text-xs px-2 py-0.5 rounded-full shrink-0 ${
                               service.enabled
                                 ? 'bg-green-100 text-green-700'
-                                : 'bg-secondary text-muted-foreground'
+                                : 'bg-secondary text-foreground-muted'
                             }`}
                           >
                             {service.enabled ? 'Enabled' : 'Disabled'}
                           </span>
                           {service.sort_order !== null && (
-                            <span className='text-xs text-muted-foreground'>
+                            <span className='text-xs text-foreground-muted'>
                               #{service.sort_order}
                             </span>
                           )}
                         </div>
                         {service.description && (
-                          <p className='text-sm text-muted-foreground line-clamp-2 mt-1'>
+                          <p className='text-sm text-foreground-muted line-clamp-2 mt-1'>
                             {service.description}
                           </p>
                         )}

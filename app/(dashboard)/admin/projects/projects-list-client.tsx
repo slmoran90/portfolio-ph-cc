@@ -66,7 +66,7 @@ export default function ProjectsListClient({
           <select
             value={selectedCategory}
             onChange={(e) => setSelectedCategory(e.target.value)}
-            className='h-10 px-4 rounded-lg border border-border/50 bg-background text-foreground focus:border-dusty-rose focus:outline-none focus:ring-1 focus:ring-dusty-rose'
+            className='h-10 px-4 rounded-lg border border-border/50 bg-background text-foreground focus:border-primary-soft focus:outline-none focus:ring-1 focus:ring-primary-soft'
           >
             {categories.map((category) => (
               <option
@@ -136,7 +136,7 @@ export default function ProjectsListClient({
                             ?.label ?? project.category
                         }
                       </span>
-                      <span className='text-sm text-muted-foreground'>
+                      <span className='text-sm text-foreground-muted'>
                         {project.created_at
                           ? new Intl.DateTimeFormat('en-US', {
                               year: 'numeric',
@@ -145,14 +145,14 @@ export default function ProjectsListClient({
                             }).format(new Date(project.created_at))
                           : '—'}
                       </span>
-                      <span className='text-sm text-muted-foreground'>
+                      <span className='text-sm text-foreground-muted'>
                         {project.images?.length ?? 0} images
                       </span>
                       <span
                         className={`text-xs px-2 py-0.5 rounded-full ${
                           project.published
                             ? 'bg-green-100 text-green-700'
-                            : 'bg-secondary text-muted-foreground'
+                            : 'bg-secondary text-foreground-muted'
                         }`}
                       >
                         {project.published ? 'Published' : 'Draft'}
