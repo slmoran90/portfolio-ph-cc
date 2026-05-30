@@ -72,7 +72,7 @@ export function Header() {
           {/* Logo */}
           <Link href="/" className="group">
             <span className="font-serif text-2xl lg:text-3xl font-medium tracking-wide text-foreground transition-colors group-hover:text-foreground-muted">
-              Luminara
+              Carla Cáceres
             </span>
           </Link>
 

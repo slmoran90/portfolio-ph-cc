@@ -23,7 +23,7 @@ export function AboutPreview() {
             <div className="relative aspect-[4/5] rounded-2xl overflow-hidden">
               <Image
                 src="/images/photographer-portrait.jpg"
-                alt="Sofia Martinez - Photographer"
+                alt="Carla Cáceres - Photographer"
                 fill
                 className="object-cover image-premium"
                 sizes="(max-width: 1024px) 100vw, 50vw"
@@ -45,7 +45,7 @@ export function AboutPreview() {
               The Artist
             </span>
             <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-medium text-foreground leading-tight mb-6 text-balance">
-              Hello, I&apos;m Sofia
+              Hello, I&apos;m Carla
             </h2>
             <div className="space-y-4 text-foreground-muted leading-relaxed mb-8">
               <p>
