@@ -23,14 +23,14 @@ export function AdminHeader({ title, description }: AdminHeaderProps) {
             {title}
           </h1>
           {description && (
-            <p className="text-sm text-muted-foreground mt-1">{description}</p>
+            <p className="text-sm text-foreground-muted mt-1">{description}</p>
           )}
         </div>
 
         <div className="flex items-center gap-4">
           {/* Search */}
           <div className="relative hidden md:block">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-foreground-muted" />
             <Input
               type="search"
               placeholder="Search..."
@@ -40,7 +40,7 @@ export function AdminHeader({ title, description }: AdminHeaderProps) {
 
           {/* Notifications */}
           <button className="relative p-2 rounded-lg hover:bg-secondary transition-colors">
-            <Bell className="w-5 h-5 text-muted-foreground" />
+            <Bell className="w-5 h-5 text-foreground-muted" />
             <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-primary-soft rounded-full" />
           </button>
         </div>

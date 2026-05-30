@@ -223,17 +223,17 @@ export default function GalleryClient({
           onDragLeave={() => setDragOver(false)}
           className={`border-2 border-dashed rounded-2xl p-8 text-center mb-6 transition-all ${
             dragOver
-              ? 'border-dusty-rose bg-champagne/10'
+              ? 'border-primary-soft bg-champagne/10'
               : 'border-border/50 hover:border-border bg-card'
           }`}
         >
-          <div className='w-14 h-14 mx-auto bg-cream rounded-full flex items-center justify-center mb-4'>
-            <Upload className='w-6 h-6 text-dusty-rose' />
+          <div className='w-14 h-14 mx-auto bg-surface-alt rounded-full flex items-center justify-center mb-4'>
+            <Upload className='w-6 h-6 text-primary-soft' />
           </div>
           <p className='text-foreground font-medium mb-2'>
             Drag and drop images to upload
           </p>
-          <p className='text-sm text-muted-foreground mb-4'>
+          <p className='text-sm text-foreground-muted mb-4'>
             JPEG, PNG, WebP, AVIF — up to 10 MB each
           </p>
           <Button variant='outline' onClick={() => fileInputRef.current?.click()}>
@@ -252,7 +252,7 @@ export default function GalleryClient({
         {/* Toolbar */}
         <div className='flex flex-col sm:flex-row gap-4 mb-6'>
           <div className='relative flex-1'>
-            <Search className='absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground' />
+            <Search className='absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-foreground-muted' />
             <Input
               type='search'
               placeholder='Search by title or category...'
@@ -312,7 +312,7 @@ export default function GalleryClient({
                   />
                   <div className='absolute inset-0 flex flex-col items-center justify-center'>
                     {item.status === 'uploading' ? (
-                      <div className='w-6 h-6 border-2 border-dusty-rose border-t-transparent rounded-full animate-spin' />
+                      <div className='w-6 h-6 border-2 border-primary-soft border-t-transparent rounded-full animate-spin' />
                     ) : (
                       <>
                         <X className='w-5 h-5 text-destructive mb-1' />
@@ -361,7 +361,7 @@ export default function GalleryClient({
                   <div
                     className={`absolute inset-0 transition-colors ${
                       selectedIds.includes(image.id)
-                        ? 'bg-dusty-rose/20'
+                        ? 'bg-primary-soft/20'
                         : 'bg-foreground/0 group-hover:bg-foreground/30'
                     }`}
                   />
@@ -370,7 +370,7 @@ export default function GalleryClient({
                   <button
                     className={`absolute top-2 left-2 w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all ${
                       selectedIds.includes(image.id)
-                        ? 'bg-dusty-rose border-dusty-rose opacity-100'
+                        ? 'bg-primary-soft border-primary-soft opacity-100'
                         : 'bg-background/80 border-background/80 opacity-0 group-hover:opacity-100'
                     }`}
                     onClick={() => toggleSelect(image.id)}

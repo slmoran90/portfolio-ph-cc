@@ -24,7 +24,7 @@ export default async function DashboardLayout({
   const siteSettings = await getSiteSettings()
 
   return (
-    <div className='min-h-screen bg-cream flex'>
+    <div className='min-h-screen bg-surface-alt flex'>
       <AdminSidebar siteSettings={siteSettings} demoMode={DEMO_ADMIN_OPEN} />
 
       <main className='flex-1 flex flex-col'>

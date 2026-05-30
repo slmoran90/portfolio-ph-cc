@@ -108,7 +108,7 @@ export function AdminSidebar({ siteSettings, demoMode }: { siteSettings: SiteSet
               <p className="font-serif text-lg font-medium text-sidebar-foreground truncate">
                 {fullName || "Luminara"}
               </p>
-              <p className="text-xs text-muted-foreground">Admin Panel</p>
+              <p className="text-xs text-foreground-muted">Admin Panel</p>
             </div>
           </Link>
         </div>
@@ -123,7 +123,7 @@ export function AdminSidebar({ siteSettings, demoMode }: { siteSettings: SiteSet
               className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 ${
                 isActive(link.href)
                   ? "bg-sidebar-accent text-sidebar-foreground"
-                  : "text-muted-foreground hover:bg-sidebar-accent/50 hover:text-sidebar-foreground"
+                  : "text-foreground-muted hover:bg-sidebar-accent/50 hover:text-sidebar-foreground"
               }`}
             >
               <link.icon className="w-5 h-5" />
@@ -136,7 +136,7 @@ export function AdminSidebar({ siteSettings, demoMode }: { siteSettings: SiteSet
         <div className="p-4 border-t border-sidebar-border">
           <button
             onClick={handleLogout}
-            className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-muted-foreground hover:bg-destructive/10 hover:text-destructive transition-all duration-200 w-full"
+            className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-foreground-muted hover:bg-destructive/10 hover:text-destructive transition-all duration-200 w-full"
           >
             <LogOut className="w-5 h-5" />
             Cerrar sesión
