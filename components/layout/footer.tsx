@@ -2,20 +2,18 @@
 
 import { motion } from "framer-motion"
 import Link from "next/link"
-import { Instagram, Mail, Phone } from "lucide-react"
+import { Instagram } from "lucide-react"
 
 const footerLinks = [
   { href: "/", label: "Home" },
   { href: "/about", label: "About" },
   { href: "/projects", label: "Projects" },
   { href: "/gallery", label: "Gallery" },
-  { href: "/contact", label: "Contact" },
+  { href: "/#contact", label: "Contact" },
 ]
 
 const socialLinks = [
   { href: "https://instagram.com", icon: Instagram, label: "Instagram" },
-  { href: "mailto:hello@luminara.com", icon: Mail, label: "Email" },
-  { href: "tel:+1234567890", icon: Phone, label: "Phone" },
 ]
 
 export function Footer() {
@@ -78,9 +76,6 @@ export function Footer() {
                 </a>
               ))}
             </div>
-            <p className="text-sm text-foreground-muted">
-              hello@luminara.com
-            </p>
           </div>
         </div>
 

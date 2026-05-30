@@ -2,13 +2,33 @@
 
 import { motion } from "framer-motion"
 import Link from "next/link"
-import { ArrowRight } from "lucide-react"
+import { ArrowRight, MessageCircle, Instagram, Mail } from "lucide-react"
 import { Section, Container } from "@/components/layout"
 import { Button } from "@/components/ui/button"
 
-export function CTASection() {
+interface CTASectionProps {
+  whatsapp?: string | null
+  instagram?: string | null
+  email?: string | null
+}
+
+function normalizeWhatsAppNumber(value: string): string {
+  // If already a wa.me link, extract the number
+  if (value.includes('wa.me/')) {
+    const match = value.match(/wa\.me\/(.+)/)
+    if (match) return match[1]
+  }
+  // Remove spaces, +, -, parentheses
+  return value.replace(/[\s+\-\(\)]/g, '')
+}
+
+export function CTASection({ whatsapp, instagram, email }: CTASectionProps) {
+  const whatsappUrl = whatsapp
+    ? `https://wa.me/${normalizeWhatsAppNumber(whatsapp)}`
+    : null
+
   return (
-    <Section>
+    <Section id="contact">
       <Container size="narrow">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
@@ -20,7 +40,7 @@ export function CTASection() {
           {/* Decorative Elements */}
           <div className="absolute top-0 right-0 w-64 h-64 bg-champagne/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
           <div className="absolute bottom-0 left-0 w-48 h-48 bg-primary-soft/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
-          
+
           <div className="relative z-10">
             <motion.span
               initial={{ opacity: 0, y: 10 }}
@@ -31,7 +51,7 @@ export function CTASection() {
             >
               Let&apos;s Create Together
             </motion.span>
-            
+
             <motion.h2
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -41,7 +61,7 @@ export function CTASection() {
             >
               Ready to Capture Your Special Moments?
             </motion.h2>
-            
+
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -51,19 +71,42 @@ export function CTASection() {
             >
               Whether it&apos;s a baby shower, birthday celebration, or baptism, I&apos;d love to hear about your upcoming event and create lasting memories together.
             </motion.p>
-            
+
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
               viewport={{ once: true }}
             >
-              <Button asChild size="lg" className="text-sm tracking-wider uppercase px-10">
-                <Link href="/contact">
-                  Get In Touch
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
+              {whatsappUrl ? (
+                <Button asChild size="lg" className="text-sm tracking-wider uppercase px-10">
+                  <Link href={whatsappUrl} target="_blank" rel="noopener noreferrer">
+                    <MessageCircle className="mr-2 h-4 w-4" />
+                    Chat on WhatsApp
+                  </Link>
+                </Button>
+              ) : (
+                <Button asChild size="lg" className="text-sm tracking-wider uppercase px-10">
+                  <Link href={email ? `mailto:${email}` : instagram || '#'}>
+                    {email ? (
+                      <>
+                        <Mail className="mr-2 h-4 w-4" />
+                        Send Email
+                      </>
+                    ) : instagram ? (
+                      <>
+                        <Instagram className="mr-2 h-4 w-4" />
+                        Contact on Instagram
+                      </>
+                    ) : (
+                      <>
+                        <ArrowRight className="mr-2 h-4 w-4" />
+                        Get In Touch
+                      </>
+                    )}
+                  </Link>
+                </Button>
+              )}
             </motion.div>
           </div>
         </motion.div>

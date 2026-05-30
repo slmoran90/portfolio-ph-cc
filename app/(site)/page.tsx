@@ -7,11 +7,13 @@ import {
 } from "@/components/home"
 import { getServices } from "@/lib/data/services"
 import { getTestimonials } from "@/lib/data/testimonials"
+import { getSiteSettings } from "@/lib/data/site-settings"
 
 export default async function HomePage() {
-  const [services, testimonials] = await Promise.all([
+  const [services, testimonials, siteSettings] = await Promise.all([
     getServices(),
     getTestimonials(),
+    getSiteSettings(),
   ])
 
   return (
@@ -20,7 +22,11 @@ export default async function HomePage() {
       <FeaturedGallery services={services} />
       <AboutPreview />
       <TestimonialsSection testimonials={testimonials} />
-      <CTASection />
+      <CTASection
+        whatsapp={siteSettings?.whatsapp}
+        instagram={siteSettings?.instagram}
+        email={siteSettings?.email}
+      />
     </>
   )
 }
