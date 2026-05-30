@@ -87,15 +87,15 @@ export default function ContactPage() {
                   <motion.div
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    className="bg-cream rounded-2xl p-10 text-center"
+                    className="bg-surface-alt rounded-2xl p-10 text-center"
                   >
                     <div className="w-16 h-16 mx-auto bg-champagne/30 rounded-full flex items-center justify-center mb-6">
-                      <Send className="w-7 h-7 text-dusty-rose" />
+                      <Send className="w-7 h-7 text-primary-soft" />
                     </div>
                     <h3 className="font-serif text-2xl font-medium text-foreground mb-3">
                       Message Sent!
                     </h3>
-                    <p className="text-muted-foreground">
+                    <p className="text-foreground-muted">
                       Thank you for reaching out. I&apos;ll get back to you within 24 hours.
                     </p>
                   </motion.div>
@@ -110,7 +110,7 @@ export default function ContactPage() {
                           id="firstName"
                           name="firstName"
                           required
-                          className="h-12 bg-background border-border/50 focus:border-dusty-rose"
+                          className="h-12 bg-background border-border/50 focus:border-primary-soft"
                         />
                       </div>
                       <div className="space-y-2">
@@ -121,7 +121,7 @@ export default function ContactPage() {
                           id="lastName"
                           name="lastName"
                           required
-                          className="h-12 bg-background border-border/50 focus:border-dusty-rose"
+                          className="h-12 bg-background border-border/50 focus:border-primary-soft"
                         />
                       </div>
                     </div>
@@ -159,7 +159,7 @@ export default function ContactPage() {
                         id="eventType"
                         name="eventType"
                         required
-                        className="w-full h-12 px-4 rounded-lg border border-border/50 bg-background text-foreground focus:border-dusty-rose focus:outline-none focus:ring-1 focus:ring-dusty-rose"
+                        className="w-full h-12 px-4 rounded-lg border border-border/50 bg-background text-foreground focus:border-primary-soft focus:outline-none focus:ring-1 focus:ring-primary-soft"
                       >
                         <option value="">Select an event type</option>
                         <option value="baby-shower">Baby Shower</option>
@@ -179,7 +179,7 @@ export default function ContactPage() {
                         rows={5}
                         required
                         placeholder="Tell me about your event, preferred date, and any special requests..."
-                        className="w-full px-4 py-3 rounded-lg border border-border/50 bg-background text-foreground placeholder:text-muted-foreground focus:border-dusty-rose focus:outline-none focus:ring-1 focus:ring-dusty-rose resize-none"
+                        className="w-full px-4 py-3 rounded-lg border border-border/50 bg-background text-foreground placeholder:text-foreground-muted focus:border-primary-soft focus:outline-none focus:ring-1 focus:ring-primary-soft resize-none"
                       />
                     </div>
 
@@ -214,13 +214,13 @@ export default function ContactPage() {
                       className="flex items-start gap-4 p-4 rounded-xl bg-secondary/50 hover:bg-secondary transition-colors group"
                     >
                       <div className="w-12 h-12 bg-background rounded-full flex items-center justify-center shrink-0">
-                        <info.icon className="w-5 h-5 text-dusty-rose" />
+                        <info.icon className="w-5 h-5 text-primary-soft" />
                       </div>
                       <div>
-                        <p className="text-sm text-muted-foreground mb-1">
+                        <p className="text-sm text-foreground-muted mb-1">
                           {info.label}
                         </p>
-                        <p className="text-foreground font-medium group-hover:text-warm-gray transition-colors">
+                        <p className="text-foreground font-medium group-hover:text-foreground-muted transition-colors">
                           {info.value}
                         </p>
                       </div>
@@ -239,16 +239,16 @@ export default function ContactPage() {
                       href={social.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-4 p-4 rounded-xl border border-border/50 hover:border-dusty-rose/50 hover:bg-cream/50 transition-all group"
+                      className="flex items-center gap-4 p-4 rounded-xl border border-border/50 hover:border-primary-soft/50 hover:bg-surface-alt/50 transition-all group"
                     >
-                      <div className="w-12 h-12 bg-cream rounded-full flex items-center justify-center shrink-0">
-                        <social.icon className="w-5 h-5 text-dusty-rose" />
+                      <div className="w-12 h-12 bg-surface-alt rounded-full flex items-center justify-center shrink-0">
+                        <social.icon className="w-5 h-5 text-primary-soft" />
                       </div>
                       <div>
-                        <p className="text-foreground font-medium group-hover:text-warm-gray transition-colors">
+                        <p className="text-foreground font-medium group-hover:text-foreground-muted transition-colors">
                           {social.label}
                         </p>
-                        <p className="text-sm text-muted-foreground">
+                        <p className="text-sm text-foreground-muted">
                           {social.value}
                         </p>
                       </div>
@@ -257,8 +257,8 @@ export default function ContactPage() {
                 </div>
 
                 {/* Response Time */}
-                <div className="mt-12 p-6 bg-cream rounded-2xl">
-                  <p className="text-sm text-muted-foreground leading-relaxed">
+                <div className="mt-12 p-6 bg-surface-alt rounded-2xl">
+                  <p className="text-sm text-foreground-muted leading-relaxed">
                     <strong className="text-foreground">Response Time:</strong> I typically respond to all inquiries within 24 hours. For urgent requests, please reach out via WhatsApp.
                   </p>
                 </div>

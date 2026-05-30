@@ -52,7 +52,7 @@ export default function GalleryClient({
               <motion.p
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                className='text-center text-muted-foreground py-16'
+                className='text-center text-foreground-muted py-16'
               >
                 No images in this category yet.
               </motion.p>
