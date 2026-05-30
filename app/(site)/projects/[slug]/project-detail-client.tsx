@@ -64,7 +64,7 @@ export function ProjectDetailClient({
             >
               <Link
                 href='/projects'
-                className='inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors text-sm'
+                className='inline-flex items-center gap-2 text-foreground-muted hover:text-foreground transition-colors text-sm'
               >
                 <ArrowLeft className='w-4 h-4' />
                 Back to Projects
@@ -109,7 +109,7 @@ export function ProjectDetailClient({
                 className='lg:sticky lg:top-32'
               >
                 {categoryLabel && (
-                  <span className='inline-block text-xs tracking-[0.3em] uppercase text-dusty-rose font-medium mb-4'>
+                  <span className='inline-block text-xs tracking-[0.3em] uppercase text-primary-soft font-medium mb-4'>
                     {categoryLabel}
                   </span>
                 )}
@@ -118,14 +118,14 @@ export function ProjectDetailClient({
                 </h1>
 
                 <div className='flex flex-wrap gap-6 mb-8'>
-                  <div className='flex items-center gap-2 text-muted-foreground'>
+                  <div className='flex items-center gap-2 text-foreground-muted'>
                     <Calendar className='w-4 h-4' />
                     <span>{formattedDate}</span>
                   </div>
                 </div>
 
                 {project.short_description && (
-                  <p className='text-muted-foreground leading-relaxed mb-8'>
+                  <p className='text-foreground-muted leading-relaxed mb-8'>
                     {project.short_description}
                   </p>
                 )}
@@ -238,7 +238,7 @@ export function ProjectDetailClient({
                           <ArrowUpRight className='w-4 h-4 text-foreground' />
                         </div>
                       </div>
-                      <h3 className='font-serif text-lg font-medium text-foreground group-hover:text-warm-gray transition-colors'>
+                      <h3 className='font-serif text-lg font-medium text-foreground group-hover:text-foreground-muted transition-colors'>
                         {relatedProject.title}
                       </h3>
                     </Link>

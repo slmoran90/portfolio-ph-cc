@@ -28,7 +28,7 @@ function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
   return (
     <div className="bg-card rounded-2xl p-8 shadow-sm border border-border/50 h-full flex flex-col">
       <div className="w-12 h-12 bg-champagne/30 rounded-full flex items-center justify-center mb-6 shrink-0">
-        <Quote className="w-5 h-5 text-dusty-rose" />
+        <Quote className="w-5 h-5 text-primary-soft" />
       </div>
 
       <StarRating rating={testimonial.rating} />
@@ -53,7 +53,7 @@ function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
         )}
         <div>
           <p className="font-medium text-foreground">{testimonial.client_name}</p>
-          <p className="text-sm text-muted-foreground min-h-[1.25rem]">
+          <p className="text-sm text-foreground-muted min-h-[1.25rem]">
             {testimonial.service?.title}
           </p>
         </div>

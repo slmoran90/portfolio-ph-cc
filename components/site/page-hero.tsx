@@ -19,7 +19,7 @@ export function PageHero({
   descriptionClassName = "",
 }: PageHeroProps) {
   return (
-    <Section className="bg-cream">
+    <Section className="bg-surface-alt">
       <Container size={containerSize}>
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -27,14 +27,14 @@ export function PageHero({
           transition={{ duration: 0.8 }}
           className="text-center max-w-3xl mx-auto"
         >
-          <span className="inline-block text-xs tracking-[0.3em] uppercase text-dusty-rose font-medium mb-4">
+          <span className="inline-block text-xs tracking-[0.3em] uppercase text-primary-soft font-medium mb-4">
             {label}
           </span>
           <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-medium text-foreground leading-tight mb-6 text-balance">
             {title}
           </h1>
           <p
-            className={`text-lg text-muted-foreground leading-relaxed ${descriptionClassName}`}
+            className={`text-lg text-foreground-muted leading-relaxed ${descriptionClassName}`}
           >
             {description}
           </p>

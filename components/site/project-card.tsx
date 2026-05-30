@@ -74,19 +74,19 @@ export function ProjectCard({
         {isGrid ? (
           <div className='space-y-2'>
             {categoryLabel && (
-              <span className='text-xs tracking-[0.2em] uppercase text-dusty-rose'>
+              <span className='text-xs tracking-[0.2em] uppercase text-primary-soft'>
                 {categoryLabel}
               </span>
             )}
-            <h3 className='font-serif text-xl font-medium text-foreground group-hover:text-warm-gray transition-colors'>
+            <h3 className='font-serif text-xl font-medium text-foreground group-hover:text-foreground-muted transition-colors'>
               {project.title}
             </h3>
-            <p className='text-sm text-muted-foreground'>
+            <p className='text-sm text-foreground-muted'>
               {project.date} • {project.location}
             </p>
           </div>
         ) : (
-          <h3 className='font-serif text-lg font-medium text-foreground group-hover:text-warm-gray transition-colors'>
+          <h3 className='font-serif text-lg font-medium text-foreground group-hover:text-foreground-muted transition-colors'>
             {project.title}
           </h3>
         )}

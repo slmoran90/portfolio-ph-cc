@@ -9,7 +9,7 @@ export function FeaturedGallery({ services }: { services: Service[] }) {
   if (services.length === 0) return null
 
   return (
-    <Section className="bg-cream">
+    <Section className="bg-surface-alt">
       <Container>
         <SectionHeader
           label="Services"
@@ -42,11 +42,11 @@ export function FeaturedGallery({ services }: { services: Service[] }) {
                   )}
                   <div className="absolute inset-0 bg-gradient-to-t from-foreground/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 </div>
-                <h3 className="font-serif text-2xl font-medium text-foreground mb-2 group-hover:text-warm-gray transition-colors">
+                <h3 className="font-serif text-2xl font-medium text-foreground mb-2 group-hover:text-foreground-muted transition-colors">
                   {service.title}
                 </h3>
                 {service.description && (
-                  <p className="text-muted-foreground leading-relaxed">
+                  <p className="text-foreground-muted leading-relaxed">
                     {service.description}
                   </p>
                 )}
