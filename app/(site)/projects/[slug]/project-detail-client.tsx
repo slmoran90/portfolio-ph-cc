@@ -5,10 +5,11 @@ import { motion } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Section, Container } from '@/components/layout'
-import { ImageLightbox } from '@/components/site'
+import { ImageLightbox, ProjectCard } from '@/components/site'
 import { categories } from '@/lib/data/projects.constants'
 import type { Project } from '@/lib/data/projects.types'
-import { ArrowLeft, ArrowUpRight, Calendar } from 'lucide-react'
+import { mapProjectToCardProject } from '@/lib/data/project-mappers'
+import { ArrowLeft, Calendar } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
 interface ProjectDetailClientProps {
@@ -215,34 +216,14 @@ export function ProjectDetailClient({
 
               <div className='grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8'>
                 {relatedProjects.map((relatedProject, index) => (
-                  <motion.div
+                  <ProjectCard
                     key={relatedProject.id}
-                    initial={{ opacity: 0, y: 40 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: index * 0.15 }}
-                    viewport={{ once: true }}
-                  >
-                    <Link
-                      href={`/projects/${relatedProject.slug}`}
-                      className='group block'
-                    >
-                      <div className='relative aspect-[4/5] overflow-hidden rounded-xl mb-4 bg-secondary/30'>
-                        <Image
-                          src={relatedProject.cover_image || '/placeholder.jpg'}
-                          alt={relatedProject.title}
-                          fill
-                          className='object-cover image-premium transition-transform duration-700 group-hover:scale-105'
-                          sizes='(max-width: 768px) 100vw, 33vw'
-                        />
-                        <div className='absolute bottom-4 right-4 w-10 h-10 bg-background rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-4 group-hover:translate-y-0'>
-                          <ArrowUpRight className='w-4 h-4 text-foreground' />
-                        </div>
-                      </div>
-                      <h3 className='font-serif text-lg font-medium text-foreground group-hover:text-foreground-muted transition-colors'>
-                        {relatedProject.title}
-                      </h3>
-                    </Link>
-                  </motion.div>
+                    project={mapProjectToCardProject(relatedProject)}
+                    categoryLabel={categories.find((c) => c.value === relatedProject.category)?.label}
+                    variant='related'
+                    index={index}
+                    animateOnMount={false}
+                  />
                 ))}
               </div>
             </Container>
