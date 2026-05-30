@@ -1,29 +1,62 @@
 "use client"
 
-import { motion } from "framer-motion"
+import { motion, useScroll, useTransform, useMotionValueEvent } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
 import { ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 export function HeroSection() {
+  const { scrollY } = useScroll()
+  const shouldReduceMotion = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768
+
+  // Parallax for background image (disabled on mobile and with reduced motion)
+  const y = useTransform(scrollY, [0, 500], [0, shouldReduceMotion || isMobile ? 0 : 100], {
+    clamp: true
+  })
+
+  // Gradient overlay opacity enhancement
+  const gradientOpacity = useTransform(scrollY, [0, 300], [0.3, 0.5], {
+    clamp: true
+  })
+
+  // Content fade on scroll
+  const contentOpacity = useTransform(scrollY, [0, 300], [1, 0.6], {
+    clamp: true
+  })
+
+  // Scroll indicator fade out
+  const indicatorOpacity = useTransform(scrollY, [0, 300], [1, 0], {
+    clamp: true
+  })
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
-        <Image
-          src="/images/hero-baby-shower.jpg"
-          alt="Beautiful baby shower photography"
-          fill
-          className="object-cover image-premium"
-          priority
-          sizes="100vw"
-        />
+        <motion.div style={{ y: shouldReduceMotion || isMobile ? 0 : y }}>
+          <Image
+            src="/images/hero-baby-shower.jpg"
+            alt="Beautiful baby shower photography"
+            fill
+            className="object-cover image-premium"
+            priority
+            sizes="100vw"
+          />
+        </motion.div>
         <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-background/30 to-background" />
+        <motion.div 
+          className="absolute inset-0 bg-gradient-to-b from-background/20 via-background/10 to-background/20"
+          style={{ opacity: gradientOpacity }}
+        />
       </div>
 
       {/* Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 pt-32 pb-16">
+      <motion.div 
+        className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 pt-32 pb-16"
+        style={{ opacity: contentOpacity }}
+      >
         <div className="max-w-3xl">
           <motion.span
             initial={{ opacity: 0, y: 20 }}
@@ -71,7 +104,7 @@ export function HeroSection() {
             </Button>
           </motion.div>
         </div>
-      </div>
+      </motion.div>
 
       {/* Scroll Indicator */}
       <motion.div
@@ -79,13 +112,18 @@ export function HeroSection() {
         animate={{ opacity: 1 }}
         transition={{ duration: 1, delay: 1 }}
         className="absolute bottom-8 left-1/2 -translate-x-1/2"
+        style={{ opacity: indicatorOpacity }}
       >
         <motion.div
           animate={{ y: [0, 10, 0] }}
           transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
           className="w-6 h-10 border-2 border-foreground/30 rounded-full flex items-start justify-center p-2"
         >
-          <div className="w-1.5 h-1.5 bg-foreground/50 rounded-full" />
+          <motion.div 
+            animate={{ scale: [1, 1.2, 1], opacity: [0.5, 1, 0.5] }}
+            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+            className="w-1.5 h-1.5 bg-foreground/50 rounded-full" 
+          />
         </motion.div>
       </motion.div>
     </section>
