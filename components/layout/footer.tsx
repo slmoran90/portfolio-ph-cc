@@ -36,7 +36,7 @@ export function Footer() {
                 Luminara
               </span>
             </Link>
-            <p className="text-muted-foreground leading-relaxed max-w-xs">
+            <p className="text-foreground-muted leading-relaxed max-w-xs">
               Capturing life&apos;s most precious moments with elegance and artistry.
             </p>
           </div>
@@ -51,7 +51,7 @@ export function Footer() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="text-muted-foreground hover:text-foreground transition-colors duration-300"
+                  className="text-foreground-muted hover:text-foreground transition-colors duration-300"
                 >
                   {link.label}
                 </Link>
@@ -71,14 +71,14 @@ export function Footer() {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-12 h-12 rounded-full bg-background border border-border flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-foreground transition-all duration-300"
+                  className="w-12 h-12 rounded-full bg-background border border-border flex items-center justify-center text-foreground-muted hover:text-foreground hover:border-foreground transition-all duration-300"
                   aria-label={social.label}
                 >
                   <social.icon size={20} />
                 </a>
               ))}
             </div>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-foreground-muted">
               hello@luminara.com
             </p>
           </div>
@@ -87,14 +87,14 @@ export function Footer() {
         {/* Bottom Bar */}
         <div className="mt-16 pt-8 border-t border-border/50">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-foreground-muted">
               &copy; {new Date().getFullYear()} Luminara Photography. All rights reserved.
             </p>
             <div className="flex gap-6">
-              <Link href="/privacy" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+              <Link href="/privacy" className="text-sm text-foreground-muted hover:text-foreground transition-colors">
                 Privacy Policy
               </Link>
-              <Link href="/terms" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+              <Link href="/terms" className="text-sm text-foreground-muted hover:text-foreground transition-colors">
                 Terms of Service
               </Link>
             </div>
