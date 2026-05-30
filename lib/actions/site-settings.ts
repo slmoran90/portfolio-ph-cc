@@ -67,6 +67,7 @@ export async function updateContactSettings(input: {
   id: string
   email: string | null
   instagram: string | null
+  whatsapp: string | null
 }): Promise<{ error?: string }> {
   if (DEMO_ADMIN_OPEN) return { error: DEMO_ERROR }
   const supabase = await createClient()
@@ -80,6 +81,7 @@ export async function updateContactSettings(input: {
     .update({
       email: input.email || null,
       instagram: input.instagram || null,
+      whatsapp: input.whatsapp || null,
       updated_at: new Date().toISOString()
     })
     .eq('id', input.id)

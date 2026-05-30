@@ -17,7 +17,8 @@ import {
   Upload,
   Loader2,
   Check,
-  AlertCircle
+  AlertCircle,
+  MessageCircle
 } from 'lucide-react'
 import { uploadProfileImage } from '@/lib/supabase/storage'
 import {
@@ -59,6 +60,7 @@ export default function SettingsClient({
 
   const [email, setEmail] = useState(initialSettings?.email ?? '')
   const [instagram, setInstagram] = useState(initialSettings?.instagram ?? '')
+  const [whatsapp, setWhatsapp] = useState(initialSettings?.whatsapp ?? '')
   const [contactSaving, setContactSaving] = useState(false)
   const [contactError, setContactError] = useState<string | null>(null)
   const [contactSuccess, setContactSuccess] = useState(false)
@@ -125,7 +127,8 @@ export default function SettingsClient({
     const result = await updateContactSettings({
       id: settingsId,
       email: email.trim() || null,
-      instagram: instagram.trim() || null
+      instagram: instagram.trim() || null,
+      whatsapp: whatsapp.trim() || null
     })
     setContactSaving(false)
     if (result.error) {
@@ -368,6 +371,23 @@ export default function SettingsClient({
                         value={instagram}
                         onChange={(e) => setInstagram(e.target.value)}
                         placeholder='@yourhandle'
+                        className='h-12 bg-background border-border/50'
+                      />
+                    </div>
+
+                    <div className='space-y-2'>
+                      <Label
+                        htmlFor='whatsapp'
+                        className='flex items-center gap-2'
+                      >
+                        <MessageCircle className='w-4 h-4' />
+                        WhatsApp
+                      </Label>
+                      <Input
+                        id='whatsapp'
+                        value={whatsapp}
+                        onChange={(e) => setWhatsapp(e.target.value)}
+                        placeholder='+54 9 381 123-4567'
                         className='h-12 bg-background border-border/50'
                       />
                     </div>
