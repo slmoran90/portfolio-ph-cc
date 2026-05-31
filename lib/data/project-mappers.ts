@@ -25,6 +25,6 @@ export function mapProjectToCardProject(project: Project): ProjectCardProject {
           timeZone: 'UTC'
         }).format(new Date(project.created_at))
       : '',
-    location: 'Tucumán'
+    location: project.location || ''
   }
 }

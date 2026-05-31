@@ -9,7 +9,7 @@ import { ImageLightbox, ProjectCard } from '@/components/site'
 import { categories } from '@/lib/data/projects.constants'
 import type { Project } from '@/lib/data/projects.types'
 import { mapProjectToCardProject } from '@/lib/data/project-mappers'
-import { ArrowLeft, Calendar } from 'lucide-react'
+import { ArrowLeft, Calendar, MapPin } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
 interface ProjectDetailClientProps {
@@ -123,6 +123,12 @@ export function ProjectDetailClient({
                     <Calendar className='w-4 h-4' />
                     <span>{formattedDate}</span>
                   </div>
+                  {project.location && (
+                    <div className='flex items-center gap-2 text-foreground-muted'>
+                      <MapPin className='w-4 h-4' />
+                      <span>{project.location}</span>
+                    </div>
+                  )}
                 </div>
 
                 {project.short_description && (
