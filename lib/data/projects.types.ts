@@ -12,4 +12,5 @@ export interface Project {
   images: string[]
   event_date: string | null
   location: string | null
+  featured: boolean | null
 }

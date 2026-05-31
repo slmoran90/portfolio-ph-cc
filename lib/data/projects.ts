@@ -21,6 +21,25 @@ export async function getProjects() {
   return data as Project[]
 }
 
+export async function getFeaturedProjects(limit = 3): Promise<Project[]> {
+  const supabase = await createClient()
+
+  const { data, error } = await supabase
+    .from('projects')
+    .select('*')
+    .eq('published', true)
+    .eq('featured', true)
+    .order('created_at', { ascending: false })
+    .limit(limit)
+
+  if (error) {
+    console.error(error)
+    throw new Error('Failed to fetch featured projects')
+  }
+
+  return (data as Project[]) ?? []
+}
+
 export async function getProjectBySlug(slug: string) {
   const supabase = await createClient()
 

@@ -161,7 +161,10 @@ export default function NewProjectPage() {
           (formEl.elements.namedItem('published') as HTMLSelectElement)
             .value === 'published',
         images: doneImages,
-        cover_image: coverImageUrl
+        cover_image: coverImageUrl,
+        featured:
+          (formEl.elements.namedItem('featured') as HTMLInputElement)?.checked ??
+          false
       })
 
       if ('error' in result) {
@@ -440,6 +443,19 @@ export default function NewProjectPage() {
                       <option value='published'>Published</option>
                     </select>
                   </div>
+
+                  <div className='flex items-center gap-3'>
+                    <input
+                      id='featured'
+                      name='featured'
+                      type='checkbox'
+                      className='w-4 h-4 rounded border-border/50 text-primary-soft focus:ring-primary-soft'
+                    />
+                    <Label htmlFor='featured' className='text-sm font-medium cursor-pointer'>
+                      Featured on Home
+                    </Label>
+                  </div>
+
                   {submitError && (
                     <p className='text-sm text-destructive'>{submitError}</p>
                   )}
