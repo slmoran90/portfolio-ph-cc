@@ -8,14 +8,14 @@ import {
 } from "@/components/home"
 import { getFeaturedProjects } from "@/lib/data/projects"
 import { getServices } from "@/lib/data/services"
-import { getTestimonials } from "@/lib/data/testimonials"
+import { getFeaturedTestimonials } from "@/lib/data/testimonials"
 import { getSiteSettings } from "@/lib/data/site-settings"
 
 export default async function HomePage() {
   const [featuredProjects, services, testimonials, siteSettings] = await Promise.all([
     getFeaturedProjects(),
     getServices(),
-    getTestimonials(),
+    getFeaturedTestimonials(),
     getSiteSettings(),
   ])
 
