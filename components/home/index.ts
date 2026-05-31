@@ -1,4 +1,5 @@
 export { HeroSection } from "./hero-section"
+export { FeaturedProjectsSection } from "./featured-projects-section"
 export { FeaturedGallery } from "./featured-gallery"
 export { AboutPreview } from "./about-preview"
 export { TestimonialsSection } from "./testimonials-section"

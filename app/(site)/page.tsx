@@ -1,16 +1,19 @@
 import {
   HeroSection,
+  FeaturedProjectsSection,
   FeaturedGallery,
   AboutPreview,
   TestimonialsSection,
   CTASection,
 } from "@/components/home"
+import { getFeaturedProjects } from "@/lib/data/projects"
 import { getServices } from "@/lib/data/services"
 import { getTestimonials } from "@/lib/data/testimonials"
 import { getSiteSettings } from "@/lib/data/site-settings"
 
 export default async function HomePage() {
-  const [services, testimonials, siteSettings] = await Promise.all([
+  const [featuredProjects, services, testimonials, siteSettings] = await Promise.all([
+    getFeaturedProjects(),
     getServices(),
     getTestimonials(),
     getSiteSettings(),
@@ -19,8 +22,9 @@ export default async function HomePage() {
   return (
     <>
       <HeroSection />
-      <FeaturedGallery services={services} />
+      <FeaturedProjectsSection projects={featuredProjects} />
       <AboutPreview />
+      <FeaturedGallery services={services} />
       <TestimonialsSection testimonials={testimonials} />
       <CTASection
         whatsapp={siteSettings?.whatsapp}

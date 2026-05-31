@@ -15,7 +15,8 @@ import {
   Trash2,
   Eye,
   FolderOpen,
-  Image as ImageIcon
+  Image as ImageIcon,
+  Star
 } from 'lucide-react'
 import {
   DropdownMenu,
@@ -157,6 +158,12 @@ export default function ProjectsListClient({
                       >
                         {project.published ? 'Published' : 'Draft'}
                       </span>
+                      {project.featured && (
+                        <span className='text-xs px-2 py-0.5 rounded-full bg-champagne/40 text-foreground flex items-center gap-1'>
+                          <Star className='w-3 h-3 fill-current' />
+                          Featured
+                        </span>
+                      )}
                     </div>
                   </div>
                   <DropdownMenu>
