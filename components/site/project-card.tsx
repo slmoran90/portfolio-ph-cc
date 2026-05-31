@@ -82,7 +82,8 @@ export function ProjectCard({
               {project.title}
             </h3>
             <p className='text-sm text-foreground-muted'>
-              {project.date} • {project.location}
+              {project.date}
+              {project.location && ` • ${project.location}`}
             </p>
           </div>
         ) : (
