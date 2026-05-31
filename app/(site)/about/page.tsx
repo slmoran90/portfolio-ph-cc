@@ -112,7 +112,7 @@ export default function AboutPage() {
           </Container>
         </Section>
 
-        {/* Studio Section */}
+        {/* My Approach Section */}
         <Section className="bg-secondary/50">
           <Container>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
@@ -126,7 +126,7 @@ export default function AboutPage() {
                 <div className="relative aspect-[4/3] rounded-2xl overflow-hidden">
                   <Image
                     src="/images/about-studio.jpg"
-                    alt="Carla Cáceres Photography Studio"
+                    alt="Carla Cáceres working on location"
                     fill
                     className="object-cover image-premium"
                     sizes="(max-width: 1024px) 100vw, 50vw"
@@ -142,17 +142,20 @@ export default function AboutPage() {
                 className="order-1 lg:order-2"
               >
                 <span className="inline-block text-xs tracking-[0.3em] uppercase text-primary-soft font-medium mb-4">
-                  The Studio
+                  My Approach
                 </span>
                 <h2 className="font-serif text-3xl md:text-4xl font-medium text-foreground leading-tight mb-6 text-balance">
-                  A Space Designed for Comfort
+                  How I Work
                 </h2>
                 <div className="space-y-4 text-foreground-muted leading-relaxed">
                   <p>
-                    Located in a beautifully restored building, my studio offers a warm, inviting atmosphere perfect for intimate portraits and small celebrations.
+                    Before every event, I take time to understand your vision and the moments that matter most to you. This preparation allows me to be in the right place at the right time, capturing the emotions that tell your story.
                   </p>
                   <p>
-                    Natural light floods through large windows, creating the soft, elegant illumination that defines my signature style. The space is equipped with everything needed to make your session comfortable and enjoyable.
+                    During the event, I work with a calm, documentary style. I blend into the background, letting genuine interactions unfold naturally. My goal is to capture authentic moments without disrupting the flow of your celebration.
+                  </p>
+                  <p>
+                    After the event, I carefully curate and edit each image to create a polished gallery that you will treasure for years to come. Every photo is selected and refined with care, ensuring the final collection reflects the beauty and emotion of your day.
                   </p>
                 </div>
               </motion.div>
