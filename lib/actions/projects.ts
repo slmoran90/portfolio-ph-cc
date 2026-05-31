@@ -17,6 +17,7 @@ export type ProjectMutationInput = {
   published: boolean
   images: string[]
   cover_image: string | null
+  featured: boolean
 }
 
 function generateSlug(title: string): string {
@@ -71,7 +72,8 @@ export async function createProject(
       description: input.description || null,
       published: input.published,
       images: input.images,
-      cover_image: input.cover_image
+      cover_image: input.cover_image,
+      featured: input.featured
     })
     .select('id, slug')
     .single()
@@ -83,6 +85,7 @@ export async function createProject(
 
   revalidatePath('/admin/projects')
   revalidatePath('/projects')
+  revalidatePath('/')
 
   return { id: data.id, slug: data.slug }
 }
@@ -111,6 +114,7 @@ export async function updateProject(
       published: input.published,
       images: input.images,
       cover_image: input.cover_image,
+      featured: input.featured,
       updated_at: new Date().toISOString()
     })
     .eq('id', id)
@@ -124,6 +128,7 @@ export async function updateProject(
   revalidatePath(`/admin/projects/${id}`)
   revalidatePath('/projects')
   revalidatePath(`/projects/${slug}`)
+  revalidatePath('/')
 
   return {}
 }
@@ -160,6 +165,7 @@ export async function deleteProject(
   revalidatePath('/admin/projects')
   revalidatePath('/projects')
   revalidatePath(`/projects/${slug}`)
+  revalidatePath('/')
 
   return {}
 }
