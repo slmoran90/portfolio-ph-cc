@@ -170,9 +170,9 @@ export function TestimonialsSection({
     <Section className="bg-secondary/50">
       <Container>
         <SectionHeader
-          label="Testimonials"
-          title="Words From Our Families"
-          description="The greatest reward is seeing families cherish the memories we create together."
+          label="Testimonios"
+          title="Lo que dicen quienes confiaron en mí"
+          description="La mayor recompensa es ver a las familias disfrutar de los recuerdos que creamos juntos."
         />
 
         {testimonials.length > 3 ? (

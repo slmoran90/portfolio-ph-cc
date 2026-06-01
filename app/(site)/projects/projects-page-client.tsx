@@ -63,9 +63,9 @@ export default function ProjectsPageClient({
   return (
     <motion.div className='pt-20'>
       <PageHero
-        label='Portfolio'
-        title='Featured Projects'
-        description='Explore a curated collection of celebrations, each one unique and filled with emotion. Every project tells a story worth remembering.'
+        label='Trabajos'
+        title='Trabajos destacados'
+        description='Explora una colección curada de celebraciones, cada una única y llena de emoción. Cada trabajo cuenta una historia que vale la pena recordar.'
       />
 
       <Section>
@@ -73,7 +73,7 @@ export default function ProjectsPageClient({
           <Suspense
             fallback={
               <div className='text-center text-foreground-muted'>
-                Loading projects...
+                Cargando trabajos...
               </div>
             }
           >
