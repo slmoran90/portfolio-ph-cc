@@ -30,34 +30,34 @@ export default function DashboardClient({
 
   const firstName = siteSettings?.full_name?.split(/\s+/)[0] || null
   const greeting = firstName
-    ? `Welcome back, ${firstName}. Here's what's happening.`
-    : "Welcome back. Here's what's happening."
+    ? `Hola, ${firstName}. Esto es lo que está pasando.`
+    : "Hola. Esto es lo que está pasando."
 
   return (
     <>
       <AdminHeader
-        title='Dashboard'
+        title='Panel'
         description={greeting}
       />
 
       <main className='flex-1 p-6 overflow-auto'>
         <div className='grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8'>
           <StatCard
-            title='Total Projects'
+            title='Total de proyectos'
             value={projects.length}
-            change={`${publishedCount} published`}
+            change={`${publishedCount} publicados`}
             changeType='positive'
             icon={FolderOpen}
           />
           <StatCard
-            title='Published Projects'
+            title='Proyectos publicados'
             value={publishedCount}
-            change={`${projects.length - publishedCount} drafts`}
+            change={`${projects.length - publishedCount} borradores`}
             changeType='neutral'
             icon={FolderOpen}
           />
           <StatCard
-            title='Gallery Images'
+            title='Imágenes en galería'
             value={galleryCount}
             icon={ImageIcon}
           />
@@ -66,12 +66,12 @@ export default function DashboardClient({
         <div className='grid grid-cols-1 lg:grid-cols-2 gap-6'>
           {/* Recent Projects */}
           <AdminCard
-            title='Recent Projects'
-            description='Your latest photography projects'
+            title='Proyectos recientes'
+            description='Tus últimos proyectos de fotografía'
             action={
               <Button asChild variant='outline' size='sm'>
                 <Link href='/admin/projects'>
-                  View All
+                  Ver todos
                   <ArrowRight className='w-4 h-4 ml-2' />
                 </Link>
               </Button>
@@ -107,7 +107,7 @@ export default function DashboardClient({
                     </p>
                     <p className='text-sm text-muted-foreground'>
                       {project.created_at
-                        ? new Intl.DateTimeFormat('en-US', {
+                        ? new Intl.DateTimeFormat('es-AR', {
                             year: 'numeric',
                             month: 'long',
                             timeZone: 'UTC'
@@ -116,13 +116,13 @@ export default function DashboardClient({
                     </p>
                   </div>
                   <Button asChild variant='ghost' size='sm'>
-                    <Link href={`/admin/projects/${project.id}`}>Edit</Link>
+                    <Link href={`/admin/projects/${project.id}`}>Editar</Link>
                   </Button>
                 </motion.div>
               ))}
               {projects.length === 0 && (
                 <p className='text-sm text-muted-foreground text-center py-4'>
-                  No projects yet.
+                  Aún no hay proyectos.
                 </p>
               )}
             </div>
@@ -130,12 +130,12 @@ export default function DashboardClient({
 
           {/* Recent Gallery Uploads */}
           <AdminCard
-            title='Recent Gallery Uploads'
-            description='Latest images added to the gallery'
+            title='Subidas recientes'
+            description='Últimas imágenes agregadas a la galería'
             action={
               <Button asChild variant='outline' size='sm'>
                 <Link href='/admin/gallery'>
-                  View All
+                  Ver todos
                   <ArrowRight className='w-4 h-4 ml-2' />
                 </Link>
               </Button>
@@ -162,14 +162,14 @@ export default function DashboardClient({
                   <div className='flex-1 min-w-0'>
                     <div className='flex items-center gap-1.5'>
                       <p className='font-medium text-foreground truncate'>
-                        {image.title ?? 'Untitled'}
+                        {image.title ?? 'Sin título'}
                       </p>
                       {image.featured && (
                         <Star className='w-3 h-3 text-amber-400 fill-amber-400 shrink-0' />
                       )}
                     </div>
                     <p className='text-sm text-muted-foreground'>
-                      {new Intl.DateTimeFormat('en-US', {
+                      {new Intl.DateTimeFormat('es-AR', {
                         year: 'numeric',
                         month: 'long',
                         day: 'numeric',
@@ -181,7 +181,7 @@ export default function DashboardClient({
               ))}
               {recentGallery.length === 0 && (
                 <p className='text-sm text-muted-foreground text-center py-4'>
-                  No gallery images yet.
+                  Aún no hay imágenes en la galería.
                 </p>
               )}
             </div>
