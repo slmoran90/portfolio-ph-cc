@@ -5,11 +5,11 @@ import Link from "next/link"
 import { Instagram } from "lucide-react"
 
 const footerLinks = [
-  { href: "/", label: "Home" },
-  { href: "/about", label: "About" },
-  { href: "/projects", label: "Projects" },
-  { href: "/gallery", label: "Gallery" },
-  { href: "/#contact", label: "Contact" },
+  { href: "/", label: "Inicio" },
+  { href: "/about", label: "Sobre mí" },
+  { href: "/projects", label: "Trabajos" },
+  { href: "/gallery", label: "Galería" },
+  { href: "/#contact", label: "Contacto" },
 ]
 
 const socialLinks = [
@@ -35,14 +35,14 @@ export function Footer() {
               </span>
             </Link>
             <p className="text-foreground-muted leading-relaxed max-w-xs">
-              Capturing life&apos;s most precious moments with elegance and artistry.
+              Capturando los momentos más preciosos de la vida con elegancia y arte.
             </p>
           </div>
 
           {/* Quick Links */}
           <div className="space-y-6">
             <h4 className="text-sm tracking-widest uppercase text-foreground font-medium">
-              Quick Links
+              Enlaces
             </h4>
             <div className="flex flex-col gap-4">
               {footerLinks.map((link) => (
@@ -60,7 +60,7 @@ export function Footer() {
           {/* Contact & Social */}
           <div className="space-y-6">
             <h4 className="text-sm tracking-widest uppercase text-foreground font-medium">
-              Connect
+              Conectá
             </h4>
             <div className="flex gap-4">
               {socialLinks.map((social) => (
@@ -83,14 +83,14 @@ export function Footer() {
         <div className="mt-16 pt-8 border-t border-border/50">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <p className="text-sm text-foreground-muted">
-              &copy; {new Date().getFullYear()} Carla Cáceres Photography. All rights reserved.
+              &copy; {new Date().getFullYear()} Carla Cáceres Photography. Todos los derechos reservados.
             </p>
             <div className="flex gap-6">
               <Link href="/privacy" className="text-sm text-foreground-muted hover:text-foreground transition-colors">
-                Privacy Policy
+                Privacidad
               </Link>
               <Link href="/terms" className="text-sm text-foreground-muted hover:text-foreground transition-colors">
-                Terms of Service
+                Términos
               </Link>
             </div>
           </div>

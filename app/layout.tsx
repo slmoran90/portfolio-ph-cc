@@ -17,17 +17,17 @@ const cormorant = Cormorant_Garamond({
 })
 
 export const metadata: Metadata = {
-  title: "Carla Cáceres Photography | Capturing Life's Precious Moments",
+  title: "Carla Cáceres Photography | Capturando momentos preciosos de la vida",
   description:
-    'Professional photography studio specializing in baby showers, kids birthdays, and baptisms. Elegant, emotional, and timeless photography.',
+    'Estudio de fotografía profesional especializado en baby showers, cumpleaños infantiles y bautismos. Fotografía elegante, emotiva y atemporal.',
   generator: 'v0.app',
   keywords: [
-    'photography',
+    'fotografía',
     'baby shower',
-    'birthday',
-    'baptism',
-    'professional photographer',
-    'family photography'
+    'cumpleaños',
+    'bautismo',
+    'fotógrafa profesional',
+    'fotografía familiar'
   ],
   icons: {
     icon: [
@@ -55,7 +55,7 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang='en'
+      lang='es'
       className={`${inter.variable} ${cormorant.variable} bg-background`}
       data-scroll-behavior='smooth'
     >

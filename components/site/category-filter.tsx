@@ -42,7 +42,7 @@ export function CategoryFilter(props: CategoryFilterProps) {
     <div
       className={cn("flex flex-wrap justify-center gap-3", className)}
       role="group"
-      aria-label="Filter by category"
+      aria-label="Filtrar por categoría"
     >
       {options.map((option) => {
         const isActive = activeValue === option.value

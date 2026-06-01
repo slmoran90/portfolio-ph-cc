@@ -27,7 +27,7 @@ export function ProjectDetailClient({
   const coverImage = project.cover_image
   const categoryLabel = categories.find((c) => c.value === project.category)?.label
   const formattedDate = project.created_at
-    ? new Intl.DateTimeFormat('en-US', {
+    ? new Intl.DateTimeFormat('es-AR', {
         year: 'numeric',
         month: 'long',
         day: 'numeric',
@@ -68,7 +68,7 @@ export function ProjectDetailClient({
                 className='inline-flex items-center gap-2 text-foreground-muted hover:text-foreground transition-colors text-sm'
               >
                 <ArrowLeft className='w-4 h-4' />
-                Back to Projects
+                Volver a trabajos
               </Link>
             </motion.div>
           </Container>
@@ -142,7 +142,7 @@ export function ProjectDetailClient({
                   size='lg'
                   className='text-sm tracking-wider uppercase'
                 >
-                  <Link href='/contact'>Book a Similar Session</Link>
+                  <Link href='/contact'>Reservar una sesión similar</Link>
                 </Button>
               </motion.div>
             </div>
@@ -217,7 +217,7 @@ export function ProjectDetailClient({
                 viewport={{ once: true }}
                 className='font-serif text-2xl md:text-3xl font-medium text-foreground text-center mb-12'
               >
-                Related Projects
+                Trabajos relacionados
               </motion.h2>
 
               <div className='grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8'>

@@ -12,9 +12,9 @@ export function FeaturedGallery({ services }: { services: Service[] }) {
     <Section className="bg-surface-alt">
       <Container>
         <SectionHeader
-          label="Services"
-          title="What We Capture"
-          description="Every celebration tells a unique story. We specialize in creating timeless imagery that preserves your most cherished moments."
+          label="Servicios"
+          title="Servicios fotográficos"
+          description="Cada celebración cuenta una historia única. Nos especializamos en crear imágenes atemporales que preservan tus momentos más queridos."
         />
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">

@@ -7,11 +7,11 @@ import { usePathname } from "next/navigation"
 import { Menu, X } from "lucide-react"
 
 const navLinks = [
-  { href: "/", label: "Home" },
-  { href: "/about", label: "About" },
-  { href: "/projects", label: "Projects" },
-  { href: "/gallery", label: "Gallery" },
-  { href: "/#contact", label: "Contact" },
+  { href: "/", label: "Inicio" },
+  { href: "/about", label: "Sobre mí" },
+  { href: "/projects", label: "Trabajos" },
+  { href: "/gallery", label: "Galería" },
+  { href: "/#contact", label: "Contacto" },
 ]
 
 export function Header() {
@@ -114,7 +114,7 @@ export function Header() {
           <button
             onClick={() => setIsOpen(!isOpen)}
             className="md:hidden p-2 text-foreground"
-            aria-label="Toggle menu"
+            aria-label="Abrir menú"
           >
             {isOpen ? <X size={24} /> : <Menu size={24} />}
           </button>

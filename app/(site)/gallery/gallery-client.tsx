@@ -33,9 +33,9 @@ export default function GalleryClient({
     <>
       <motion.div className='pt-20'>
         <PageHero
-          label='Gallery'
-          title='A Visual Journey'
-          description='Browse through our collection of captured moments. Each image tells a story of love, joy, and celebration.'
+          label='Galería'
+          title='Un viaje visual'
+          description='Explora nuestra colección de momentos capturados. Cada imagen cuenta una historia de amor, alegría y celebración.'
         />
 
         <Section>
@@ -54,7 +54,7 @@ export default function GalleryClient({
                 animate={{ opacity: 1 }}
                 className='text-center text-foreground-muted py-16'
               >
-                No images in this category yet.
+                Todavía no hay imágenes en esta categoría.
               </motion.p>
             ) : (
               <div className='columns-1 md:columns-2 lg:columns-3 gap-6'>
@@ -99,7 +99,7 @@ export default function GalleryClient({
             i !== null && i < lightboxImageUrls.length - 1 ? i + 1 : i
           )
         }
-        alt='Gallery image'
+        alt='Imagen de galería'
       />
     </>
   )

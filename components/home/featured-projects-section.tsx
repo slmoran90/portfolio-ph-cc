@@ -28,13 +28,13 @@ export function FeaturedProjectsSection({ projects }: FeaturedProjectsSectionPro
           className='text-center mb-12'
         >
           <span className='inline-block text-xs tracking-[0.3em] uppercase text-primary-soft font-medium mb-4'>
-            Portfolio
+            Trabajos
           </span>
           <h2 className='font-serif text-3xl md:text-4xl lg:text-5xl font-medium text-foreground leading-tight mb-6 text-balance'>
-            Featured Projects
+            Trabajos destacados
           </h2>
           <p className='text-foreground-muted leading-relaxed max-w-xl mx-auto'>
-            A curated selection of my most meaningful work.
+            Una selección curada de mis trabajos más significativos.
           </p>
         </motion.div>
 
@@ -60,7 +60,7 @@ export function FeaturedProjectsSection({ projects }: FeaturedProjectsSectionPro
         >
           <Button asChild variant='outline' size='lg' className='text-sm tracking-wider uppercase'>
             <Link href='/projects'>
-              View All Projects
+              Ver todos los trabajos
               <ArrowRight className='ml-2 h-4 w-4' />
             </Link>
           </Button>
