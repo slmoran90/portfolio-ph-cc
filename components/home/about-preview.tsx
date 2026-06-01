@@ -23,7 +23,7 @@ export function AboutPreview() {
             <div className="relative aspect-[4/5] rounded-2xl overflow-hidden">
               <Image
                 src="/images/photographer-portrait.jpg"
-                alt="Carla Cáceres - Photographer"
+                alt="Carla Cáceres - Fotógrafa"
                 fill
                 className="object-cover image-premium"
                 sizes="(max-width: 1024px) 100vw, 50vw"
@@ -42,22 +42,22 @@ export function AboutPreview() {
             className="lg:pl-8"
           >
             <span className="inline-block text-xs tracking-[0.3em] uppercase text-primary-soft font-medium mb-4">
-              The Artist
+              Sobre mí
             </span>
             <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-medium text-foreground leading-tight mb-6 text-balance">
-              Hello, I&apos;m Carla
+              Hola, soy Carla
             </h2>
             <div className="space-y-4 text-foreground-muted leading-relaxed mb-8">
               <p>
-                With over a decade of experience in event photography, I&apos;ve dedicated my career to capturing the emotions, connections, and fleeting moments that make life beautiful.
+                Con más de una década de experiencia en fotografía de eventos, he dedicado mi carrera a capturar las emociones, conexiones y momentos efímeros que hacen que la vida sea hermosa.
               </p>
               <p>
-                Every baby shower, birthday celebration, and baptism tells a unique story. My approach combines artistic vision with genuine warmth, creating images that you&apos;ll treasure for generations.
+                Cada baby shower, celebración de cumpleaños y bautismo cuenta una historia única. Mi enfoque combina visión artística con calidez genuina, creando imágenes que atesorarás por generaciones.
               </p>
             </div>
             <Button asChild variant="outline" size="lg" className="text-sm tracking-wider uppercase">
               <Link href="/about">
-                Learn More About Me
+                Conocé más sobre mí
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>

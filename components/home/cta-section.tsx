@@ -49,7 +49,7 @@ export function CTASection({ whatsapp, instagram, email }: CTASectionProps) {
               viewport={{ once: true }}
               className="inline-block text-xs tracking-[0.3em] uppercase text-primary-soft font-medium mb-4"
             >
-              Let&apos;s Create Together
+              Contacto
             </motion.span>
 
             <motion.h2
@@ -59,7 +59,7 @@ export function CTASection({ whatsapp, instagram, email }: CTASectionProps) {
               viewport={{ once: true }}
               className="font-serif text-3xl md:text-4xl lg:text-5xl font-medium text-foreground leading-tight mb-6 text-balance"
             >
-              Ready to Capture Your Special Moments?
+              Coordinemos tu sesión
             </motion.h2>
 
             <motion.p
@@ -69,7 +69,7 @@ export function CTASection({ whatsapp, instagram, email }: CTASectionProps) {
               viewport={{ once: true }}
               className="text-foreground-muted leading-relaxed mb-10 max-w-xl mx-auto"
             >
-              Whether it&apos;s a baby shower, birthday celebration, or baptism, I&apos;d love to hear about your upcoming event and create lasting memories together.
+              Ya sea un baby shower, una celebración de cumpleaños o un bautismo, me encantaría escuchar sobre tu próximo evento y crear recuerdos duraderos juntos.
             </motion.p>
 
             <motion.div
@@ -82,7 +82,7 @@ export function CTASection({ whatsapp, instagram, email }: CTASectionProps) {
                 <Button asChild size="lg" className="text-sm tracking-wider uppercase px-10">
                   <Link href={whatsappUrl} target="_blank" rel="noopener noreferrer">
                     <MessageCircle className="mr-2 h-4 w-4" />
-                    Chat on WhatsApp
+                    Escribime por WhatsApp
                   </Link>
                 </Button>
               ) : (
@@ -91,17 +91,17 @@ export function CTASection({ whatsapp, instagram, email }: CTASectionProps) {
                     {email ? (
                       <>
                         <Mail className="mr-2 h-4 w-4" />
-                        Send Email
+                        Enviar email
                       </>
                     ) : instagram ? (
                       <>
                         <Instagram className="mr-2 h-4 w-4" />
-                        Contact on Instagram
+                        Contactame por Instagram
                       </>
                     ) : (
                       <>
                         <ArrowRight className="mr-2 h-4 w-4" />
-                        Get In Touch
+                        Contactame
                       </>
                     )}
                   </Link>

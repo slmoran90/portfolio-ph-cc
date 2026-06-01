@@ -6,28 +6,28 @@ import { Section, Container } from "@/components/layout"
 import { Camera, Heart, Award, Users } from "lucide-react"
 
 const stats = [
-  { label: "Years Experience", value: "10+", icon: Camera },
-  { label: "Happy Families", value: "500+", icon: Heart },
-  { label: "Awards Won", value: "15", icon: Award },
-  { label: "Events Captured", value: "1,200+", icon: Users },
+  { label: "Años de experiencia", value: "10+", icon: Camera },
+  { label: "Familias felices", value: "500+", icon: Heart },
+  { label: "Premios ganados", value: "15", icon: Award },
+  { label: "Eventos capturados", value: "1.200+", icon: Users },
 ]
 
 const values = [
   {
-    title: "Authentic Moments",
-    description: "I believe the most beautiful photographs capture genuine emotions. No forced poses, just real connections and natural expressions.",
+    title: "Momentos auténticos",
+    description: "Creo que las fotografías más bellas capturan emociones genuinas. Sin poses forzadas, solo conexiones reales y expresiones naturales.",
   },
   {
-    title: "Timeless Artistry",
-    description: "Every image I create is designed to stand the test of time. Classic compositions meet modern sensibilities.",
+    title: "Arte atemporal",
+    description: "Cada imagen que creo está diseñada para resistir el paso del tiempo. Composiciones clásicas que se encuentran con sensibilidades modernas.",
   },
   {
-    title: "Personal Connection",
-    description: "I take time to understand your family, your story, and what makes your celebration unique.",
+    title: "Conexión personal",
+    description: "Tomo el tiempo para entender a tu familia, tu historia y lo que hace única tu celebración.",
   },
   {
-    title: "Attention to Detail",
-    description: "From the first consultation to the final delivery, every step is handled with care and precision.",
+    title: "Atención al detalle",
+    description: "Desde la primera consulta hasta la entrega final, cada paso se maneja con cuidado y precisión.",
   },
 ]
 
@@ -44,20 +44,20 @@ export default function AboutPage() {
                 transition={{ duration: 0.8 }}
               >
                 <span className="inline-block text-xs tracking-[0.3em] uppercase text-primary-soft font-medium mb-4">
-                  About Me
+                  Sobre mí
                 </span>
                 <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-medium text-foreground leading-tight mb-6 text-balance">
-                  The Story Behind the Lens
+                  La historia detrás del lente
                 </h1>
                 <div className="space-y-4 text-foreground-muted leading-relaxed">
                   <p>
-                    Hello, I&apos;m Carla Cáceres, a professional event photographer based in the heart of the city. For over a decade, I&apos;ve had the privilege of documenting life&apos;s most precious celebrations.
+                    Hola, soy Carla Cáceres, una fotógrafa de eventos profesional con base en el corazón de la ciudad. Durante más de una década, he tenido el privilegio de documentar las celebraciones más preciadas de la vida.
                   </p>
                   <p>
-                    My journey into photography began with a simple desire: to freeze time and preserve the emotions that make moments meaningful. From the anticipation at a baby shower to the pure joy of a child&apos;s birthday, each event offers a unique story waiting to be told.
+                    Mi viaje en la fotografía comenzó con un deseo simple: congelar el tiempo y preservar las emociones que hacen que los momentos sean significativos. Desde la anticipación en un baby shower hasta la alegría pura de un cumpleaños infantil, cada evento ofrece una historia única esperando ser contada.
                   </p>
                   <p>
-                    What sets my work apart is my approach. I don&apos;t just take photos; I create visual narratives that capture the essence of your celebration. My style blends documentary authenticity with artistic elegance, resulting in images that are both natural and refined.
+                    Lo que distingue mi trabajo es mi enfoque. No solo tomo fotos; creo narrativas visuales que capturan la esencia de tu celebración. Mi estilo combina autenticidad documental con elegancia artística, resultando en imágenes que son tanto naturales como refinadas.
                   </p>
                 </div>
               </motion.div>
@@ -71,7 +71,7 @@ export default function AboutPage() {
                 <div className="relative aspect-[4/5] rounded-2xl overflow-hidden">
                   <Image
                     src="/images/photographer-portrait.jpg"
-                    alt="Carla Cáceres - Professional Photographer"
+                    alt="Carla Cáceres - Fotógrafa profesional"
                     fill
                     className="object-cover image-premium"
                     priority
@@ -126,7 +126,7 @@ export default function AboutPage() {
                 <div className="relative aspect-[4/3] rounded-2xl overflow-hidden">
                   <Image
                     src="/images/about-studio.jpg"
-                    alt="Carla Cáceres working on location"
+                    alt="Carla Cáceres trabajando en el lugar"
                     fill
                     className="object-cover image-premium"
                     sizes="(max-width: 1024px) 100vw, 50vw"
@@ -142,20 +142,20 @@ export default function AboutPage() {
                 className="order-1 lg:order-2"
               >
                 <span className="inline-block text-xs tracking-[0.3em] uppercase text-primary-soft font-medium mb-4">
-                  My Approach
+                  Mi enfoque
                 </span>
                 <h2 className="font-serif text-3xl md:text-4xl font-medium text-foreground leading-tight mb-6 text-balance">
-                  How I Work
+                  Cómo trabajo
                 </h2>
                 <div className="space-y-4 text-foreground-muted leading-relaxed">
                   <p>
-                    Before every event, I take time to understand your vision and the moments that matter most to you. This preparation allows me to be in the right place at the right time, capturing the emotions that tell your story.
+                    Antes de cada evento, tomo el tiempo para entender tu visión y los momentos que más te importan. Esta preparación me permite estar en el lugar correcto en el momento correcto, capturando las emociones que cuentan tu historia.
                   </p>
                   <p>
-                    During the event, I work with a calm, documentary style. I blend into the background, letting genuine interactions unfold naturally. My goal is to capture authentic moments without disrupting the flow of your celebration.
+                    Durante el evento, trabajo con un estilo documental tranquilo. Me mezclo con el fondo, dejando que las interacciones genuinas se desarrollen naturalmente. Mi objetivo es capturar momentos auténticos sin interrumpir el flujo de tu celebración.
                   </p>
                   <p>
-                    After the event, I carefully curate and edit each image to create a polished gallery that you will treasure for years to come. Every photo is selected and refined with care, ensuring the final collection reflects the beauty and emotion of your day.
+                    Después del evento, curó y edito cuidadosamente cada imagen para crear una galería pulida que atesorarás por años. Cada foto se selecciona y refina con cuidado, asegurando que la colección final refleje la belleza y la emoción de tu día.
                   </p>
                 </div>
               </motion.div>
@@ -174,10 +174,10 @@ export default function AboutPage() {
               className="text-center max-w-3xl mx-auto mb-16"
             >
               <span className="inline-block text-xs tracking-[0.3em] uppercase text-primary-soft font-medium mb-4">
-                My Philosophy
+                Mi filosofía
               </span>
               <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-medium text-foreground leading-tight text-balance">
-                What Guides My Work
+                Lo que guía mi trabajo
               </h2>
             </motion.div>
 

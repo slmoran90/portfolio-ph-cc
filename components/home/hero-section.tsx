@@ -40,7 +40,7 @@ export function HeroSection() {
         >
           <Image
             src="/images/hero-baby-shower.jpg"
-            alt="Beautiful baby shower photography"
+            alt="Hermosa fotografía de baby shower"
             fill
             className="object-cover image-premium"
             priority
@@ -63,7 +63,7 @@ export function HeroSection() {
             transition={{ duration: 0.6 }}
             className="inline-block text-xs tracking-[0.3em] uppercase text-primary-soft font-medium mb-6"
           >
-            Professional Photography Studio
+            Fotografía profesional
           </motion.span>
           
           <motion.h1
@@ -72,7 +72,7 @@ export function HeroSection() {
             transition={{ duration: 0.8, delay: 0.1 }}
             className="font-serif text-4xl md:text-5xl lg:text-7xl font-medium text-foreground leading-[1.1] mb-8 text-balance"
           >
-            Capturing Life&apos;s Most Precious Moments
+            Capturando los momentos más preciosos de la vida
           </motion.h1>
           
           <motion.p
@@ -81,7 +81,7 @@ export function HeroSection() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="text-lg md:text-xl text-foreground-muted leading-relaxed mb-10 max-w-xl"
           >
-            Specializing in baby showers, birthdays, and baptisms. Creating timeless memories with elegance and artistry.
+            Especializada en baby showers, cumpleaños y bautismos. Creando recuerdos atemporales con elegancia y arte.
           </motion.p>
           
           <motion.div
@@ -92,13 +92,13 @@ export function HeroSection() {
           >
             <Button asChild size="lg" className="text-sm tracking-wider uppercase px-8">
               <Link href="/projects">
-                View Portfolio
+                Ver trabajos
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>
             <Button asChild variant="outline" size="lg" className="text-sm tracking-wider uppercase px-8">
               <Link href="/contact">
-                Book a Session
+                Reservar sesión
               </Link>
             </Button>
           </motion.div>

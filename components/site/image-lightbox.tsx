@@ -20,7 +20,7 @@ export function ImageLightbox({
   onClose,
   onPrev,
   onNext,
-  alt = "Gallery image",
+  alt = "Imagen de galería",
 }: ImageLightboxProps) {
   const onPrevRef = useRef(onPrev)
   const onNextRef = useRef(onNext)
@@ -74,14 +74,14 @@ export function ImageLightbox({
       }}
       role="dialog"
       aria-modal="true"
-      aria-label="Image preview"
+      aria-label="Vista previa de imagen"
     >
       {/* Close */}
       <button
         type="button"
         onClick={onClose}
         className="absolute top-5 right-5 z-10 w-10 h-10 flex items-center justify-center rounded-full bg-background/10 hover:bg-background/20 text-background transition-colors"
-        aria-label="Close lightbox"
+        aria-label="Cerrar lightbox"
       >
         <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -101,7 +101,7 @@ export function ImageLightbox({
           type="button"
           onClick={(e) => { e.stopPropagation(); onPrev() }}
           className="absolute left-4 top-1/2 -translate-y-1/2 z-10 w-11 h-11 flex items-center justify-center rounded-full bg-background/10 hover:bg-background/20 text-background transition-colors"
-          aria-label="Previous image"
+          aria-label="Imagen anterior"
         >
           <ChevronLeft className="w-6 h-6" />
         </button>
@@ -113,7 +113,7 @@ export function ImageLightbox({
           type="button"
           onClick={(e) => { e.stopPropagation(); onNext() }}
           className="absolute right-4 top-1/2 -translate-y-1/2 z-10 w-11 h-11 flex items-center justify-center rounded-full bg-background/10 hover:bg-background/20 text-background transition-colors"
-          aria-label="Next image"
+          aria-label="Imagen siguiente"
         >
           <ChevronRight className="w-6 h-6" />
         </button>
