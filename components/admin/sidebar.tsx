@@ -19,12 +19,12 @@ import { createClient } from "@/lib/supabase/browser"
 import type { SiteSettings } from "@/lib/data/site-settings.types"
 
 const sidebarLinks = [
-  { href: "/admin", icon: LayoutDashboard, label: "Dashboard" },
-  { href: "/admin/projects", icon: FolderOpen, label: "Projects" },
-  { href: "/admin/gallery", icon: ImageIcon, label: "Gallery" },
-  { href: "/admin/services", icon: Layers, label: "Services" },
-  { href: "/admin/testimonials", icon: Star, label: "Testimonials" },
-  { href: "/admin/settings", icon: Settings, label: "Settings" },
+  { href: "/admin", icon: LayoutDashboard, label: "Panel" },
+  { href: "/admin/projects", icon: FolderOpen, label: "Proyectos" },
+  { href: "/admin/gallery", icon: ImageIcon, label: "Galería" },
+  { href: "/admin/services", icon: Layers, label: "Servicios" },
+  { href: "/admin/testimonials", icon: Star, label: "Testimonios" },
+  { href: "/admin/settings", icon: Settings, label: "Configuración" },
 ]
 
 function getInitials(fullName: string | null): string {
@@ -69,7 +69,7 @@ export function AdminSidebar({ siteSettings }: { siteSettings: SiteSettings | nu
       <button
         onClick={() => setIsMobileOpen(!isMobileOpen)}
         className="lg:hidden fixed top-4 left-4 z-50 p-2 bg-background rounded-lg border border-border shadow-sm"
-        aria-label="Toggle menu"
+        aria-label="Abrir/cerrar menú"
       >
         {isMobileOpen ? <X size={20} /> : <Menu size={20} />}
       </button>
@@ -108,7 +108,7 @@ export function AdminSidebar({ siteSettings }: { siteSettings: SiteSettings | nu
               <p className="font-serif text-lg font-medium text-sidebar-foreground truncate">
                 {fullName || "Carla Cáceres"}
               </p>
-              <p className="text-xs text-foreground-muted">Admin Panel</p>
+              <p className="text-xs text-foreground-muted">Panel de administración</p>
             </div>
           </Link>
         </div>

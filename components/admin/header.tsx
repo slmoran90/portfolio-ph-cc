@@ -33,7 +33,7 @@ export function AdminHeader({ title, description }: AdminHeaderProps) {
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-foreground-muted" />
             <Input
               type="search"
-              placeholder="Search..."
+              placeholder="Buscar..."
               className="pl-10 w-64 bg-secondary/50 border-0 focus-visible:ring-1 focus-visible:ring-ring"
             />
           </div>
