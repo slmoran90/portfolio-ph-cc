@@ -144,6 +144,10 @@ function TestimonialsCarousel({
       className="overflow-hidden"
       onMouseEnter={() => { pausedRef.current = true }}
       onMouseLeave={() => { pausedRef.current = false }}
+      style={{
+        maskImage: 'linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)',
+        WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)',
+      }}
     >
       <div ref={trackRef} className="flex will-change-transform">
         {slides.map((testimonial, index) => (
