@@ -48,8 +48,8 @@ export default function ProjectsListClient({
   return (
     <>
       <AdminHeader
-        title='Projects'
-        description='Manage your photography projects and portfolios'
+        title='Proyectos'
+        description='Administrá tus proyectos de fotografía'
       />
 
       <main className='flex-1 p-6 overflow-auto'>
@@ -58,7 +58,7 @@ export default function ProjectsListClient({
             <Search className='absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground' />
             <Input
               type='search'
-              placeholder='Search projects...'
+              placeholder='Buscar proyectos...'
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className='pl-10 bg-background border-border/50'
@@ -81,22 +81,22 @@ export default function ProjectsListClient({
           <Button asChild>
             <Link href='/admin/projects/new'>
               <Plus className='w-4 h-4 mr-2' />
-              New Project
+              Nuevo proyecto
             </Link>
           </Button>
         </div>
 
-        <AdminCard title={`${filteredProjects.length} Projects`}>
+        <AdminCard title={`${filteredProjects.length} Proyecto${filteredProjects.length !== 1 ? 's' : ''}`}>
           {filteredProjects.length === 0 ? (
             <EmptyState
               icon={FolderOpen}
-              title='No projects found'
-              description='Try adjusting your search or filter, or create a new project.'
+              title='No se encontraron proyectos'
+              description='Probá ajustar tu búsqueda o filtro, o creá un proyecto nuevo.'
               action={
                 <Button asChild>
                   <Link href='/admin/projects/new'>
                     <Plus className='w-4 h-4 mr-2' />
-                    Create Project
+                    Crear proyecto
                   </Link>
                 </Button>
               }
@@ -139,7 +139,7 @@ export default function ProjectsListClient({
                       </span>
                       <span className='text-sm text-foreground-muted'>
                         {project.created_at
-                          ? new Intl.DateTimeFormat('en-US', {
+                          ? new Intl.DateTimeFormat('es-AR', {
                               year: 'numeric',
                               month: 'long',
                               timeZone: 'UTC'
@@ -147,7 +147,7 @@ export default function ProjectsListClient({
                           : '—'}
                       </span>
                       <span className='text-sm text-foreground-muted'>
-                        {project.images?.length ?? 0} images
+                        {project.images?.length ?? 0} imágenes
                       </span>
                       <span
                         className={`text-xs px-2 py-0.5 rounded-full ${
@@ -156,12 +156,12 @@ export default function ProjectsListClient({
                             : 'bg-secondary text-foreground-muted'
                         }`}
                       >
-                        {project.published ? 'Published' : 'Draft'}
+                        {project.published ? 'Publicado' : 'Borrador'}
                       </span>
                       {project.featured && (
                         <span className='text-xs px-2 py-0.5 rounded-full bg-champagne/40 text-foreground flex items-center gap-1'>
                           <Star className='w-3 h-3 fill-current' />
-                          Featured
+                          Destacado
                         </span>
                       )}
                     </div>
@@ -183,19 +183,19 @@ export default function ProjectsListClient({
                           target='_blank'
                         >
                           <Eye className='w-4 h-4 mr-2' />
-                          View Live
+                          Ver en vivo
                         </Link>
                       </DropdownMenuItem>
                       <DropdownMenuItem asChild>
                         <Link href={`/admin/projects/${project.id}`}>
                           <Edit className='w-4 h-4 mr-2' />
-                          Edit
+                          Editar
                         </Link>
                       </DropdownMenuItem>
                       <DropdownMenuSeparator />
                       <DropdownMenuItem className='text-destructive'>
                         <Trash2 className='w-4 h-4 mr-2' />
-                        Delete
+                        Eliminar
                       </DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
