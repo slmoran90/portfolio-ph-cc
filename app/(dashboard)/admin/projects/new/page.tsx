@@ -183,8 +183,8 @@ export default function NewProjectPage() {
   return (
     <>
       <AdminHeader
-        title='New Project'
-        description='Create a new photography project'
+        title='Nuevo proyecto'
+        description='Creá un proyecto de fotografía nuevo'
       />
 
       <main className='flex-1 p-6 overflow-auto'>
@@ -193,26 +193,26 @@ export default function NewProjectPage() {
           className='inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors text-sm mb-6'
         >
           <ArrowLeft className='w-4 h-4' />
-          Back to Projects
+          Volver a proyectos
         </Link>
 
         <form onSubmit={handleSubmit}>
           <div className='grid grid-cols-1 lg:grid-cols-3 gap-6'>
             <div className='lg:col-span-2 space-y-6'>
-              <AdminCard title='Project Details'>
+              <AdminCard title='Detalles del proyecto'>
                 <div className='space-y-6'>
                   <div className='space-y-2'>
                     <Label
                       htmlFor='title'
                       className='text-sm font-medium'
                     >
-                      Project Title *
+                      Título del proyecto *
                     </Label>
                     <Input
                       id='title'
                       name='title'
                       required
-                      placeholder="e.g., Emma's Garden Baby Shower"
+                      placeholder="ej., Baby Shower en el Jardín de Emma"
                       className='h-12 bg-background border-border/50'
                     />
                   </div>
@@ -223,7 +223,7 @@ export default function NewProjectPage() {
                         htmlFor='category'
                         className='text-sm font-medium'
                       >
-                        Category *
+                        Categoría *
                       </Label>
                       <select
                         id='category'
@@ -231,7 +231,7 @@ export default function NewProjectPage() {
                         required
                         className='w-full h-12 px-4 rounded-lg border border-border/50 bg-background text-foreground focus:border-primary-soft focus:outline-none focus:ring-1 focus:ring-primary-soft'
                       >
-                        <option value=''>Select a category</option>
+                        <option value=''>Seleccioná una categoría</option>
                         {categories.slice(1).map((category) => (
                           <option
                             key={category.value}
@@ -247,7 +247,7 @@ export default function NewProjectPage() {
                         htmlFor='event_date'
                         className='text-sm font-medium'
                       >
-                        Event Date
+                        Fecha del evento
                       </Label>
                       <Input
                         id='event_date'
@@ -263,12 +263,12 @@ export default function NewProjectPage() {
                       htmlFor='location'
                       className='text-sm font-medium'
                     >
-                      Location
+                      Ubicación
                     </Label>
                     <Input
                       id='location'
                       name='location'
-                      placeholder='e.g., Botanical Gardens, City Center'
+                      placeholder='ej., Jardín Botánico, Centro de la ciudad'
                       className='h-12 bg-background border-border/50'
                     />
                   </div>
@@ -278,13 +278,13 @@ export default function NewProjectPage() {
                       htmlFor='short_description'
                       className='text-sm font-medium'
                     >
-                      Short Description (SEO / Cards)
+                      Descripción corta (SEO / tarjetas)
                     </Label>
                     <textarea
                       id='short_description'
                       name='short_description'
                       rows={3}
-                      placeholder='Brief summary shown on project cards...'
+                      placeholder='Resumen breve que aparece en las tarjetas de proyecto...'
                       className='w-full px-4 py-3 rounded-lg border border-border/50 bg-background text-foreground placeholder:text-foreground-muted focus:border-primary-soft focus:outline-none focus:ring-1 focus:ring-primary-soft resize-none'
                     />
                   </div>
@@ -294,13 +294,13 @@ export default function NewProjectPage() {
                       htmlFor='description'
                       className='text-sm font-medium'
                     >
-                      Full Description
+                      Descripción completa
                     </Label>
                     <textarea
                       id='description'
                       name='description'
                       rows={6}
-                      placeholder='Full story, details, and description of the project...'
+                      placeholder='Historia completa, detalles y descripción del proyecto...'
                       className='w-full px-4 py-3 rounded-lg border border-border/50 bg-background text-foreground placeholder:text-foreground-muted focus:border-primary-soft focus:outline-none focus:ring-1 focus:ring-primary-soft resize-none'
                     />
                   </div>
@@ -308,8 +308,8 @@ export default function NewProjectPage() {
               </AdminCard>
 
               <AdminCard
-                title='Project Images'
-                description='Upload photos. Click the star icon to set the cover image.'
+                title='Imágenes del proyecto'
+                description='Subí fotos. Hacé clic en la estrella para establecer la imagen de portada.'
               >
                 <input
                   ref={fileInputRef}
@@ -335,26 +335,26 @@ export default function NewProjectPage() {
                     <Upload className='w-6 h-6 text-primary-soft' />
                   </div>
                   <p className='text-foreground font-medium mb-2'>
-                    Drag and drop images here
+                    Arrastrá imágenes acá
                   </p>
                   <p className='text-sm text-foreground-muted mb-4'>
-                    or click to browse from your computer
+                    o hacé clic para buscar en tu computadora
                   </p>
                   <Button
                     type='button'
                     variant='outline'
                     onClick={() => fileInputRef.current?.click()}
                   >
-                    Browse Files
+                    Buscar archivos
                   </Button>
                 </motion.div>
 
                 {uploadedImages.length > 0 && (
                   <div className='mt-6'>
                     <p className='text-sm text-foreground-muted mb-4'>
-                      Click{' '}
+                      Hacé clic{' '}
                       <Star className='w-3 h-3 inline text-primary-soft fill-primary-soft' />{' '}
-                      to set the cover image.
+                      para establecer la imagen de portada.
                     </p>
                     <div className='grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4'>
                       {uploadedImages.map((image, index) => (
@@ -383,7 +383,7 @@ export default function NewProjectPage() {
                           {image.status === 'error' && (
                             <div className='absolute inset-0 bg-destructive/20 flex items-center justify-center'>
                               <p className='text-xs text-destructive font-medium px-2 text-center'>
-                                Upload failed
+                                Error al subir
                               </p>
                             </div>
                           )}
@@ -393,7 +393,7 @@ export default function NewProjectPage() {
                               <button
                                 type='button'
                                 onClick={() => setCoverImageUrl(image.url)}
-                                title='Set as cover'
+                                title='Establecer como portada'
                                 className={`absolute top-2 left-2 w-8 h-8 rounded-lg flex items-center justify-center transition-opacity ${
                                   coverImageUrl === image.url
                                     ? 'opacity-100 bg-primary-soft'
@@ -410,7 +410,7 @@ export default function NewProjectPage() {
                               </button>
                               {coverImageUrl === image.url && (
                                 <div className='absolute bottom-2 left-2 px-2 py-1 bg-primary-soft rounded text-xs font-medium text-white'>
-                                  Cover
+                                  Portada
                                 </div>
                               )}
                             </>
@@ -431,16 +431,16 @@ export default function NewProjectPage() {
             </div>
 
             <div className='space-y-6'>
-              <AdminCard title='Publish'>
+              <AdminCard title='Publicar'>
                 <div className='space-y-4'>
                   <div className='space-y-2'>
-                    <Label className='text-sm font-medium'>Status</Label>
+                    <Label className='text-sm font-medium'>Estado</Label>
                     <select
                       name='published'
                       className='w-full h-10 px-3 rounded-lg border border-border/50 bg-background text-foreground text-sm'
                     >
-                      <option value='draft'>Draft</option>
-                      <option value='published'>Published</option>
+                      <option value='draft'>Borrador</option>
+                      <option value='published'>Publicado</option>
                     </select>
                   </div>
 
@@ -452,7 +452,7 @@ export default function NewProjectPage() {
                       className='w-4 h-4 rounded border-border/50 text-primary-soft focus:ring-primary-soft'
                     />
                     <Label htmlFor='featured' className='text-sm font-medium cursor-pointer'>
-                      Featured on Home
+                      Destacado en inicio
                     </Label>
                   </div>
 
@@ -466,7 +466,7 @@ export default function NewProjectPage() {
                       className='flex-1'
                       onClick={() => router.push('/admin/projects')}
                     >
-                      Cancel
+                      Cancelar
                     </Button>
                     <Button
                       type='submit'
@@ -476,12 +476,12 @@ export default function NewProjectPage() {
                       {isSubmitting ? (
                         <>
                           <Loader2 className='w-4 h-4 mr-2 animate-spin' />
-                          Saving...
+                          Guardando...
                         </>
                       ) : (
                         <>
                           <Save className='w-4 h-4 mr-2' />
-                          Save
+                          Guardar
                         </>
                       )}
                     </Button>
@@ -489,13 +489,13 @@ export default function NewProjectPage() {
                 </div>
               </AdminCard>
 
-              <AdminCard title='Preview'>
+              <AdminCard title='Vista previa'>
                 <div className='space-y-3'>
                   <div className='aspect-[4/5] rounded-lg bg-secondary/50 flex items-center justify-center overflow-hidden'>
                     {coverImageUrl ? (
                       <Image
                         src={coverImageUrl}
-                        alt='Cover preview'
+                        alt='Vista previa de portada'
                         width={200}
                         height={250}
                         className='w-full h-full object-cover rounded-lg'
@@ -516,7 +516,7 @@ export default function NewProjectPage() {
                         />
                         <div className='absolute inset-0 flex items-center justify-center'>
                           <p className='text-xs text-muted-foreground bg-background/80 px-2 py-1 rounded'>
-                            No cover set
+                            Sin portada establecida
                           </p>
                         </div>
                       </div>
@@ -524,13 +524,13 @@ export default function NewProjectPage() {
                       <div className='flex flex-col items-center gap-2'>
                         <ImageIcon className='w-8 h-8 text-muted-foreground' />
                         <p className='text-sm text-muted-foreground'>
-                          No cover image
+                          Sin imagen de portada
                         </p>
                       </div>
                     )}
                   </div>
                   <p className='text-sm text-muted-foreground'>
-                    {doneCount} image{doneCount !== 1 ? 's' : ''} uploaded
+                    {doneCount} imagen{doneCount !== 1 ? 'es' : ''} subida{doneCount !== 1 ? 's' : ''}
                   </p>
                 </div>
               </AdminCard>
