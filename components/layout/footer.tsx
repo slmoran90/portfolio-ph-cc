@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion"
 import Link from "next/link"
-import { Instagram } from "lucide-react"
+import { Instagram, Mail } from "lucide-react"
 
 const footerLinks = [
   { href: "/", label: "Inicio" },
@@ -12,11 +12,30 @@ const footerLinks = [
   { href: "/#contact", label: "Contacto" },
 ]
 
-const socialLinks = [
-  { href: "https://instagram.com", icon: Instagram, label: "Instagram" },
-]
+interface FooterProps {
+  instagram?: string | null
+  email?: string | null
+}
 
-export function Footer() {
+export function Footer({ instagram, email }: FooterProps) {
+  const socialLinks = []
+  
+  if (instagram) {
+    socialLinks.push({
+      href: instagram.startsWith('http') ? instagram : `https://instagram.com/${instagram.replace('@', '')}`,
+      icon: Instagram,
+      label: "Instagram"
+    })
+  }
+  
+  if (email) {
+    socialLinks.push({
+      href: `mailto:${email}`,
+      icon: Mail,
+      label: "Email"
+    })
+  }
+
   return (
     <motion.footer
       initial={{ opacity: 0 }}
@@ -67,8 +86,8 @@ export function Footer() {
                 <a
                   key={social.label}
                   href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  target={social.label === "Instagram" ? "_blank" : undefined}
+                  rel={social.label === "Instagram" ? "noopener noreferrer" : undefined}
                   className="w-12 h-12 rounded-full bg-background border border-border flex items-center justify-center text-foreground-muted hover:text-foreground hover:border-foreground transition-all duration-300"
                   aria-label={social.label}
                 >
@@ -83,16 +102,8 @@ export function Footer() {
         <div className="mt-16 pt-8 border-t border-border/50">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <p className="text-sm text-foreground-muted">
-              &copy; {new Date().getFullYear()} Carla Cáceres Photography. Todos los derechos reservados.
+              &copy; {new Date().getFullYear()} Carla Cáceres - Fotografía. Todos los derechos reservados.
             </p>
-            <div className="flex gap-6">
-              <Link href="/privacy" className="text-sm text-foreground-muted hover:text-foreground transition-colors">
-                Privacidad
-              </Link>
-              <Link href="/terms" className="text-sm text-foreground-muted hover:text-foreground transition-colors">
-                Términos
-              </Link>
-            </div>
           </div>
         </div>
       </div>
