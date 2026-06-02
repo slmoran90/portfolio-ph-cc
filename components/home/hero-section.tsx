@@ -54,6 +54,9 @@ export function HeroSection() {
         />
       </div>
 
+      {/* Permanent Warm Overlay */}
+      <div className="absolute inset-0 z-[1] bg-gradient-to-b from-background/80 via-background/70 to-background/60" />
+
       {/* Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 pt-32 pb-16">
         <div className="max-w-3xl">
@@ -61,7 +64,8 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="inline-block text-xs tracking-[0.3em] uppercase text-primary-soft font-medium mb-6"
+            className="inline-block text-xs tracking-[0.3em] uppercase text-foreground/80 font-medium mb-6"
+            style={{ textShadow: '0 1px 3px rgba(0,0,0,0.15)' }}
           >
             Fotografía profesional
           </motion.span>

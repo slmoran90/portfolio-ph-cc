@@ -3,8 +3,9 @@
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import Image from 'next/image'
-import { AdminHeader, StatCard, AdminCard } from '@/components/admin'
+import { AdminCard } from '@/components/admin'
 import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import {
   FolderOpen,
   Image as ImageIcon,
@@ -14,6 +15,50 @@ import {
 import type { Project } from '@/lib/data/projects.types'
 import type { GalleryImage } from '@/lib/data/gallery.types'
 import type { SiteSettings } from '@/lib/data/site-settings.types'
+
+interface DashboardStatCardProps {
+  title: string
+  value: string | number
+  change?: string
+  changeType?: 'positive' | 'negative' | 'neutral'
+  icon: any
+}
+
+function DashboardStatCard({ title, value, change, changeType = 'neutral', icon: Icon }: DashboardStatCardProps) {
+  const changeColors = {
+    positive: 'text-green-600',
+    negative: 'text-red-500',
+    neutral: 'text-foreground-muted',
+  }
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4 }}
+      className="h-full"
+    >
+      <Card className="border-border/50 h-full flex flex-col">
+        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+          <CardTitle className="text-sm font-medium text-foreground-muted">
+            {title}
+          </CardTitle>
+          <div className="w-10 h-10 bg-surface-alt rounded-md flex items-center justify-center">
+            <Icon className="w-5 h-5 text-primary-soft" />
+          </div>
+        </CardHeader>
+        <CardContent className="flex-1 flex flex-col justify-between">
+          <div className="text-2xl font-serif font-medium text-foreground">
+            {value}
+          </div>
+          <p className={`text-xs ${changeColors[changeType]} mt-1 min-h-5`}>
+            {change || '\u00A0'}
+          </p>
+        </CardContent>
+      </Card>
+    </motion.div>
+  )
+}
 
 export default function DashboardClient({
   projects,
@@ -35,34 +80,39 @@ export default function DashboardClient({
 
   return (
     <>
-      <AdminHeader
-        title='Panel'
-        description={greeting}
-      />
-
       <main className='flex-1 p-6 overflow-auto'>
-        <div className='grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8'>
-          <StatCard
+        {/* Welcome Card */}
+        <div className='bg-card rounded-2xl border border-border/50 p-6 mb-6'>
+          <h1 className='font-serif text-2xl font-medium text-foreground'>
+            Panel
+          </h1>
+          <p className='text-sm text-foreground-muted mt-1'>{greeting}</p>
+        </div>
+
+        {/* Stats Grid */}
+        <div className='grid grid-cols-1 sm:grid-cols-3 gap-6 mb-6'>
+          <DashboardStatCard
             title='Total de proyectos'
             value={projects.length}
             change={`${publishedCount} publicados`}
             changeType='positive'
             icon={FolderOpen}
           />
-          <StatCard
+          <DashboardStatCard
             title='Proyectos publicados'
             value={publishedCount}
             change={`${projects.length - publishedCount} borradores`}
             changeType='neutral'
             icon={FolderOpen}
           />
-          <StatCard
+          <DashboardStatCard
             title='Imágenes en galería'
             value={galleryCount}
             icon={ImageIcon}
           />
         </div>
 
+        {/* Recent Sections */}
         <div className='grid grid-cols-1 lg:grid-cols-2 gap-6'>
           {/* Recent Projects */}
           <AdminCard
