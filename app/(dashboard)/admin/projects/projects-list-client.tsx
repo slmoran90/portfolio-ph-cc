@@ -195,7 +195,7 @@ export default function ProjectsListClient({
                   <div className='flex items-center gap-1.5 shrink-0'>
                     <Tooltip>
                       <TooltipTrigger asChild>
-                        <Button size='sm' variant='outline' asChild>
+                        <Button size='sm' variant='outline' asChild aria-label='Ver en vivo' className='min-w-10 min-h-10'>
                           <Link
                             href={`/projects/${project.slug}`}
                             target='_blank'
@@ -208,7 +208,7 @@ export default function ProjectsListClient({
                     </Tooltip>
                     <Tooltip>
                       <TooltipTrigger asChild>
-                        <Button size='sm' variant='outline' asChild>
+                        <Button size='sm' variant='outline' asChild aria-label='Editar' className='min-w-10 min-h-10'>
                           <Link href={`/admin/projects/${project.id}`}>
                             <Pencil className='w-3.5 h-3.5' />
                           </Link>
@@ -221,8 +221,9 @@ export default function ProjectsListClient({
                         <Button
                           size='sm'
                           variant='outline'
-                          className='text-destructive border-destructive/30 hover:bg-destructive/10'
+                          className='text-destructive border-destructive/30 hover:bg-destructive/10 min-w-10 min-h-10'
                           onClick={() => openDeleteDialog(project)}
+                          aria-label='Eliminar'
                         >
                           <Trash2 className='w-3.5 h-3.5' />
                         </Button>

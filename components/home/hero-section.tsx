@@ -1,5 +1,6 @@
 "use client"
 
+import { useState, useEffect } from "react"
 import { motion, useScroll, useTransform, useMotionValueEvent } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
@@ -8,8 +9,13 @@ import { Button } from "@/components/ui/button"
 
 export function HeroSection() {
   const { scrollY } = useScroll()
-  const shouldReduceMotion = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768
+  const [shouldReduceMotion, setShouldReduceMotion] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    setShouldReduceMotion(window.matchMedia('(prefers-reduced-motion: reduce)').matches)
+    setIsMobile(window.innerWidth < 768)
+  }, [])
 
   // Parallax for background image (disabled on mobile and with reduced motion)
   const y = useTransform(scrollY, [0, 500], [0, shouldReduceMotion || isMobile ? 0 : 40], {

@@ -800,6 +800,8 @@ export default function TestimonialsClient({
                               size='sm'
                               variant='outline'
                               onClick={() => handleStartEdit(testimonial)}
+                              aria-label='Editar'
+                              className='min-w-10 min-h-10'
                             >
                               <Pencil className='w-3.5 h-3.5' />
                             </Button>
@@ -812,6 +814,8 @@ export default function TestimonialsClient({
                               size='sm'
                               variant='outline'
                               onClick={() => handleToggleFeatured(testimonial)}
+                              aria-label={testimonial.featured ? 'Quitar destacado' : 'Destacar'}
+                              className='min-w-10 min-h-10'
                             >
                               <Star
                                 className={`w-3.5 h-3.5 ${
@@ -830,6 +834,8 @@ export default function TestimonialsClient({
                               size='sm'
                               variant='outline'
                               onClick={() => handleToggleEnabled(testimonial)}
+                              aria-label={testimonial.enabled ? 'Deshabilitar' : 'Habilitar'}
+                              className='min-w-10 min-h-10'
                             >
                               {testimonial.enabled ? (
                                 <EyeOff className='w-3.5 h-3.5' />
@@ -845,8 +851,9 @@ export default function TestimonialsClient({
                             <Button
                               size='sm'
                               variant='outline'
-                              className='text-destructive border-destructive/30 hover:bg-destructive/10'
+                              className='text-destructive border-destructive/30 hover:bg-destructive/10 min-w-10 min-h-10'
                               onClick={() => openDeleteDialog(testimonial)}
+                              aria-label='Eliminar'
                             >
                               <Trash2 className='w-3.5 h-3.5' />
                             </Button>
