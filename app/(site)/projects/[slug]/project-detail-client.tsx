@@ -54,29 +54,27 @@ export function ProjectDetailClient({
 
   return (
     <>
-      <motion.div className='pt-20'>
-        {/* Back Button */}
-        <Section className='pb-0'>
+      <motion.div>
+        {/* Back Button + Hero Section */}
+        <Section className='pt-6 md:pt-8'>
           <Container>
+            {/* Back Button */}
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5 }}
+              className='mb-6 md:mb-8'
             >
               <Link
                 href='/projects'
-                className='inline-flex items-center gap-2 text-foreground-muted hover:text-foreground transition-colors text-sm'
+                className='inline-flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-foreground-muted hover:text-foreground hover:bg-secondary/50 transition-colors cursor-pointer'
               >
                 <ArrowLeft className='w-4 h-4' />
                 Volver a trabajos
               </Link>
             </motion.div>
-          </Container>
-        </Section>
 
-        {/* Hero Section */}
-        <Section className='pt-8'>
-          <Container>
+            {/* Project Grid */}
             <div className='grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start'>
               {/* Main Image */}
               <motion.div
@@ -95,7 +93,6 @@ export function ProjectDetailClient({
                       fill
                       className='object-cover image-premium hover:scale-105 transition-transform duration-700'
                       priority
-                      loading='eager'
                       sizes='(max-width: 1024px) 100vw, 50vw'
                     />
                   </div>
