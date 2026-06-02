@@ -5,7 +5,7 @@ import { motion } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Section, Container } from '@/components/layout'
-import { ImageLightbox, ProjectCard } from '@/components/site'
+import { ImageLightbox, ProjectCard, ImageWithFallback } from '@/components/site'
 import { categories } from '@/lib/data/projects.constants'
 import type { Project } from '@/lib/data/projects.types'
 import { mapProjectToCardProject } from '@/lib/data/project-mappers'
@@ -89,7 +89,7 @@ export function ProjectDetailClient({
                     className='relative aspect-[4/5] rounded-2xl overflow-hidden cursor-pointer bg-secondary/30'
                     onClick={openCover}
                   >
-                    <Image
+                    <ImageWithFallback
                       src={coverImage}
                       alt={project.title}
                       fill
@@ -131,9 +131,9 @@ export function ProjectDetailClient({
                   )}
                 </div>
 
-                {project.short_description && (
-                  <p className='text-foreground-muted leading-relaxed mb-8'>
-                    {project.short_description}
+                {project.description && (
+                  <p className='text-foreground-muted leading-relaxed mb-8 whitespace-pre-line'>
+                    {project.description}
                   </p>
                 )}
 
@@ -149,24 +149,6 @@ export function ProjectDetailClient({
           </Container>
         </Section>
 
-        {/* Full Description */}
-        {project.description && (
-          <Section>
-            <Container>
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
-                viewport={{ once: true }}
-                className='max-w-2xl mx-auto'
-              >
-                <p className='text-foreground leading-relaxed whitespace-pre-line'>
-                  {project.description}
-                </p>
-              </motion.div>
-            </Container>
-          </Section>
-        )}
 
         {/* Gallery */}
         {galleryImages.length > 0 && (
@@ -189,7 +171,7 @@ export function ProjectDetailClient({
                       className='relative overflow-hidden rounded-xl cursor-pointer group bg-secondary/30'
                       onClick={() => openGallery(index)}
                     >
-                      <Image
+                      <ImageWithFallback
                         src={url}
                         alt={`${project.title} — ${index + 1}`}
                         width={800}

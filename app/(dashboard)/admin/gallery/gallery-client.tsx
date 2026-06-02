@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import { Upload, Search, Trash2, Image as ImageIcon, Check, X, Star } from 'lucide-react'
+import { ImageWithFallback } from '@/components/site'
 import { categories } from '@/lib/data/projects.constants'
 import { uploadGalleryImage } from '@/lib/supabase/storage'
 import {
@@ -377,7 +378,7 @@ export default function GalleryClient({
                       : ''
                   }`}
                 >
-                  <Image
+                  <ImageWithFallback
                     src={image.image_url}
                     alt={image.title ?? 'Imagen de galería'}
                     fill

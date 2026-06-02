@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import Image from "next/image"
 import { ChevronLeft, ChevronRight } from "lucide-react"
+import { ImageWithFallback } from "./image-with-fallback"
 
 interface ImageLightboxProps {
   images: string[]
@@ -83,7 +84,7 @@ export function ImageLightbox({
         className="absolute top-5 right-5 z-10 w-10 h-10 flex items-center justify-center rounded-full bg-background/10 hover:bg-background/20 text-background transition-colors"
         aria-label="Cerrar lightbox"
       >
-        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
         </svg>
       </button>
@@ -135,7 +136,7 @@ export function ImageLightbox({
             transition={{ duration: 0.2 }}
             className="relative w-full h-full"
           >
-            <Image
+            <ImageWithFallback
               src={currentSrc}
               alt={`${alt} ${currentIndex + 1}`}
               fill

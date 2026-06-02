@@ -12,6 +12,7 @@ import {
   ArrowRight,
   Star
 } from 'lucide-react'
+import { ImageWithFallback } from '@/components/site'
 import type { Project } from '@/lib/data/projects.types'
 import type { GalleryImage } from '@/lib/data/gallery.types'
 import type { SiteSettings } from '@/lib/data/site-settings.types'
@@ -201,7 +202,7 @@ export default function DashboardClient({
                   className='flex items-center gap-4 p-3 rounded-xl hover:bg-secondary/50 transition-colors'
                 >
                   <div className='relative w-14 h-14 rounded-lg overflow-hidden shrink-0 bg-secondary'>
-                    <Image
+                    <ImageWithFallback
                       src={image.image_url}
                       alt={image.title ?? 'Imagen de galería'}
                       fill
