@@ -18,8 +18,13 @@ export function Header() {
   const [isOpen, setIsOpen] = useState(false)
   const pathname = usePathname()
   const { scrollY } = useScroll()
-  const shouldReduceMotion = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768
+  const [shouldReduceMotion, setShouldReduceMotion] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    setShouldReduceMotion(window.matchMedia('(prefers-reduced-motion: reduce)').matches)
+    setIsMobile(window.innerWidth < 768)
+  }, [])
 
   // Scroll threshold: 50px desktop, 30px mobile
   const scrollThreshold = isMobile ? 30 : 50

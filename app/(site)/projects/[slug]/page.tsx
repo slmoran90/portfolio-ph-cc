@@ -23,7 +23,7 @@ export async function generateMetadata({
   const { slug } = await params
   const project = await getProjectBySlug(slug)
 
-  if (!project) return { title: 'Project Not Found' }
+  if (!project) return { title: 'Proyecto no encontrado | Carla Cáceres Photography' }
 
   return {
     title: project.title,
