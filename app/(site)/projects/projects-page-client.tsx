@@ -37,18 +37,32 @@ function ProjectsContent({ projects }: ProjectsContentProps) {
         }
       />
 
-      <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8'>
-        {filteredProjects.map((project, index) => (
-          <ProjectCard
-            key={project.id}
-            project={mapProjectToCardProject(project)}
-            categoryLabel={
-              categories.find((c) => c.value === project.category)?.label
-            }
-            index={index}
-          />
-        ))}
-      </div>
+      {filteredProjects.length === 0 ? (
+        <div className='text-center py-20'>
+          <p className='text-foreground-muted text-lg mb-6'>
+            No se encontraron trabajos en esta categoría.
+          </p>
+          <a
+            href='/projects'
+            className='inline-flex items-center gap-2 text-foreground hover:text-foreground-muted transition-colors'
+          >
+            Ver todos los trabajos
+          </a>
+        </div>
+      ) : (
+        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8'>
+          {filteredProjects.map((project, index) => (
+            <ProjectCard
+              key={project.id}
+              project={mapProjectToCardProject(project)}
+              categoryLabel={
+                categories.find((c) => c.value === project.category)?.label
+              }
+              index={index}
+            />
+          ))}
+        </div>
+      )}
     </>
   )
 }

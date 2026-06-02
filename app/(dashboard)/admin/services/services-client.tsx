@@ -654,6 +654,8 @@ export default function ServicesClient({
                               size='sm'
                               variant='outline'
                               onClick={() => handleStartEdit(service)}
+                              aria-label='Editar'
+                              className='min-w-10 min-h-10'
                             >
                               <Pencil className='w-3.5 h-3.5' />
                             </Button>
@@ -666,6 +668,8 @@ export default function ServicesClient({
                               size='sm'
                               variant='outline'
                               onClick={() => handleToggleEnabled(service)}
+                              aria-label={service.enabled ? 'Deshabilitar' : 'Habilitar'}
+                              className='min-w-10 min-h-10'
                             >
                               {service.enabled ? (
                                 <EyeOff className='w-3.5 h-3.5' />
@@ -681,8 +685,9 @@ export default function ServicesClient({
                             <Button
                               size='sm'
                               variant='outline'
-                              className='text-destructive border-destructive/30 hover:bg-destructive/10'
+                              className='text-destructive border-destructive/30 hover:bg-destructive/10 min-w-10 min-h-10'
                               onClick={() => openDeleteDialog(service)}
+                              aria-label='Eliminar'
                             >
                               <Trash2 className='w-3.5 h-3.5' />
                             </Button>
