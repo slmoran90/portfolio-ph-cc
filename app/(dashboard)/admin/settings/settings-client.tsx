@@ -34,9 +34,9 @@ const MAX_BYTES = 10 * 1024 * 1024
 type Tab = 'profile' | 'contact' | 'security'
 
 const tabs: { id: Tab; label: string; icon: React.ElementType }[] = [
-  { id: 'profile', label: 'Profile', icon: User },
-  { id: 'contact', label: 'Contact Info', icon: Mail },
-  { id: 'security', label: 'Security', icon: Lock }
+  { id: 'profile', label: 'Perfil', icon: User },
+  { id: 'contact', label: 'Información de contacto', icon: Mail },
+  { id: 'security', label: 'Seguridad', icon: Lock }
 ]
 
 export default function SettingsClient({
@@ -79,11 +79,11 @@ export default function SettingsClient({
     e.target.value = ''
     if (!file) return
     if (!ACCEPTED_MIME.includes(file.type)) {
-      setProfileError('Unsupported format. Use JPEG, PNG, WebP, or AVIF.')
+      setProfileError('Formato no soportado. Usá JPEG, PNG, WebP o AVIF.')
       return
     }
     if (file.size > MAX_BYTES) {
-      setProfileError('File exceeds 10 MB.')
+      setProfileError('El archivo supera los 10 MB.')
       return
     }
     setProfileError(null)
@@ -144,15 +144,15 @@ export default function SettingsClient({
     setPasswordError(null)
     setPasswordSuccess(false)
     if (!currentPassword) {
-      setPasswordError('Current password is required.')
+      setPasswordError('La contraseña actual es obligatoria.')
       return
     }
     if (!newPassword || newPassword.length < 6) {
-      setPasswordError('New password must be at least 6 characters.')
+      setPasswordError('La nueva contraseña debe tener al menos 6 caracteres.')
       return
     }
     if (newPassword !== confirmPassword) {
-      setPasswordError('Passwords do not match.')
+      setPasswordError('Las contraseñas no coinciden.')
       return
     }
     setPasswordSaving(true)
@@ -173,12 +173,12 @@ export default function SettingsClient({
     return (
       <>
         <AdminHeader
-          title='Settings'
-          description='Manage your account and preferences'
+          title='Configuración'
+          description='Administrá tu cuenta y preferencias'
         />
         <main className='flex-1 p-6 flex items-center justify-center'>
           <p className='text-foreground-muted text-sm'>
-            Settings row not found. Please insert an initial row into the{' '}
+            No se encontró la fila de configuración. Insertá una fila inicial en la{' '}
             <code className='text-foreground'>site_settings</code> table.
           </p>
         </main>
@@ -189,15 +189,15 @@ export default function SettingsClient({
   return (
     <>
       <AdminHeader
-        title='Settings'
-        description='Manage your account and preferences'
+        title='Configuración'
+        description='Administrá tu cuenta y preferencias'
       />
 
       <main className='flex-1 p-6 overflow-auto'>
         <div className='grid grid-cols-1 lg:grid-cols-4 gap-6'>
           {/* Sidebar Tabs */}
           <div className='lg:col-span-1'>
-            <AdminCard title='Settings'>
+            <AdminCard title='Configuración'>
               <nav className='space-y-1'>
                 {tabs.map((tab) => (
                   <button
@@ -226,8 +226,8 @@ export default function SettingsClient({
                 animate={{ opacity: 1, y: 0 }}
               >
                 <AdminCard
-                  title='Profile Information'
-                  description='Update your personal details and photo'
+                  title='Información del perfil'
+                  description='Actualizá tus datos personales y foto'
                 >
                   {/* Avatar row */}
                   <div className='flex items-center gap-6 mb-8'>
@@ -235,7 +235,7 @@ export default function SettingsClient({
                       {profileImageUrl ? (
                         <Image
                           src={profileImageUrl}
-                          alt='Profile photo'
+                          alt='Foto de perfil'
                           fill
                           className='object-cover'
                           sizes='96px'
@@ -259,10 +259,10 @@ export default function SettingsClient({
                         disabled={imageUploading}
                       >
                         <Upload className='w-4 h-4 mr-2' />
-                        {profileImageUrl ? 'Change Photo' : 'Upload Photo'}
+                        {profileImageUrl ? 'Cambiar foto' : 'Subir foto'}
                       </Button>
                       <p className='text-xs text-foreground-muted mt-2'>
-                        JPEG, PNG, WebP, AVIF · max 10 MB
+                        JPEG, PNG, WebP, AVIF · máx. 10 MB
                       </p>
                     </div>
                     <input
@@ -276,24 +276,24 @@ export default function SettingsClient({
 
                   <div className='space-y-4'>
                     <div className='space-y-2'>
-                      <Label htmlFor='fullName'>Full Name</Label>
+                      <Label htmlFor='fullName'>Nombre completo</Label>
                       <Input
                         id='fullName'
                         value={fullName}
                         onChange={(e) => setFullName(e.target.value)}
-                        placeholder='Your name'
+                        placeholder='Tu nombre'
                         className='h-12 bg-background border-border/50'
                       />
                     </div>
 
                     <div className='space-y-2'>
-                      <Label htmlFor='bio'>Bio</Label>
+                      <Label htmlFor='bio'>Biografía</Label>
                       <textarea
                         id='bio'
                         rows={4}
                         value={bio}
                         onChange={(e) => setBio(e.target.value)}
-                        placeholder='A short bio shown on the about page'
+                        placeholder='Una breve biografía que aparece en la página Sobre mí'
                         className='w-full px-4 py-3 rounded-lg border border-border/50 bg-background text-sm text-foreground placeholder:text-foreground-muted focus:border-primary-soft focus:outline-none focus:ring-1 focus:ring-primary-soft resize-none'
                       />
                     </div>
@@ -316,12 +316,12 @@ export default function SettingsClient({
                       ) : (
                         <Save className='w-4 h-4 mr-2' />
                       )}
-                      Save Profile
+                      Guardar perfil
                     </Button>
                     {profileSuccess && (
                       <span className='flex items-center gap-1.5 text-sm text-green-600'>
                         <Check className='w-4 h-4' />
-                        Saved
+                        Guardado
                       </span>
                     )}
                   </div>
@@ -336,8 +336,8 @@ export default function SettingsClient({
                 animate={{ opacity: 1, y: 0 }}
               >
                 <AdminCard
-                  title='Contact Information'
-                  description='Update your public contact details'
+                  title='Información de contacto'
+                  description='Actualizá tus datos de contacto públicos'
                 >
                   <div className='space-y-4 max-w-md'>
                     <div className='space-y-2'>
@@ -346,14 +346,14 @@ export default function SettingsClient({
                         className='flex items-center gap-2'
                       >
                         <Mail className='w-4 h-4' />
-                        Email Address
+                        Correo electrónico
                       </Label>
                       <Input
                         id='email'
                         type='email'
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        placeholder='hello@example.com'
+                        placeholder='hola@ejemplo.com'
                         className='h-12 bg-background border-border/50'
                       />
                     </div>
@@ -410,12 +410,12 @@ export default function SettingsClient({
                       ) : (
                         <Save className='w-4 h-4 mr-2' />
                       )}
-                      Save Contact
+                      Guardar contacto
                     </Button>
                     {contactSuccess && (
                       <span className='flex items-center gap-1.5 text-sm text-green-600'>
                         <Check className='w-4 h-4' />
-                        Saved
+                        Guardado
                       </span>
                     )}
                   </div>
@@ -430,12 +430,12 @@ export default function SettingsClient({
                 animate={{ opacity: 1, y: 0 }}
               >
                 <AdminCard
-                  title='Change Password'
-                  description='Update your account password'
+                  title='Cambiar contraseña'
+                  description='Actualizá la contraseña de tu cuenta'
                 >
                   <div className='space-y-4 max-w-md'>
                     <div className='space-y-2'>
-                      <Label htmlFor='currentPassword'>Current Password</Label>
+                      <Label htmlFor='currentPassword'>Contraseña actual</Label>
                       <Input
                         id='currentPassword'
                         type='password'
@@ -446,7 +446,7 @@ export default function SettingsClient({
                       />
                     </div>
                     <div className='space-y-2'>
-                      <Label htmlFor='newPassword'>New Password</Label>
+                      <Label htmlFor='newPassword'>Nueva contraseña</Label>
                       <Input
                         id='newPassword'
                         type='password'
@@ -458,7 +458,7 @@ export default function SettingsClient({
                     </div>
                     <div className='space-y-2'>
                       <Label htmlFor='confirmPassword'>
-                        Confirm New Password
+                        Confirmar nueva contraseña
                       </Label>
                       <Input
                         id='confirmPassword'
@@ -480,7 +480,7 @@ export default function SettingsClient({
                   {passwordSuccess && (
                     <p className='flex items-center gap-2 text-sm text-green-600 mt-4'>
                       <Check className='w-4 h-4' />
-                      Password updated successfully.
+                      Contraseña actualizada correctamente.
                     </p>
                   )}
 
@@ -494,7 +494,7 @@ export default function SettingsClient({
                       ) : (
                         <Lock className='w-4 h-4 mr-2' />
                       )}
-                      Update Password
+                      Actualizar contraseña
                     </Button>
                   </div>
                 </AdminCard>
