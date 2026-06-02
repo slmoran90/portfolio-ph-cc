@@ -65,8 +65,8 @@ export default function GalleryClient({
   )
 
   function validateFile(file: File): string | null {
-    if (!ACCEPTED_MIME.includes(file.type)) return 'Unsupported format (JPEG, PNG, WebP, AVIF only)'
-    if (file.size > MAX_BYTES) return 'File exceeds 10 MB limit'
+    if (!ACCEPTED_MIME.includes(file.type)) return 'Formato no soportado (solo JPEG, PNG, WebP, AVIF)'
+    if (file.size > MAX_BYTES) return 'El archivo supera los 10 MB'
     return null
   }
 
@@ -211,7 +211,7 @@ export default function GalleryClient({
 
   return (
     <>
-      <AdminHeader title='Gallery' description='Manage your media library' />
+      <AdminHeader title='Galería' description='Administrá tu biblioteca de medios' />
 
       <main className='flex-1 p-6 overflow-auto'>
         {/* Upload Area */}
@@ -231,13 +231,13 @@ export default function GalleryClient({
             <Upload className='w-6 h-6 text-primary-soft' />
           </div>
           <p className='text-foreground font-medium mb-2'>
-            Drag and drop images to upload
+            Arrastrá imágenes para subir
           </p>
           <p className='text-sm text-foreground-muted mb-4'>
-            JPEG, PNG, WebP, AVIF — up to 10 MB each
+            JPEG, PNG, WebP, AVIF — hasta 10 MB cada uno
           </p>
           <Button variant='outline' onClick={() => fileInputRef.current?.click()}>
-            Browse Files
+            Buscar archivos
           </Button>
           <input
             ref={fileInputRef}
@@ -255,7 +255,7 @@ export default function GalleryClient({
             <Search className='absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-foreground-muted' />
             <Input
               type='search'
-              placeholder='Search by title or category...'
+              placeholder='Buscar por título o categoría...'
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className='pl-10 bg-background border-border/50'
@@ -264,9 +264,9 @@ export default function GalleryClient({
           <div className='flex gap-2'>
             <Button variant='outline' onClick={toggleSelectAll}>
               {allSelected ? (
-                <><X className='w-4 h-4 mr-2' />Deselect All</>
+                <><X className='w-4 h-4 mr-2' />Deseleccionar todo</>
               ) : (
-                <><Check className='w-4 h-4 mr-2' />Select All</>
+                <><Check className='w-4 h-4 mr-2' />Seleccionar todo</>
               )}
             </Button>
             {selectedIds.length > 0 && (
@@ -277,7 +277,7 @@ export default function GalleryClient({
                 disabled={bulkDeleting}
               >
                 <Trash2 className='w-4 h-4 mr-2' />
-                Delete ({selectedIds.length})
+                Eliminar ({selectedIds.length})
               </Button>
             )}
           </div>
@@ -285,16 +285,16 @@ export default function GalleryClient({
 
         {/* Grid */}
         <AdminCard
-          title={`${filteredImages.length + uploadQueue.length} Images`}
+          title={`${filteredImages.length + uploadQueue.length} Imágenes`}
         >
           {filteredImages.length === 0 && uploadQueue.length === 0 ? (
             <EmptyState
               icon={ImageIcon}
-              title='No images yet'
-              description='Upload images to build your gallery.'
+              title='Aún no hay imágenes'
+              description='Subí imágenes para armar tu galería.'
               action={
                 <Button onClick={() => fileInputRef.current?.click()}>
-                  Upload Images
+                  Subir imágenes
                 </Button>
               }
             />
@@ -328,7 +328,7 @@ export default function GalleryClient({
                             )
                           }}
                         >
-                          Dismiss
+                          Cerrar
                         </button>
                       </>
                     )}
@@ -351,7 +351,7 @@ export default function GalleryClient({
                 >
                   <Image
                     src={image.image_url}
-                    alt={image.title ?? 'Gallery image'}
+                    alt={image.title ?? 'Imagen de galería'}
                     fill
                     className='object-cover transition-transform duration-300 group-hover:scale-105'
                     sizes='(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 16vw'
@@ -374,7 +374,7 @@ export default function GalleryClient({
                         : 'bg-background/80 border-background/80 opacity-0 group-hover:opacity-100'
                     }`}
                     onClick={() => toggleSelect(image.id)}
-                    aria-label='Select image'
+                    aria-label='Seleccionar imagen'
                   >
                     {selectedIds.includes(image.id) && (
                       <Check className='w-3 h-3 text-white' />
@@ -389,7 +389,7 @@ export default function GalleryClient({
                         : 'bg-background/80 opacity-0 group-hover:opacity-100'
                     }`}
                     onClick={() => handleToggleFeatured(image)}
-                    aria-label={image.featured ? 'Unfeature' : 'Feature'}
+                    aria-label={image.featured ? 'Quitar destacado' : 'Destacar'}
                   >
                     <Star
                       className={`w-3.5 h-3.5 ${image.featured ? 'text-white fill-white' : 'text-foreground'}`}
@@ -404,9 +404,9 @@ export default function GalleryClient({
                         onChange={(e) => handleCategoryChange(image, e.target.value)}
                         onClick={(e) => e.stopPropagation()}
                         className='text-xs bg-transparent text-white flex-1 min-w-0 outline-none cursor-pointer'
-                        aria-label='Category'
+                        aria-label='Categoría'
                       >
-                        <option value=''>No category</option>
+                        <option value=''>Sin categoría</option>
                         {IMAGE_CATEGORIES.map((c) => (
                           <option key={c.value} value={c.value} className='text-foreground bg-background'>
                             {c.label}
@@ -416,7 +416,7 @@ export default function GalleryClient({
                       <button
                         onClick={() => setDeletingId(image.id)}
                         className='shrink-0 text-white/80 hover:text-white transition-colors'
-                        aria-label='Delete'
+                        aria-label='Eliminar'
                       >
                         <Trash2 className='w-3.5 h-3.5' />
                       </button>
@@ -427,7 +427,7 @@ export default function GalleryClient({
                   {deletingId === image.id && (
                     <div className='absolute inset-0 bg-foreground/90 flex flex-col items-center justify-center gap-2 p-3'>
                       <p className='text-white text-xs text-center font-medium'>
-                        Delete this image?
+                        ¿Eliminar esta imagen?
                       </p>
                       <div className='flex gap-2'>
                         <Button
@@ -436,7 +436,7 @@ export default function GalleryClient({
                           className='h-7 text-xs px-3'
                           onClick={() => confirmDelete(image.id, image.image_url)}
                         >
-                          Delete
+                          Eliminar
                         </Button>
                         <Button
                           size='sm'
@@ -444,7 +444,7 @@ export default function GalleryClient({
                           className='h-7 text-xs px-3 bg-transparent text-white border-white/50 hover:bg-white/10'
                           onClick={() => setDeletingId(null)}
                         >
-                          Cancel
+                          Cancelar
                         </Button>
                       </div>
                     </div>
