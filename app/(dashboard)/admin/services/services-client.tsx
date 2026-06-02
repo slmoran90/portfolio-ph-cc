@@ -8,6 +8,7 @@ import { AdminHeader, AdminCard, EmptyState } from '@/components/admin'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import {
   Search,
   Plus,
@@ -28,6 +29,7 @@ import {
   updateService,
   deleteService
 } from '@/lib/actions/services'
+import { ConfirmDeleteDialog } from '@/components/admin/confirm-delete-dialog'
 import type { Service } from '@/lib/data/services.types'
 
 const ACCEPTED_MIME = ['image/jpeg', 'image/png', 'image/webp', 'image/avif']
@@ -136,7 +138,9 @@ export default function ServicesClient({
   const [createDraft, setCreateDraft] = useState<ServiceDraft>(emptyDraft)
   const [editingId, setEditingId] = useState<string | null>(null)
   const [editDraft, setEditDraft] = useState<ServiceDraft | null>(null)
-  const [deletingId, setDeletingId] = useState<string | null>(null)
+  const [dialogOpen, setDialogOpen] = useState(false)
+  const [pendingDelete, setPendingDelete] = useState<Service | null>(null)
+  const [isDeleting, setIsDeleting] = useState(false)
   const [saving, setSaving] = useState(false)
   const [saveError, setSaveError] = useState<string | null>(null)
   const [imageUploading, setImageUploading] = useState(false)
@@ -290,11 +294,27 @@ export default function ServicesClient({
     router.refresh()
   }
 
-  async function handleDelete(id: string, imageUrl: string | null) {
-    setDeletingId(null)
-    setServices((prev) => prev.filter((s) => s.id !== id))
-    await deleteService(id, imageUrl)
-    router.refresh()
+  function openDeleteDialog(service: Service) {
+    setPendingDelete(service)
+    setDialogOpen(true)
+  }
+
+  async function handleConfirmDelete() {
+    if (!pendingDelete) return
+    setIsDeleting(true)
+    try {
+      const result = await deleteService(pendingDelete.id, pendingDelete.image_url)
+      if (result.error) {
+        console.error('Delete error:', result.error)
+      } else {
+        setServices((prev) => prev.filter((s) => s.id !== pendingDelete.id))
+        router.refresh()
+      }
+    } finally {
+      setIsDeleting(false)
+      setDialogOpen(false)
+      setPendingDelete(null)
+    }
   }
 
   return (
@@ -628,74 +648,65 @@ export default function ServicesClient({
 
                       {/* Actions */}
                       <div className='flex items-center gap-1.5 shrink-0'>
-                        <Button
-                          size='sm'
-                          variant='outline'
-                          onClick={() => handleStartEdit(service)}
-                        >
-                          <Pencil className='w-3.5 h-3.5 sm:mr-1.5' />
-                          <span className='hidden sm:inline'>Editar</span>
-                        </Button>
-                        <Button
-                          size='sm'
-                          variant='outline'
-                          onClick={() => handleToggleEnabled(service)}
-                          title={service.enabled ? 'Deshabilitar' : 'Habilitar'}
-                        >
-                          {service.enabled ? (
-                            <EyeOff className='w-3.5 h-3.5' />
-                          ) : (
-                            <Eye className='w-3.5 h-3.5' />
-                          )}
-                        </Button>
-                        <Button
-                          size='sm'
-                          variant='outline'
-                          className='text-destructive border-destructive/30 hover:bg-destructive/10'
-                          onClick={() => setDeletingId(service.id)}
-                        >
-                          <Trash2 className='w-3.5 h-3.5' />
-                        </Button>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <Button
+                              size='sm'
+                              variant='outline'
+                              onClick={() => handleStartEdit(service)}
+                            >
+                              <Pencil className='w-3.5 h-3.5' />
+                            </Button>
+                          </TooltipTrigger>
+                          <TooltipContent>Editar</TooltipContent>
+                        </Tooltip>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <Button
+                              size='sm'
+                              variant='outline'
+                              onClick={() => handleToggleEnabled(service)}
+                            >
+                              {service.enabled ? (
+                                <EyeOff className='w-3.5 h-3.5' />
+                              ) : (
+                                <Eye className='w-3.5 h-3.5' />
+                              )}
+                            </Button>
+                          </TooltipTrigger>
+                          <TooltipContent>{service.enabled ? 'Deshabilitar' : 'Habilitar'}</TooltipContent>
+                        </Tooltip>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <Button
+                              size='sm'
+                              variant='outline'
+                              className='text-destructive border-destructive/30 hover:bg-destructive/10'
+                              onClick={() => openDeleteDialog(service)}
+                            >
+                              <Trash2 className='w-3.5 h-3.5' />
+                            </Button>
+                          </TooltipTrigger>
+                          <TooltipContent>Eliminar</TooltipContent>
+                        </Tooltip>
                       </div>
                     </div>
                   )}
 
-                  {/* Delete confirmation */}
-                  {deletingId === service.id && (
-                    <motion.div
-                      initial={{ opacity: 0, y: -4 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      className='mt-1 p-3 bg-destructive/10 rounded-xl border border-destructive/20 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3'
-                    >
-                      <p className='text-sm font-medium text-destructive'>
-                        ¿Eliminar &ldquo;{service.title}&rdquo;? Esta acción no se puede deshacer.
-                      </p>
-                      <div className='flex gap-2 shrink-0'>
-                        <Button
-                          size='sm'
-                          variant='destructive'
-                          onClick={() =>
-                            handleDelete(service.id, service.image_url)
-                          }
-                        >
-                          Confirmar
-                        </Button>
-                        <Button
-                          size='sm'
-                          variant='outline'
-                          onClick={() => setDeletingId(null)}
-                        >
-                          Cancelar
-                        </Button>
-                      </div>
-                    </motion.div>
-                  )}
                 </motion.div>
               ))}
             </div>
           )}
         </AdminCard>
       </main>
+
+      <ConfirmDeleteDialog
+        open={dialogOpen}
+        onOpenChange={setDialogOpen}
+        title='¿Eliminar servicio?'
+        description={`¿Eliminar "${pendingDelete?.title}"? Esta acción no se puede deshacer.`}
+        onConfirm={handleConfirmDelete}
+        loading={isDeleting}
+      />
     </>
-  )
-}
+  )}

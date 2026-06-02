@@ -6,26 +6,22 @@ import Image from 'next/image'
 import { AdminHeader, AdminCard, EmptyState } from '@/components/admin'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import { categories } from '@/lib/data/projects.constants'
 import {
   Plus,
   Search,
-  MoreHorizontal,
-  Edit,
+  Pencil,
   Trash2,
   Eye,
   FolderOpen,
   Image as ImageIcon,
   Star
 } from 'lucide-react'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger
-} from '@/components/ui/dropdown-menu'
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
+import { deleteProject } from '@/lib/actions/projects'
+import { ConfirmDeleteDialog } from '@/components/admin/confirm-delete-dialog'
 import type { Project } from '@/lib/data/projects.types'
 
 export default function ProjectsListClient({
@@ -33,8 +29,12 @@ export default function ProjectsListClient({
 }: {
   projects: Project[]
 }) {
+  const router = useRouter()
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('all')
+  const [dialogOpen, setDialogOpen] = useState(false)
+  const [pendingDelete, setPendingDelete] = useState<Project | null>(null)
+  const [isDeleting, setIsDeleting] = useState(false)
 
   const filteredProjects = projects.filter((project) => {
     const matchesSearch = project.title
@@ -44,6 +44,32 @@ export default function ProjectsListClient({
       selectedCategory === 'all' || project.category === selectedCategory
     return matchesSearch && matchesCategory
   })
+
+  function openDeleteDialog(project: Project) {
+    setPendingDelete(project)
+    setDialogOpen(true)
+  }
+
+  async function handleConfirmDelete() {
+    if (!pendingDelete) return
+    setIsDeleting(true)
+    try {
+      const result = await deleteProject(
+        pendingDelete.id,
+        pendingDelete.slug,
+        pendingDelete.images ?? []
+      )
+      if (result.error) {
+        console.error('Delete error:', result.error)
+      } else {
+        router.refresh()
+      }
+    } finally {
+      setIsDeleting(false)
+      setDialogOpen(false)
+      setPendingDelete(null)
+    }
+  }
 
   return (
     <>
@@ -86,7 +112,7 @@ export default function ProjectsListClient({
           </Button>
         </div>
 
-        <AdminCard title={`${filteredProjects.length} Proyecto${filteredProjects.length !== 1 ? 's' : ''}`}>
+        <AdminCard title={`Proyectos creados: ${filteredProjects.length}`}>
           {filteredProjects.length === 0 ? (
             <EmptyState
               icon={FolderOpen}
@@ -130,23 +156,23 @@ export default function ProjectsListClient({
                     <h3 className='font-medium text-foreground truncate'>
                       {project.title}
                     </h3>
-                    <div className='flex items-center gap-4 mt-1'>
+                    <div className='flex flex-wrap items-center gap-2 mt-1.5'>
                       <span className='text-xs px-2 py-1 rounded-full bg-champagne/30 text-foreground'>
                         {
                           categories.find((c) => c.value === project.category)
                             ?.label ?? project.category
                         }
                       </span>
-                      <span className='text-sm text-foreground-muted'>
+                      <span className='text-xs px-2 py-1 rounded-full bg-surface-alt text-foreground-muted'>
                         {project.created_at
                           ? new Intl.DateTimeFormat('es-AR', {
                               year: 'numeric',
-                              month: 'long',
+                              month: 'short',
                               timeZone: 'UTC'
                             }).format(new Date(project.created_at))
                           : '—'}
                       </span>
-                      <span className='text-sm text-foreground-muted'>
+                      <span className='text-xs px-2 py-1 rounded-full bg-surface-alt text-foreground-muted'>
                         {project.images?.length ?? 0} imágenes
                       </span>
                       <span
@@ -166,45 +192,58 @@ export default function ProjectsListClient({
                       )}
                     </div>
                   </div>
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button
-                        variant='ghost'
-                        size='sm'
-                        className='h-8 w-8 p-0'
-                      >
-                        <MoreHorizontal className='w-4 h-4' />
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align='end'>
-                      <DropdownMenuItem asChild>
-                        <Link
-                          href={`/projects/${project.slug}`}
-                          target='_blank'
+                  <div className='flex items-center gap-1.5 shrink-0'>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Button size='sm' variant='outline' asChild>
+                          <Link
+                            href={`/projects/${project.slug}`}
+                            target='_blank'
+                          >
+                            <Eye className='w-3.5 h-3.5' />
+                          </Link>
+                        </Button>
+                      </TooltipTrigger>
+                      <TooltipContent>Ver en vivo</TooltipContent>
+                    </Tooltip>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Button size='sm' variant='outline' asChild>
+                          <Link href={`/admin/projects/${project.id}`}>
+                            <Pencil className='w-3.5 h-3.5' />
+                          </Link>
+                        </Button>
+                      </TooltipTrigger>
+                      <TooltipContent>Editar</TooltipContent>
+                    </Tooltip>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Button
+                          size='sm'
+                          variant='outline'
+                          className='text-destructive border-destructive/30 hover:bg-destructive/10'
+                          onClick={() => openDeleteDialog(project)}
                         >
-                          <Eye className='w-4 h-4 mr-2' />
-                          Ver en vivo
-                        </Link>
-                      </DropdownMenuItem>
-                      <DropdownMenuItem asChild>
-                        <Link href={`/admin/projects/${project.id}`}>
-                          <Edit className='w-4 h-4 mr-2' />
-                          Editar
-                        </Link>
-                      </DropdownMenuItem>
-                      <DropdownMenuSeparator />
-                      <DropdownMenuItem className='text-destructive'>
-                        <Trash2 className='w-4 h-4 mr-2' />
-                        Eliminar
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
+                          <Trash2 className='w-3.5 h-3.5' />
+                        </Button>
+                      </TooltipTrigger>
+                      <TooltipContent>Eliminar</TooltipContent>
+                    </Tooltip>
+                  </div>
                 </motion.div>
               ))}
             </div>
           )}
         </AdminCard>
       </main>
+
+      <ConfirmDeleteDialog
+        open={dialogOpen}
+        onOpenChange={setDialogOpen}
+        title='¿Eliminar proyecto?'
+        description={`¿Eliminar "${pendingDelete?.title}"? Esta acción no se puede deshacer.`}
+        onConfirm={handleConfirmDelete}
+        loading={isDeleting}
+      />
     </>
-  )
-}
+  )}
