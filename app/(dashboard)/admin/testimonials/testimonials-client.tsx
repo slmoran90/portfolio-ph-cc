@@ -8,6 +8,7 @@ import { AdminHeader, AdminCard, EmptyState } from '@/components/admin'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import {
   Select,
   SelectContent,
@@ -36,6 +37,7 @@ import {
   updateTestimonial,
   deleteTestimonial,
 } from '@/lib/actions/testimonials'
+import { ConfirmDeleteDialog } from '@/components/admin/confirm-delete-dialog'
 import type { Testimonial } from '@/lib/data/testimonials.types'
 import type { Service } from '@/lib/data/services.types'
 
@@ -372,7 +374,9 @@ export default function TestimonialsClient({
   const [createDraft, setCreateDraft] = useState<TestimonialDraft>(emptyDraft)
   const [editingId, setEditingId] = useState<string | null>(null)
   const [editDraft, setEditDraft] = useState<TestimonialDraft>(emptyDraft)
-  const [deletingId, setDeletingId] = useState<string | null>(null)
+  const [dialogOpen, setDialogOpen] = useState(false)
+  const [pendingDelete, setPendingDelete] = useState<Testimonial | null>(null)
+  const [isDeleting, setIsDeleting] = useState(false)
   const [saving, setSaving] = useState(false)
   const [saveError, setSaveError] = useState<string | null>(null)
   const [imageUploading, setImageUploading] = useState(false)
@@ -604,11 +608,27 @@ export default function TestimonialsClient({
     router.refresh()
   }
 
-  async function handleDelete(id: string, avatarUrl: string | null) {
-    setDeletingId(null)
-    setTestimonials((prev) => prev.filter((t) => t.id !== id))
-    await deleteTestimonial(id, avatarUrl)
-    router.refresh()
+  function openDeleteDialog(testimonial: Testimonial) {
+    setPendingDelete(testimonial)
+    setDialogOpen(true)
+  }
+
+  async function handleConfirmDelete() {
+    if (!pendingDelete) return
+    setIsDeleting(true)
+    try {
+      const result = await deleteTestimonial(pendingDelete.id, pendingDelete.avatar_url)
+      if (result.error) {
+        console.error('Delete error:', result.error)
+      } else {
+        setTestimonials((prev) => prev.filter((t) => t.id !== pendingDelete.id))
+        router.refresh()
+      }
+    } finally {
+      setIsDeleting(false)
+      setDialogOpen(false)
+      setPendingDelete(null)
+    }
   }
 
   return (
@@ -774,91 +794,83 @@ export default function TestimonialsClient({
                       </div>
 
                       <div className='flex items-start gap-1.5 shrink-0 pt-0.5'>
-                        <Button
-                          size='sm'
-                          variant='outline'
-                          onClick={() => handleStartEdit(testimonial)}
-                        >
-                          <Pencil className='w-3.5 h-3.5 sm:mr-1.5' />
-                          <span className='hidden sm:inline'>Editar</span>
-                        </Button>
-                        <Button
-                          size='sm'
-                          variant='outline'
-                          onClick={() => handleToggleFeatured(testimonial)}
-                          title={
-                            testimonial.featured
-                              ? 'Quitar destacado'
-                              : 'Destacar'
-                          }
-                        >
-                          <Star
-                            className={`w-3.5 h-3.5 ${
-                              testimonial.featured
-                                ? 'fill-current text-champagne'
-                                : ''
-                            }`}
-                          />
-                        </Button>
-                        <Button
-                          size='sm'
-                          variant='outline'
-                          onClick={() => handleToggleEnabled(testimonial)}
-                          title={testimonial.enabled ? 'Deshabilitar' : 'Habilitar'}
-                        >
-                          {testimonial.enabled ? (
-                            <EyeOff className='w-3.5 h-3.5' />
-                          ) : (
-                            <Eye className='w-3.5 h-3.5' />
-                          )}
-                        </Button>
-                        <Button
-                          size='sm'
-                          variant='outline'
-                          className='text-destructive border-destructive/30 hover:bg-destructive/10'
-                          onClick={() => setDeletingId(testimonial.id)}
-                        >
-                          <Trash2 className='w-3.5 h-3.5' />
-                        </Button>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <Button
+                              size='sm'
+                              variant='outline'
+                              onClick={() => handleStartEdit(testimonial)}
+                            >
+                              <Pencil className='w-3.5 h-3.5' />
+                            </Button>
+                          </TooltipTrigger>
+                          <TooltipContent>Editar</TooltipContent>
+                        </Tooltip>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <Button
+                              size='sm'
+                              variant='outline'
+                              onClick={() => handleToggleFeatured(testimonial)}
+                            >
+                              <Star
+                                className={`w-3.5 h-3.5 ${
+                                  testimonial.featured
+                                    ? 'fill-current text-champagne'
+                                    : ''
+                                }`}
+                              />
+                            </Button>
+                          </TooltipTrigger>
+                          <TooltipContent>{testimonial.featured ? 'Quitar destacado' : 'Destacar'}</TooltipContent>
+                        </Tooltip>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <Button
+                              size='sm'
+                              variant='outline'
+                              onClick={() => handleToggleEnabled(testimonial)}
+                            >
+                              {testimonial.enabled ? (
+                                <EyeOff className='w-3.5 h-3.5' />
+                              ) : (
+                                <Eye className='w-3.5 h-3.5' />
+                              )}
+                            </Button>
+                          </TooltipTrigger>
+                          <TooltipContent>{testimonial.enabled ? 'Deshabilitar' : 'Habilitar'}</TooltipContent>
+                        </Tooltip>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <Button
+                              size='sm'
+                              variant='outline'
+                              className='text-destructive border-destructive/30 hover:bg-destructive/10'
+                              onClick={() => openDeleteDialog(testimonial)}
+                            >
+                              <Trash2 className='w-3.5 h-3.5' />
+                            </Button>
+                          </TooltipTrigger>
+                          <TooltipContent>Eliminar</TooltipContent>
+                        </Tooltip>
                       </div>
                     </div>
                   )}
 
-                  {deletingId === testimonial.id && (
-                    <motion.div
-                      initial={{ opacity: 0, y: -4 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      className='mt-1 p-3 bg-destructive/10 rounded-xl border border-destructive/20 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3'
-                    >
-                      <p className='text-sm font-medium text-destructive'>
-                        ¿Eliminar el testimonio de &ldquo;{testimonial.client_name}&rdquo;? Esta acción no se puede deshacer.
-                      </p>
-                      <div className='flex gap-2 shrink-0'>
-                        <Button
-                          size='sm'
-                          variant='destructive'
-                          onClick={() =>
-                            handleDelete(testimonial.id, testimonial.avatar_url)
-                          }
-                        >
-                          Confirmar
-                        </Button>
-                        <Button
-                          size='sm'
-                          variant='outline'
-                          onClick={() => setDeletingId(null)}
-                        >
-                          <X className='w-3.5 h-3.5' />
-                        </Button>
-                      </div>
-                    </motion.div>
-                  )}
                 </motion.div>
               ))}
             </div>
           )}
         </AdminCard>
       </main>
+
+      <ConfirmDeleteDialog
+        open={dialogOpen}
+        onOpenChange={setDialogOpen}
+        title='¿Eliminar testimonio?'
+        description={`¿Eliminar el testimonio de "${pendingDelete?.client_name}"? Esta acción no se puede deshacer.`}
+        onConfirm={handleConfirmDelete}
+        loading={isDeleting}
+      />
     </>
-  )
-}
+  )}
