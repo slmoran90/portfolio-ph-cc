@@ -7,6 +7,7 @@ import Image from 'next/image'
 import { AdminHeader, AdminCard, EmptyState } from '@/components/admin'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import { Upload, Search, Trash2, Image as ImageIcon, Check, X, Star } from 'lucide-react'
 import { categories } from '@/lib/data/projects.constants'
 import { uploadGalleryImage } from '@/lib/supabase/storage'
@@ -15,6 +16,7 @@ import {
   updateGalleryImage,
   deleteGalleryImage
 } from '@/lib/actions/gallery'
+import { ConfirmDeleteDialog } from '@/components/admin/confirm-delete-dialog'
 import type { GalleryImage } from '@/lib/data/gallery.types'
 
 const ACCEPTED_MIME = ['image/jpeg', 'image/png', 'image/webp', 'image/avif']
@@ -39,8 +41,10 @@ export default function GalleryClient({
   const [selectedIds, setSelectedIds] = useState<string[]>([])
   const [searchQuery, setSearchQuery] = useState('')
   const [dragOver, setDragOver] = useState(false)
-  const [deletingId, setDeletingId] = useState<string | null>(null)
-  const [bulkDeleting, setBulkDeleting] = useState(false)
+  const [dialogOpen, setDialogOpen] = useState(false)
+  const [pendingDelete, setPendingDelete] = useState<GalleryImage | null>(null)
+  const [bulkDialogOpen, setBulkDialogOpen] = useState(false)
+  const [isDeleting, setIsDeleting] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
   const sessionId = useRef(`gallery-${Date.now()}`)
   const router = useRouter()
@@ -173,23 +177,47 @@ export default function GalleryClient({
     router.refresh()
   }
 
-  async function confirmDelete(id: string, imageUrl: string) {
-    setDeletingId(null)
-    setImages((prev) => prev.filter((i) => i.id !== id))
-    await deleteGalleryImage(id, imageUrl)
-    router.refresh()
+  function openDeleteDialog(image: GalleryImage) {
+    setPendingDelete(image)
+    setDialogOpen(true)
   }
 
-  async function handleBulkDelete() {
-    setBulkDeleting(true)
-    const toDelete = images.filter((i) => selectedIds.includes(i.id))
-    setImages((prev) => prev.filter((i) => !selectedIds.includes(i.id)))
-    setSelectedIds([])
-    for (const img of toDelete) {
-      await deleteGalleryImage(img.id, img.image_url)
+  async function handleConfirmDelete() {
+    if (!pendingDelete) return
+    setIsDeleting(true)
+    try {
+      const result = await deleteGalleryImage(pendingDelete.id, pendingDelete.image_url)
+      if (result.error) {
+        console.error('Delete error:', result.error)
+      } else {
+        setImages((prev) => prev.filter((i) => i.id !== pendingDelete.id))
+        router.refresh()
+      }
+    } finally {
+      setIsDeleting(false)
+      setDialogOpen(false)
+      setPendingDelete(null)
     }
-    setBulkDeleting(false)
-    router.refresh()
+  }
+
+  function openBulkDeleteDialog() {
+    setBulkDialogOpen(true)
+  }
+
+  async function handleConfirmBulkDelete() {
+    setIsDeleting(true)
+    try {
+      const toDelete = images.filter((i) => selectedIds.includes(i.id))
+      setImages((prev) => prev.filter((i) => !selectedIds.includes(i.id)))
+      setSelectedIds([])
+      for (const img of toDelete) {
+        await deleteGalleryImage(img.id, img.image_url)
+      }
+      router.refresh()
+    } finally {
+      setIsDeleting(false)
+      setBulkDialogOpen(false)
+    }
   }
 
   function toggleSelect(id: string) {
@@ -273,8 +301,8 @@ export default function GalleryClient({
               <Button
                 variant='outline'
                 className='text-destructive border-destructive/50 hover:bg-destructive/10'
-                onClick={handleBulkDelete}
-                disabled={bulkDeleting}
+                onClick={openBulkDeleteDialog}
+                disabled={isDeleting}
               >
                 <Trash2 className='w-4 h-4 mr-2' />
                 Eliminar ({selectedIds.length})
@@ -285,7 +313,7 @@ export default function GalleryClient({
 
         {/* Grid */}
         <AdminCard
-          title={`${filteredImages.length + uploadQueue.length} Imágenes`}
+          title={`Imágenes cargadas: ${filteredImages.length + uploadQueue.length}`}
         >
           {filteredImages.length === 0 && uploadQueue.length === 0 ? (
             <EmptyState
@@ -367,37 +395,47 @@ export default function GalleryClient({
                   />
 
                   {/* Checkbox */}
-                  <button
-                    className={`absolute top-2 left-2 w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all ${
-                      selectedIds.includes(image.id)
-                        ? 'bg-primary-soft border-primary-soft opacity-100'
-                        : 'bg-background/80 border-background/80 opacity-0 group-hover:opacity-100'
-                    }`}
-                    onClick={() => toggleSelect(image.id)}
-                    aria-label='Seleccionar imagen'
-                  >
-                    {selectedIds.includes(image.id) && (
-                      <Check className='w-3 h-3 text-white' />
-                    )}
-                  </button>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <button
+                        className={`absolute top-2 left-2 w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all ${
+                          selectedIds.includes(image.id)
+                            ? 'bg-primary-soft border-primary-soft opacity-100'
+                            : 'bg-background/80 border-background/80 opacity-0 group-hover:opacity-100'
+                        }`}
+                        onClick={() => toggleSelect(image.id)}
+                        aria-label='Seleccionar imagen'
+                      >
+                        {selectedIds.includes(image.id) && (
+                          <Check className='w-3 h-3 text-white' />
+                        )}
+                      </button>
+                    </TooltipTrigger>
+                    <TooltipContent>Seleccionar imagen</TooltipContent>
+                  </Tooltip>
 
                   {/* Featured star */}
-                  <button
-                    className={`absolute top-2 right-2 w-7 h-7 rounded-full flex items-center justify-center transition-all ${
-                      image.featured
-                        ? 'bg-amber-400 opacity-100'
-                        : 'bg-background/80 opacity-0 group-hover:opacity-100'
-                    }`}
-                    onClick={() => handleToggleFeatured(image)}
-                    aria-label={image.featured ? 'Quitar destacado' : 'Destacar'}
-                  >
-                    <Star
-                      className={`w-3.5 h-3.5 ${image.featured ? 'text-white fill-white' : 'text-foreground'}`}
-                    />
-                  </button>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <button
+                        className={`absolute top-2 right-2 w-7 h-7 rounded-full flex items-center justify-center transition-all ${
+                          image.featured
+                            ? 'bg-amber-400 opacity-100'
+                            : 'bg-background/80 opacity-0 group-hover:opacity-100'
+                        }`}
+                        onClick={() => handleToggleFeatured(image)}
+                        aria-label={image.featured ? 'Quitar destacado' : 'Destacar'}
+                      >
+                        <Star
+                          className={`w-3.5 h-3.5 ${image.featured ? 'text-white fill-white' : 'text-foreground'}`}
+                        />
+                      </button>
+                    </TooltipTrigger>
+                    <TooltipContent>{image.featured ? 'Quitar destacado' : 'Destacar'}</TooltipContent>
+                  </Tooltip>
 
-                  {/* Bottom overlay */}
-                  <div className='absolute bottom-0 left-0 right-0 bg-gradient-to-t from-foreground/80 to-transparent p-2 opacity-0 group-hover:opacity-100 transition-opacity'>
+                  {/* Bottom overlay - always visible on mobile for touch accessibility */}
+                  <div className='absolute bottom-0 left-0 right-0 bg-gradient-to-t from-foreground/80 to-transparent p-2 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity'>
                     <div className='flex items-center justify-between gap-1'>
                       <select
                         value={image.category ?? ''}
@@ -413,48 +451,43 @@ export default function GalleryClient({
                           </option>
                         ))}
                       </select>
-                      <button
-                        onClick={() => setDeletingId(image.id)}
-                        className='shrink-0 text-white/80 hover:text-white transition-colors'
-                        aria-label='Eliminar'
-                      >
-                        <Trash2 className='w-3.5 h-3.5' />
-                      </button>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <button
+                            onClick={() => openDeleteDialog(image)}
+                            className='shrink-0 text-white/80 hover:text-white transition-colors'
+                            aria-label='Eliminar'
+                          >
+                            <Trash2 className='w-3.5 h-3.5' />
+                          </button>
+                        </TooltipTrigger>
+                        <TooltipContent>Eliminar</TooltipContent>
+                      </Tooltip>
                     </div>
                   </div>
-
-                  {/* Delete confirmation */}
-                  {deletingId === image.id && (
-                    <div className='absolute inset-0 bg-foreground/90 flex flex-col items-center justify-center gap-2 p-3'>
-                      <p className='text-white text-xs text-center font-medium'>
-                        ¿Eliminar esta imagen?
-                      </p>
-                      <div className='flex gap-2'>
-                        <Button
-                          size='sm'
-                          variant='destructive'
-                          className='h-7 text-xs px-3'
-                          onClick={() => confirmDelete(image.id, image.image_url)}
-                        >
-                          Eliminar
-                        </Button>
-                        <Button
-                          size='sm'
-                          variant='outline'
-                          className='h-7 text-xs px-3 bg-transparent text-white border-white/50 hover:bg-white/10'
-                          onClick={() => setDeletingId(null)}
-                        >
-                          Cancelar
-                        </Button>
-                      </div>
-                    </div>
-                  )}
                 </motion.div>
               ))}
             </div>
           )}
         </AdminCard>
       </main>
+
+      <ConfirmDeleteDialog
+        open={dialogOpen}
+        onOpenChange={setDialogOpen}
+        title='¿Eliminar imagen?'
+        description='Esta acción no se puede deshacer.'
+        onConfirm={handleConfirmDelete}
+        loading={isDeleting}
+      />
+
+      <ConfirmDeleteDialog
+        open={bulkDialogOpen}
+        onOpenChange={setBulkDialogOpen}
+        title={`¿Eliminar ${selectedIds.length} imágenes?`}
+        description='Esta acción no se puede deshacer.'
+        onConfirm={handleConfirmBulkDelete}
+        loading={isDeleting}
+      />
     </>
-  )
-}
+  )}
