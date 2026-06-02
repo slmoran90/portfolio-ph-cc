@@ -72,13 +72,13 @@ function ServiceImageField({
 }) {
   return (
     <div>
-      <Label className='text-sm font-medium mb-1.5 block'>Image</Label>
+      <Label className='text-sm font-medium mb-1.5 block'>Imagen</Label>
       <div className='flex items-center gap-3'>
         <div className='relative w-20 h-20 rounded-lg overflow-hidden shrink-0 bg-secondary border border-border/50'>
           {imageUrl ? (
             <Image
               src={imageUrl}
-              alt='Service image'
+              alt='Imagen del servicio'
               fill
               className='object-cover'
               sizes='80px'
@@ -103,10 +103,10 @@ function ServiceImageField({
             disabled={imageUploading}
           >
             <Upload className='w-3.5 h-3.5 mr-1.5' />
-            {imageUrl ? 'Change Image' : 'Upload Image'}
+            {imageUrl ? 'Cambiar imagen' : 'Subir imagen'}
           </Button>
           <p className='text-xs text-foreground-muted mt-1'>
-            JPEG, PNG, WebP, AVIF · max 10 MB
+            JPEG, PNG, WebP, AVIF · máx. 10 MB
           </p>
         </div>
         <input
@@ -158,8 +158,8 @@ export default function ServicesClient({
 
   function validateFile(file: File): string | null {
     if (!ACCEPTED_MIME.includes(file.type))
-      return 'Unsupported format. Use JPEG, PNG, WebP, or AVIF.'
-    if (file.size > MAX_BYTES) return 'File exceeds 10 MB.'
+      return 'Formato no soportado. Usá JPEG, PNG, WebP o AVIF.'
+    if (file.size > MAX_BYTES) return 'El archivo supera los 10 MB.'
     return null
   }
 
@@ -300,8 +300,8 @@ export default function ServicesClient({
   return (
     <>
       <AdminHeader
-        title='Services'
-        description='Manage the services displayed on the homepage'
+        title='Servicios'
+        description='Administrá los servicios que se muestran en la página de inicio'
       />
 
       <main className='flex-1 p-6 overflow-auto space-y-6'>
@@ -313,7 +313,7 @@ export default function ServicesClient({
             className='bg-card rounded-2xl border border-border/50 p-6 space-y-4'
           >
             <h3 className='font-serif text-lg font-medium text-foreground'>
-              New Service
+              Nuevo servicio
             </h3>
 
             <ServiceImageField
@@ -325,19 +325,19 @@ export default function ServicesClient({
 
             <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
               <div className='space-y-1.5'>
-                <Label htmlFor='create-title'>Title *</Label>
+                <Label htmlFor='create-title'>Título *</Label>
                 <Input
                   id='create-title'
                   value={createDraft.title}
                   onChange={(e) =>
                     setCreateDraft((d) => ({ ...d, title: e.target.value }))
                   }
-                  placeholder='e.g. Baby Shower'
+                  placeholder='ej., Baby Shower'
                   className='bg-background border-border/50'
                 />
               </div>
               <div className='space-y-1.5'>
-                <Label htmlFor='create-sort'>Sort Order</Label>
+                <Label htmlFor='create-sort'>Orden</Label>
                 <Input
                   id='create-sort'
                   type='number'
@@ -348,14 +348,14 @@ export default function ServicesClient({
                       sort_order: e.target.value
                     }))
                   }
-                  placeholder='e.g. 1'
+                  placeholder='ej., 1'
                   className='bg-background border-border/50'
                 />
               </div>
             </div>
 
             <div className='space-y-1.5'>
-              <Label htmlFor='create-desc'>Description</Label>
+              <Label htmlFor='create-desc'>Descripción</Label>
               <textarea
                 id='create-desc'
                 rows={3}
@@ -366,7 +366,7 @@ export default function ServicesClient({
                     description: e.target.value
                   }))
                 }
-                placeholder='Short description visible on the homepage'
+                placeholder='Descripción corta visible en la página de inicio'
                 className='w-full rounded-lg border border-border/50 bg-background px-3 py-2 text-sm text-foreground placeholder:text-foreground-muted focus:outline-none focus:ring-2 focus:ring-ring resize-none'
               />
             </div>
@@ -379,7 +379,7 @@ export default function ServicesClient({
                 }
                 className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium border transition-colors ${
                   createDraft.enabled
-                    ? 'bg-green-50 border-green-200 text-green-700'
+                    ? 'bg-green-100 border-green-200 text-green-700'
                     : 'bg-secondary border-border/50 text-foreground-muted'
                 }`}
               >
@@ -388,7 +388,7 @@ export default function ServicesClient({
                 ) : (
                   <EyeOff className='w-3.5 h-3.5' />
                 )}
-                {createDraft.enabled ? 'Enabled' : 'Disabled'}
+                {createDraft.enabled ? 'Habilitado' : 'Deshabilitado'}
               </button>
             </div>
 
@@ -403,7 +403,7 @@ export default function ServicesClient({
                 ) : (
                   <Check className='w-4 h-4 mr-2' />
                 )}
-                Create Service
+                Crear servicio
               </Button>
               <Button
                 variant='outline'
@@ -413,7 +413,7 @@ export default function ServicesClient({
                   setSaveError(null)
                 }}
               >
-                Cancel
+                Cancelar
               </Button>
             </div>
           </motion.div>
@@ -421,21 +421,21 @@ export default function ServicesClient({
           <div className='flex justify-end'>
             <Button onClick={() => setCreating(true)}>
               <Plus className='w-4 h-4 mr-2' />
-              New Service
+              Nuevo servicio
             </Button>
           </div>
         )}
 
         {/* Search + list */}
         <AdminCard
-          title={`${filtered.length} Service${filtered.length !== 1 ? 's' : ''}`}
+          title={`Servicios cargados: ${filtered.length}`}
         >
           {services.length > 0 && (
             <div className='relative mb-4'>
               <Search className='absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-foreground-muted' />
               <Input
                 type='search'
-                placeholder='Search services...'
+                placeholder='Buscar servicios...'
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className='pl-10 bg-background border-border/50'
@@ -446,12 +446,12 @@ export default function ServicesClient({
           {filtered.length === 0 ? (
             <EmptyState
               icon={Layers}
-              title='No services yet'
-              description='Create your first service to display it on the homepage.'
+              title='Aún no hay servicios'
+              description='Creá tu primer servicio para mostrarlo en la página de inicio.'
               action={
                 <Button onClick={() => setCreating(true)}>
                   <Plus className='w-4 h-4 mr-2' />
-                  New Service
+                  Nuevo servicio
                 </Button>
               }
             />
@@ -468,7 +468,7 @@ export default function ServicesClient({
                     /* ── Edit form ── */
                     <div className='bg-card rounded-xl border border-border p-5 space-y-4'>
                       <p className='font-medium text-foreground text-sm'>
-                        Editing: {service.title}
+                        Editando: {service.title}
                       </p>
 
                       <ServiceImageField
@@ -481,7 +481,7 @@ export default function ServicesClient({
                       <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
                         <div className='space-y-1.5'>
                           <Label htmlFor={`edit-title-${service.id}`}>
-                            Title *
+                            Título *
                           </Label>
                           <Input
                             id={`edit-title-${service.id}`}
@@ -496,7 +496,7 @@ export default function ServicesClient({
                         </div>
                         <div className='space-y-1.5'>
                           <Label htmlFor={`edit-sort-${service.id}`}>
-                            Sort Order
+                            Orden
                           </Label>
                           <Input
                             id={`edit-sort-${service.id}`}
@@ -514,7 +514,7 @@ export default function ServicesClient({
 
                       <div className='space-y-1.5'>
                         <Label htmlFor={`edit-desc-${service.id}`}>
-                          Description
+                          Descripción
                         </Label>
                         <textarea
                           id={`edit-desc-${service.id}`}
@@ -539,7 +539,7 @@ export default function ServicesClient({
                           }
                           className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium border transition-colors ${
                             editDraft.enabled
-                              ? 'bg-green-50 border-green-200 text-green-700'
+                              ? 'bg-green-100 border-green-200 text-green-700'
                               : 'bg-secondary border-border/50 text-foreground-muted'
                           }`}
                         >
@@ -548,7 +548,7 @@ export default function ServicesClient({
                           ) : (
                             <EyeOff className='w-3.5 h-3.5' />
                           )}
-                          {editDraft.enabled ? 'Enabled' : 'Disabled'}
+                          {editDraft.enabled ? 'Habilitado' : 'Deshabilitado'}
                         </button>
                       </div>
 
@@ -567,14 +567,14 @@ export default function ServicesClient({
                           ) : (
                             <Check className='w-3.5 h-3.5 mr-1.5' />
                           )}
-                          Save
+                          Guardar
                         </Button>
                         <Button
                           size='sm'
                           variant='outline'
                           onClick={handleCancelEdit}
                         >
-                          Cancel
+                          Cancelar
                         </Button>
                       </div>
                     </div>
@@ -611,11 +611,11 @@ export default function ServicesClient({
                                 : 'bg-secondary text-foreground-muted'
                             }`}
                           >
-                            {service.enabled ? 'Enabled' : 'Disabled'}
+                            {service.enabled ? 'Habilitado' : 'Deshabilitado'}
                           </span>
                           {service.sort_order !== null && (
-                            <span className='text-xs text-foreground-muted'>
-                              #{service.sort_order}
+                            <span className='text-xs text-foreground-muted bg-surface-alt px-2 py-0.5 rounded-full'>
+                              Orden {service.sort_order}
                             </span>
                           )}
                         </div>
@@ -634,13 +634,13 @@ export default function ServicesClient({
                           onClick={() => handleStartEdit(service)}
                         >
                           <Pencil className='w-3.5 h-3.5 sm:mr-1.5' />
-                          <span className='hidden sm:inline'>Edit</span>
+                          <span className='hidden sm:inline'>Editar</span>
                         </Button>
                         <Button
                           size='sm'
                           variant='outline'
                           onClick={() => handleToggleEnabled(service)}
-                          title={service.enabled ? 'Disable' : 'Enable'}
+                          title={service.enabled ? 'Deshabilitar' : 'Habilitar'}
                         >
                           {service.enabled ? (
                             <EyeOff className='w-3.5 h-3.5' />
@@ -668,7 +668,7 @@ export default function ServicesClient({
                       className='mt-1 p-3 bg-destructive/10 rounded-xl border border-destructive/20 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3'
                     >
                       <p className='text-sm font-medium text-destructive'>
-                        Delete &ldquo;{service.title}&rdquo;? This cannot be undone.
+                        ¿Eliminar &ldquo;{service.title}&rdquo;? Esta acción no se puede deshacer.
                       </p>
                       <div className='flex gap-2 shrink-0'>
                         <Button
@@ -678,14 +678,14 @@ export default function ServicesClient({
                             handleDelete(service.id, service.image_url)
                           }
                         >
-                          Confirm
+                          Confirmar
                         </Button>
                         <Button
                           size='sm'
                           variant='outline'
                           onClick={() => setDeletingId(null)}
                         >
-                          Cancel
+                          Cancelar
                         </Button>
                       </div>
                     </motion.div>
