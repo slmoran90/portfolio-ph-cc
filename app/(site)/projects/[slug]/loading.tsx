@@ -2,17 +2,16 @@ import { Skeleton } from '@/components/ui/skeleton'
 
 export default function Loading() {
   return (
-    <div className="pt-20">
-      {/* Back Button Skeleton */}
-      <section className="pb-0">
+    <div>
+      {/* Back Button + Hero Section Skeleton */}
+      <section className="pt-6 md:pt-8">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <Skeleton className="h-6 w-32" />
-        </div>
-      </section>
+          {/* Back Button Skeleton */}
+          <div className="mb-6 md:mb-8">
+            <Skeleton className="h-6 w-32" />
+          </div>
 
-      {/* Hero Section Skeleton */}
-      <section className="pt-8">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          {/* Project Grid Skeleton */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
             {/* Main Image Skeleton */}
             <Skeleton className="aspect-[4/5] w-full rounded-2xl" />

@@ -78,7 +78,7 @@ export function ImageWithFallback({
         className={className}
         sizes={sizes}
         priority={priority}
-        loading={loading}
+        loading={priority ? undefined : loading}
         onClick={onClick}
         onError={() => setHasError(true)}
       />
@@ -94,7 +94,7 @@ export function ImageWithFallback({
       className={className}
       sizes={sizes}
       priority={priority}
-      loading={loading}
+      loading={priority ? undefined : loading}
       onClick={onClick}
       onError={() => setHasError(true)}
     />
