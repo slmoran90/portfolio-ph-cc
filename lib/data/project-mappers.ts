@@ -18,7 +18,7 @@ export function mapProjectToCardProject(project: Project): ProjectCardProject {
     category: project.category,
     coverImage: project.cover_image || '/placeholder.jpg',
     date: project.created_at
-      ? new Intl.DateTimeFormat('en-US', {
+      ? new Intl.DateTimeFormat('es-AR', {
           year: 'numeric',
           month: 'long',
           day: 'numeric',
