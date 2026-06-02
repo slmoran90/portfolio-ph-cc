@@ -71,7 +71,7 @@ export default function NewProjectPage() {
               next[idx] = {
                 ...next[idx],
                 status: 'error',
-                error: err instanceof Error ? err.message : 'Upload failed'
+                error: err instanceof Error ? err.message : 'Error al subir'
               }
               return next
             })
@@ -509,7 +509,7 @@ export default function NewProjectPage() {
                             uploadedImages.find((i) => i.status === 'done')!
                               .localPreview
                           }
-                          alt='First image preview'
+                          alt='Vista previa de la primera imagen'
                           fill
                           className='object-cover rounded-lg opacity-50'
                           sizes='200px'
