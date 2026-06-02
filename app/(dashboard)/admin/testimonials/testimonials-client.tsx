@@ -79,9 +79,9 @@ function draftFromTestimonial(t: Testimonial): TestimonialDraft {
 }
 
 function validateDraft(draft: TestimonialDraft): string | null {
-  if (!draft.client_name.trim()) return 'Client name is required.'
-  if (!draft.quote.trim()) return 'Quote is required.'
-  if (draft.rating < 1 || draft.rating > 5) return 'Rating must be between 1 and 5.'
+  if (!draft.client_name.trim()) return 'El nombre del cliente es obligatorio.'
+  if (!draft.quote.trim()) return 'El comentario es obligatorio.'
+  if (draft.rating < 1 || draft.rating > 5) return 'La puntuación debe estar entre 1 y 5.'
   return null
 }
 
@@ -131,7 +131,7 @@ function AvatarImageField({
     <div>
       <Label className='text-sm font-medium mb-1.5 block'>
         Avatar{' '}
-        <span className='text-muted-foreground font-normal'>(optional)</span>
+        <span className='text-muted-foreground font-normal'>(opcional)</span>
       </Label>
       <div className='flex items-center gap-3'>
         <div className='relative w-16 h-16 rounded-full overflow-hidden shrink-0 bg-secondary border border-border/50'>
@@ -164,7 +164,7 @@ function AvatarImageField({
               disabled={imageUploading}
             >
               <Upload className='w-3.5 h-3.5 mr-1.5' />
-              {imageUrl ? 'Change' : 'Upload'}
+              {imageUrl ? 'Cambiar' : 'Subir'}
             </Button>
             {imageUrl && (
               <Button
@@ -176,12 +176,12 @@ function AvatarImageField({
                 className='text-destructive border-destructive/30 hover:bg-destructive/10'
               >
                 <Trash2 className='w-3.5 h-3.5 mr-1.5' />
-                Remove
+                Quitar
               </Button>
             )}
           </div>
           <p className='text-xs text-foreground-muted'>
-            JPEG, PNG, WebP, AVIF · max 5 MB
+            JPEG, PNG, WebP, AVIF · máx. 5 MB
           </p>
         </div>
         <input
@@ -238,29 +238,29 @@ function TestimonialForm({
       />
 
       <div className='space-y-1.5'>
-        <Label htmlFor='draft-client-name'>Name *</Label>
+        <Label htmlFor='draft-client-name'>Nombre *</Label>
         <Input
           id='draft-client-name'
           value={draft.client_name}
           onChange={(e) =>
             setDraft((d) => ({ ...d, client_name: e.target.value }))
           }
-          placeholder='e.g. Emily Thompson'
+          placeholder='ej., Emily Thompson'
           className='bg-background border-border/50'
         />
       </div>
 
       <div className='space-y-1.5'>
-        <Label>Service</Label>
+        <Label>Servicio</Label>
         <Select
           value={draft.service_id}
           onValueChange={(val) => setDraft((d) => ({ ...d, service_id: val }))}
         >
           <SelectTrigger className='bg-background border-border/50'>
-            <SelectValue placeholder='Select a service...' />
+            <SelectValue placeholder='Seleccioná un servicio...' />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value={NO_SERVICE}>No service</SelectItem>
+            <SelectItem value={NO_SERVICE}>Sin servicio</SelectItem>
             {services.map((s) => (
               <SelectItem key={s.id} value={s.id}>
                 {s.title}
@@ -271,27 +271,27 @@ function TestimonialForm({
       </div>
 
       <div className='space-y-1.5'>
-        <Label htmlFor='draft-quote'>Quote *</Label>
+        <Label htmlFor='draft-quote'>Comentario *</Label>
         <textarea
           id='draft-quote'
           rows={3}
           value={draft.quote}
           onChange={(e) => setDraft((d) => ({ ...d, quote: e.target.value }))}
-          placeholder='What the client said...'
+          placeholder='Lo que dijo el cliente...'
           className='w-full rounded-lg border border-border/50 bg-background px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring resize-none'
         />
       </div>
 
       <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
         <div className='space-y-1.5'>
-          <Label>Rating</Label>
+          <Label>Puntuación</Label>
           <StarRatingInput
             value={draft.rating}
             onChange={(n) => setDraft((d) => ({ ...d, rating: n }))}
           />
         </div>
         <div className='space-y-1.5'>
-          <Label htmlFor='draft-sort'>Sort Order</Label>
+          <Label htmlFor='draft-sort'>Orden</Label>
           <Input
             id='draft-sort'
             type='number'
@@ -299,7 +299,7 @@ function TestimonialForm({
             onChange={(e) =>
               setDraft((d) => ({ ...d, sort_order: e.target.value }))
             }
-            placeholder='e.g. 1'
+            placeholder='ej., 1'
             className='bg-background border-border/50'
           />
         </div>
@@ -311,7 +311,7 @@ function TestimonialForm({
           onClick={() => setDraft((d) => ({ ...d, enabled: !d.enabled }))}
           className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium border transition-colors ${
             draft.enabled
-              ? 'bg-green-50 border-green-200 text-green-700'
+              ? 'bg-green-100 border-green-200 text-green-700'
               : 'bg-secondary border-border/50 text-muted-foreground'
           }`}
         >
@@ -320,7 +320,7 @@ function TestimonialForm({
           ) : (
             <EyeOff className='w-3.5 h-3.5' />
           )}
-          {draft.enabled ? 'Enabled' : 'Disabled'}
+          {draft.enabled ? 'Habilitado' : 'Deshabilitado'}
         </button>
 
         <button
@@ -328,14 +328,14 @@ function TestimonialForm({
           onClick={() => setDraft((d) => ({ ...d, featured: !d.featured }))}
           className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium border transition-colors ${
             draft.featured
-              ? 'bg-champagne/30 border-champagne/50 text-foreground'
+              ? 'bg-champagne/40 border-champagne/50 text-foreground'
               : 'bg-secondary border-border/50 text-muted-foreground'
           }`}
         >
           <Star
             className={`w-3.5 h-3.5 ${draft.featured ? 'fill-current' : ''}`}
           />
-          {draft.featured ? 'Featured' : 'Not Featured'}
+          {draft.featured ? 'Destacado' : 'No destacado'}
         </button>
       </div>
 
@@ -351,7 +351,7 @@ function TestimonialForm({
           {submitLabel}
         </Button>
         <Button variant='outline' onClick={onCancel}>
-          Cancel
+          Cancelar
         </Button>
       </div>
     </div>
@@ -398,8 +398,8 @@ export default function TestimonialsClient({
 
   function validateFile(file: File): string | null {
     if (!ACCEPTED_MIME.includes(file.type))
-      return 'Unsupported format. Use JPEG, PNG, WebP, or AVIF.'
-    if (file.size > MAX_BYTES) return 'File exceeds 5 MB.'
+      return 'Formato no soportado. Usá JPEG, PNG, WebP o AVIF.'
+    if (file.size > MAX_BYTES) return 'El archivo supera los 5 MB.'
     return null
   }
 
@@ -614,8 +614,8 @@ export default function TestimonialsClient({
   return (
     <>
       <AdminHeader
-        title='Testimonials'
-        description='Manage client testimonials displayed on the homepage'
+        title='Testimonios'
+        description='Administrá los testimonios de clientes que se muestran en la página de inicio'
       />
 
       <main className='flex-1 p-6 overflow-auto space-y-6'>
@@ -626,7 +626,7 @@ export default function TestimonialsClient({
             className='bg-card rounded-2xl border border-border/50 p-6'
           >
             <h3 className='font-serif text-lg font-medium text-foreground mb-4'>
-              New Testimonial
+              Nuevo testimonio
             </h3>
             <TestimonialForm
               draft={createDraft}
@@ -644,27 +644,27 @@ export default function TestimonialsClient({
                 setCreateDraft(emptyDraft)
                 setSaveError(null)
               }}
-              submitLabel='Create Testimonial'
+              submitLabel='Crear testimonio'
             />
           </motion.div>
         ) : (
           <div className='flex justify-end'>
             <Button onClick={() => setCreating(true)}>
               <Plus className='w-4 h-4 mr-2' />
-              New Testimonial
+              Nuevo testimonio
             </Button>
           </div>
         )}
 
         <AdminCard
-          title={`${filtered.length} Testimonial${filtered.length !== 1 ? 's' : ''}`}
+          title={`Testimonios cargados: ${filtered.length}`}
         >
           {testimonials.length > 0 && (
             <div className='relative mb-4'>
               <Search className='absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground' />
               <Input
                 type='search'
-                placeholder='Search by name or quote...'
+                placeholder='Buscar por nombre o comentario...'
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className='pl-10 bg-background border-border/50'
@@ -675,12 +675,12 @@ export default function TestimonialsClient({
           {filtered.length === 0 ? (
             <EmptyState
               icon={MessageCircle}
-              title='No testimonials yet'
-              description='Add your first client testimonial to display it on the homepage.'
+              title='Aún no hay testimonios'
+              description='Agregá tu primer testimonio para mostrarlo en la página de inicio.'
               action={
                 <Button onClick={() => setCreating(true)}>
                   <Plus className='w-4 h-4 mr-2' />
-                  New Testimonial
+                  Nuevo testimonio
                 </Button>
               }
             />
@@ -696,7 +696,7 @@ export default function TestimonialsClient({
                   {editingId === testimonial.id ? (
                     <div className='bg-card rounded-xl border border-border p-5'>
                       <p className='font-medium text-foreground text-sm mb-4'>
-                        Editing: {testimonial.client_name}
+                        Editando: {testimonial.client_name}
                       </p>
                       <TestimonialForm
                         draft={editDraft}
@@ -710,7 +710,7 @@ export default function TestimonialsClient({
                         saveError={saveError}
                         onSubmit={handleSaveEdit}
                         onCancel={handleCancelEdit}
-                        submitLabel='Save Changes'
+                        submitLabel='Guardar cambios'
                       />
                     </div>
                   ) : (
@@ -737,13 +737,13 @@ export default function TestimonialsClient({
                             {testimonial.client_name}
                           </p>
                           {testimonial.service?.title && (
-                            <span className='text-xs text-muted-foreground shrink-0'>
-                              · {testimonial.service.title}
+                            <span className='text-xs text-muted-foreground bg-surface-alt px-2 py-0.5 rounded-full shrink-0'>
+                              {testimonial.service.title}
                             </span>
                           )}
                           {testimonial.featured && (
                             <span className='text-xs px-2 py-0.5 rounded-full bg-champagne/40 text-foreground shrink-0'>
-                              Featured
+                              Destacado
                             </span>
                           )}
                           <span
@@ -753,7 +753,7 @@ export default function TestimonialsClient({
                                 : 'bg-secondary text-muted-foreground'
                             }`}
                           >
-                            {testimonial.enabled ? 'Enabled' : 'Disabled'}
+                            {testimonial.enabled ? 'Habilitado' : 'Deshabilitado'}
                           </span>
                         </div>
                         <div className='flex gap-0.5 mb-1'>
@@ -780,7 +780,7 @@ export default function TestimonialsClient({
                           onClick={() => handleStartEdit(testimonial)}
                         >
                           <Pencil className='w-3.5 h-3.5 sm:mr-1.5' />
-                          <span className='hidden sm:inline'>Edit</span>
+                          <span className='hidden sm:inline'>Editar</span>
                         </Button>
                         <Button
                           size='sm'
@@ -788,8 +788,8 @@ export default function TestimonialsClient({
                           onClick={() => handleToggleFeatured(testimonial)}
                           title={
                             testimonial.featured
-                              ? 'Remove from featured'
-                              : 'Mark as featured'
+                              ? 'Quitar destacado'
+                              : 'Destacar'
                           }
                         >
                           <Star
@@ -804,7 +804,7 @@ export default function TestimonialsClient({
                           size='sm'
                           variant='outline'
                           onClick={() => handleToggleEnabled(testimonial)}
-                          title={testimonial.enabled ? 'Disable' : 'Enable'}
+                          title={testimonial.enabled ? 'Deshabilitar' : 'Habilitar'}
                         >
                           {testimonial.enabled ? (
                             <EyeOff className='w-3.5 h-3.5' />
@@ -831,7 +831,7 @@ export default function TestimonialsClient({
                       className='mt-1 p-3 bg-destructive/10 rounded-xl border border-destructive/20 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3'
                     >
                       <p className='text-sm font-medium text-destructive'>
-                        Delete testimonial from &ldquo;{testimonial.client_name}&rdquo;? This cannot be undone.
+                        ¿Eliminar el testimonio de &ldquo;{testimonial.client_name}&rdquo;? Esta acción no se puede deshacer.
                       </p>
                       <div className='flex gap-2 shrink-0'>
                         <Button
@@ -841,7 +841,7 @@ export default function TestimonialsClient({
                             handleDelete(testimonial.id, testimonial.avatar_url)
                           }
                         >
-                          Confirm
+                          Confirmar
                         </Button>
                         <Button
                           size='sm'
