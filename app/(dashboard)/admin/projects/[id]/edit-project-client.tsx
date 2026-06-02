@@ -87,7 +87,7 @@ export default function EditProjectClient({
               next[idx] = {
                 ...next[idx],
                 status: 'error',
-                error: err instanceof Error ? err.message : 'Upload failed'
+                error: err instanceof Error ? err.message : 'Error al subir'
               }
               return next
             })

@@ -153,7 +153,7 @@ export default function DashboardClient({
                   <div className='relative w-14 h-14 rounded-lg overflow-hidden shrink-0 bg-secondary'>
                     <Image
                       src={image.image_url}
-                      alt={image.title ?? 'Gallery image'}
+                      alt={image.title ?? 'Imagen de galería'}
                       fill
                       className='object-cover'
                       sizes='56px'
