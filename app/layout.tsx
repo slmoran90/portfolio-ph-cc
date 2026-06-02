@@ -17,10 +17,10 @@ const cormorant = Cormorant_Garamond({
 })
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://portfolio-ph-cc-slmoran90s-projects.vercel.app'),
   title: "Carla Cáceres Photography | Capturando momentos preciosos de la vida",
   description:
     'Estudio de fotografía profesional especializado en baby showers, cumpleaños infantiles y bautismos. Fotografía elegante, emotiva y atemporal.',
-  generator: 'v0.app',
   keywords: [
     'fotografía',
     'baby shower',
@@ -29,6 +29,18 @@ export const metadata: Metadata = {
     'fotógrafa profesional',
     'fotografía familiar'
   ],
+  openGraph: {
+    siteName: 'Carla Cáceres Photography',
+    locale: 'es_AR',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
   icons: {
     icon: [
       {

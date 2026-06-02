@@ -1,0 +1,13 @@
+import type { MetadataRoute } from 'next'
+
+const baseUrl = 'https://portfolio-ph-cc-slmoran90s-projects.vercel.app'
+
+export default function robots(): MetadataRoute.Robots {
+  return {
+    rules: {
+      userAgent: '*',
+      allow: '/',
+    },
+    sitemap: `${baseUrl}/sitemap.xml`,
+  }
+}
