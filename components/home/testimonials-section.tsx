@@ -5,6 +5,7 @@ import { motion, useReducedMotion } from "framer-motion"
 import Image from "next/image"
 import { Star, Quote } from "lucide-react"
 import { Section, SectionHeader, Container } from "@/components/layout"
+import { BlurFade } from "@/components/motion/blur-fade"
 import type { Testimonial } from "@/lib/data/testimonials.types"
 
 const SLIDE_DURATION_MS = 5000
@@ -70,15 +71,9 @@ function TestimonialsGrid({
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
       {testimonials.map((testimonial, index) => (
-        <motion.div
-          key={testimonial.id}
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: index * 0.15 }}
-          viewport={{ once: true }}
-        >
+        <BlurFade key={testimonial.id} duration={0.5} delay={index * 0.1} y={16} blur={4}>
           <TestimonialCard testimonial={testimonial} />
-        </motion.div>
+        </BlurFade>
       ))}
     </div>
   )

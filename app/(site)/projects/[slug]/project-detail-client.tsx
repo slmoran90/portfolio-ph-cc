@@ -6,6 +6,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Section, Container } from '@/components/layout'
 import { ImageLightbox, ProjectCard, ImageWithFallback } from '@/components/site'
+import { Masonry } from '@/components/motion/masonry'
 import { categories } from '@/lib/data/projects.constants'
 import type { Project } from '@/lib/data/projects.types'
 import { mapProjectToCardProject } from '@/lib/data/project-mappers'
@@ -151,19 +152,10 @@ export function ProjectDetailClient({
         {galleryImages.length > 0 && (
           <Section>
             <Container>
-              <div className='columns-1 sm:columns-2 lg:columns-3 gap-4'>
-                {galleryImages.map((url, index) => (
-                  <motion.div
-                    key={url}
-                    className='break-inside-avoid mb-4'
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{
-                      duration: 0.5,
-                      delay: Math.min(index * 0.05, 0.3)
-                    }}
-                    viewport={{ once: true }}
-                  >
+              <Masonry
+                items={galleryImages.map((url, index) => ({
+                  id: `${project.id}-gallery-${index}`,
+                  content: (
                     <div
                       className='relative overflow-hidden rounded-xl cursor-pointer group bg-secondary/30'
                       onClick={() => openGallery(index)}
@@ -178,9 +170,12 @@ export function ProjectDetailClient({
                       />
                       <div className='absolute inset-0 bg-foreground/0 group-hover:bg-foreground/20 transition-colors duration-300' />
                     </div>
-                  </motion.div>
-                ))}
-              </div>
+                  ),
+                }))}
+                columns={3}
+                gap='1rem'
+                itemClassName=''
+              />
             </Container>
           </Section>
         )}
