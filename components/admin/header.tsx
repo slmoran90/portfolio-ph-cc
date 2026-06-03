@@ -41,7 +41,7 @@ export function AdminHeader({ title, description }: AdminHeaderProps) {
           {/* Notifications */}
           <button className="relative p-2 rounded-lg hover:bg-secondary transition-colors">
             <Bell className="w-5 h-5 text-foreground-muted" />
-            <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-accent rounded-full" />
+            <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-admin-accent rounded-full" />
           </button>
         </div>
       </div>
