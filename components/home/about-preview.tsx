@@ -6,6 +6,7 @@ import Link from "next/link"
 import { ArrowRight } from "lucide-react"
 import { Section, Container } from "@/components/layout"
 import { Button } from "@/components/ui/button"
+import { BlurFade } from "@/components/motion/blur-fade"
 
 export function AboutPreview() {
   return (
@@ -13,25 +14,21 @@ export function AboutPreview() {
       <Container>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           {/* Image */}
-          <motion.div
-            initial={{ opacity: 0, x: -40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="relative"
-          >
-            <div className="relative aspect-4/5 rounded-2xl overflow-hidden">
-              <Image
-                src="/images/photographer-portrait.jpg"
-                alt="Carla Cáceres - Fotógrafa"
-                fill
-                className="object-cover image-premium"
-                sizes="(max-width: 1024px) 100vw, 50vw"
-              />
+          <BlurFade duration={0.6} y={16} blur={4}>
+            <div className="relative">
+              <div className="relative aspect-4/5 rounded-2xl overflow-hidden">
+                <Image
+                  src="/images/photographer-portrait.jpg"
+                  alt="Carla Cáceres - Fotógrafa"
+                  fill
+                  className="object-cover image-premium"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                />
+              </div>
+              {/* Decorative Element */}
+              <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-champagne/50 rounded-2xl -z-10" />
             </div>
-            {/* Decorative Element */}
-            <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-champagne/50 rounded-2xl -z-10" />
-          </motion.div>
+          </BlurFade>
 
           {/* Content */}
           <div className="relative">
@@ -49,13 +46,7 @@ export function AboutPreview() {
               }}
             />
 
-            <motion.div
-              initial={{ opacity: 0, x: 40 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              viewport={{ once: true }}
-              className="relative z-10 lg:pl-8"
-            >
+            <BlurFade duration={0.6} delay={0.1} y={16} blur={4} className="relative z-10 lg:pl-8">
               <span className="inline-block text-xs tracking-[0.15em] uppercase text-primary-soft font-medium mb-4">
                 Sobre mí
               </span>
@@ -76,7 +67,7 @@ export function AboutPreview() {
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
-            </motion.div>
+            </BlurFade>
           </div>
         </div>
       </Container>

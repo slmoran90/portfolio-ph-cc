@@ -4,7 +4,8 @@ import { useState, useMemo } from 'react'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
 import { Section, Container } from '@/components/layout'
-import { PageHero, CategoryFilter, ImageLightbox } from '@/components/site'
+import { PageHero, CategoryFilter, ImageLightbox, ImageWithFallback } from '@/components/site'
+import { Masonry } from '@/components/motion/masonry'
 import { categories } from '@/lib/data/projects.constants'
 import type { GalleryImage } from '@/lib/data/gallery.types'
 
@@ -57,20 +58,15 @@ export default function GalleryClient({
                 Todavía no hay imágenes en esta categoría.
               </motion.p>
             ) : (
-              <div className='columns-1 md:columns-2 lg:columns-3 gap-6'>
-                {filteredImages.map((image, index) => (
-                  <motion.div
-                    key={image.id}
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: Math.min(index * 0.05, 0.3) }}
-                    className='break-inside-avoid mb-6'
-                  >
+              <Masonry
+                items={filteredImages.map((image, index) => ({
+                  id: image.id,
+                  content: (
                     <div
                       className='relative overflow-hidden rounded-xl cursor-pointer group bg-secondary/30'
                       onClick={() => setLightboxIndex(index)}
                     >
-                      <Image
+                      <ImageWithFallback
                         src={image.image_url}
                         alt={image.title ?? 'Gallery image'}
                         width={600}
@@ -81,9 +77,12 @@ export default function GalleryClient({
                       />
                       <div className='absolute inset-0 bg-foreground/0 group-hover:bg-foreground/20 transition-colors duration-300' />
                     </div>
-                  </motion.div>
-                ))}
-              </div>
+                  ),
+                }))}
+                columns={3}
+                gap='1.5rem'
+                itemClassName=''
+              />
             )}
           </Container>
         </Section>
