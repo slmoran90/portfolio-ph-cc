@@ -43,7 +43,7 @@ export default function AboutPage() {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8 }}
               >
-                <span className="inline-block text-xs tracking-[0.15em] uppercase text-primary-soft font-medium mb-4">
+                <span className="inline-block text-base tracking-[0.15em] uppercase text-primary font-medium mb-4">
                   Sobre mí
                 </span>
                 <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-medium text-foreground leading-tight mb-6 text-balance">
@@ -141,7 +141,7 @@ export default function AboutPage() {
                 viewport={{ once: true }}
                 className="order-1 lg:order-2"
               >
-                <span className="inline-block text-xs tracking-[0.15em] uppercase text-primary-soft font-medium mb-4">
+                <span className="inline-block text-base tracking-[0.15em] uppercase text-primary font-medium mb-4">
                   Mi enfoque
                 </span>
                 <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-semibold text-foreground leading-tight mb-6 text-balance">
@@ -173,7 +173,7 @@ export default function AboutPage() {
               viewport={{ once: true }}
               className="text-center max-w-3xl mx-auto mb-16"
             >
-              <span className="inline-block text-xs tracking-[0.15em] uppercase text-primary-soft font-medium mb-4">
+              <span className="inline-block text-base tracking-[0.15em] uppercase text-primary font-medium mb-4">
                 Mi filosofía
               </span>
               <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-semibold text-foreground leading-tight text-balance">

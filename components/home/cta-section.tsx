@@ -38,7 +38,7 @@ export function CTASection({ whatsapp, instagram, email }: CTASectionProps) {
             <div className="absolute bottom-0 left-0 w-48 h-48 bg-primary/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
 
             <div className="relative z-10">
-              <span className="inline-block text-xs tracking-[0.15em] uppercase text-primary-soft font-medium mb-4">
+              <span className="inline-block text-base tracking-[0.15em] uppercase text-primary font-medium mb-4">
                 Contacto
               </span>
 

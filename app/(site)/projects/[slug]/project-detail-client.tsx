@@ -108,7 +108,7 @@ export function ProjectDetailClient({
                 className='lg:sticky lg:top-32'
               >
                 {categoryLabel && (
-                  <span className='inline-block text-xs tracking-[0.15em] uppercase text-primary-soft font-medium mb-4'>
+                  <span className='inline-block text-base tracking-[0.15em] uppercase text-primary font-medium mb-4'>
                     {categoryLabel}
                   </span>
                 )}
