@@ -18,7 +18,7 @@ export function AdminHeader({ title, description }: AdminHeaderProps) {
       className="bg-background border-b border-border px-6 py-4"
     >
       <div className="flex items-center justify-between gap-4">
-        <div className="pl-10 lg:pl-0">
+        <div className="pl-4 lg:pl-0">
           <h1 className="font-serif text-2xl font-medium text-foreground">
             {title}
           </h1>

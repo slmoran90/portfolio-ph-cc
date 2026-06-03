@@ -33,7 +33,7 @@ export default async function DashboardLayout({
             Demo mode — admin authentication disabled
           </div>
         )}
-        <div className='flex-1 p-6'>{children}</div>
+        <div className='flex-1 p-6 pt-16 lg:pt-6'>{children}</div>
       </main>
     </div>
   )
