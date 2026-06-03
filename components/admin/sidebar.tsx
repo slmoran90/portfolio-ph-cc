@@ -95,7 +95,7 @@ export function AdminSidebar({ siteSettings, demoMode }: { siteSettings: SiteSet
               <div className="w-12 h-12 rounded-full overflow-hidden shrink-0 bg-secondary border border-border/50">
                 <img
                   src={profileImageUrl}
-                  alt="Profile"
+                  alt="Foto de perfil"
                   className="w-full h-full object-cover"
                 />
               </div>

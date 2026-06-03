@@ -59,7 +59,7 @@ export function FeaturedGallery({ services }: { services: Service[] }) {
         <div className="text-center mt-12">
           <Button asChild variant="outline" size="lg" className="text-sm tracking-wider uppercase">
             <Link href="/projects">
-              Ver todos los trabajos
+              Ver todos los proyectos
             </Link>
           </Button>
         </div>
