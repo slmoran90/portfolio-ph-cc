@@ -32,7 +32,7 @@ import {
 import { ConfirmDeleteDialog } from '@/components/admin/confirm-delete-dialog'
 import type { Service } from '@/lib/data/services.types'
 
-const ACCEPTED_MIME = ['image/jpeg', 'image/png', 'image/webp', 'image/avif']
+const ACCEPTED_MIME = ['image/jpeg', 'image/png', 'image/webp']
 const MAX_BYTES = 10 * 1024 * 1024
 
 type ServiceDraft = {
@@ -75,7 +75,7 @@ function ServiceImageField({
   return (
     <div>
       <Label className='text-sm font-medium mb-1.5 block'>Imagen</Label>
-      <div className='flex items-center gap-3'>
+      <div className='flex flex-col sm:flex-row items-center sm:items-start gap-3 text-center sm:text-left'>
         <div className='relative w-20 h-20 rounded-lg overflow-hidden shrink-0 bg-secondary border border-border/50'>
           {imageUrl ? (
             <Image
@@ -108,13 +108,13 @@ function ServiceImageField({
             {imageUrl ? 'Cambiar imagen' : 'Subir imagen'}
           </Button>
           <p className='text-xs text-foreground-muted mt-1'>
-            JPEG, PNG, WebP, AVIF · máx. 10 MB
+            JPEG, JPG, PNG, WebP · máx. 10 MB
           </p>
         </div>
         <input
           ref={fileRef}
           type='file'
-          accept='image/jpeg,image/png,image/webp,image/avif'
+          accept='image/jpeg,image/png,image/webp'
           className='hidden'
           onChange={(e) => {
             const file = e.target.files?.[0]
@@ -162,7 +162,7 @@ export default function ServicesClient({
 
   function validateFile(file: File): string | null {
     if (!ACCEPTED_MIME.includes(file.type))
-      return 'Formato no soportado. Usá JPEG, PNG, WebP o AVIF.'
+      return 'Formato no soportado. Usá JPEG, JPG, PNG o WebP.'
     if (file.size > MAX_BYTES) return 'El archivo supera los 10 MB.'
     return null
   }
@@ -438,30 +438,32 @@ export default function ServicesClient({
             </div>
           </motion.div>
         ) : (
-          <div className='flex justify-end'>
-            <Button onClick={() => setCreating(true)}>
+          <div className='flex justify-end sm:justify-end'>
+            <Button onClick={() => setCreating(true)} className='w-full sm:w-auto'>
               <Plus className='w-4 h-4 mr-2' />
               Nuevo servicio
             </Button>
           </div>
         )}
 
-        {/* Search + list */}
+        {/* Search */}
+        {services.length > 0 && (
+          <div className='relative'>
+            <Search className='absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-foreground-muted' />
+            <Input
+              type='search'
+              placeholder='Buscar servicios...'
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className='pl-10 bg-background border-border/50'
+            />
+          </div>
+        )}
+
+        {/* List */}
         <AdminCard
           title={`Servicios cargados: ${filtered.length}`}
         >
-          {services.length > 0 && (
-            <div className='relative mb-4'>
-              <Search className='absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-foreground-muted' />
-              <Input
-                type='search'
-                placeholder='Buscar servicios...'
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className='pl-10 bg-background border-border/50'
-              />
-            </div>
-          )}
 
           {filtered.length === 0 ? (
             <EmptyState
@@ -600,7 +602,7 @@ export default function ServicesClient({
                     </div>
                   ) : (
                     /* ── View card ── */
-                    <div className='flex gap-4 p-4 bg-card rounded-xl border border-border/50 hover:border-border/80 transition-colors'>
+                    <div className='flex flex-col sm:flex-row gap-4 p-4 bg-card rounded-xl border border-border/50 hover:border-border/80 transition-colors'>
                       {/* Thumbnail */}
                       <div className='relative w-16 h-16 rounded-lg overflow-hidden shrink-0 bg-secondary'>
                         {service.image_url ? (
@@ -647,7 +649,7 @@ export default function ServicesClient({
                       </div>
 
                       {/* Actions */}
-                      <div className='flex items-center gap-1.5 shrink-0'>
+                      <div className='flex items-center gap-1.5 shrink-0 sm:items-center justify-start sm:justify-end'>
                         <Tooltip>
                           <TooltipTrigger asChild>
                             <Button

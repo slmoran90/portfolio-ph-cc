@@ -20,7 +20,7 @@ import {
 import { ConfirmDeleteDialog } from '@/components/admin/confirm-delete-dialog'
 import type { GalleryImage } from '@/lib/data/gallery.types'
 
-const ACCEPTED_MIME = ['image/jpeg', 'image/png', 'image/webp', 'image/avif']
+const ACCEPTED_MIME = ['image/jpeg', 'image/png', 'image/webp']
 const MAX_BYTES = 10 * 1024 * 1024
 const IMAGE_CATEGORIES = categories.filter((c) => c.value !== 'all')
 
@@ -70,7 +70,7 @@ export default function GalleryClient({
   )
 
   function validateFile(file: File): string | null {
-    if (!ACCEPTED_MIME.includes(file.type)) return 'Formato no soportado (solo JPEG, PNG, WebP, AVIF)'
+    if (!ACCEPTED_MIME.includes(file.type)) return 'Formato no soportado (solo JPEG, JPG, PNG, WebP)'
     if (file.size > MAX_BYTES) return 'El archivo supera los 10 MB'
     return null
   }
@@ -263,7 +263,7 @@ export default function GalleryClient({
             Arrastrá imágenes para subir
           </p>
           <p className='text-sm text-foreground-muted mb-4'>
-            JPEG, PNG, WebP, AVIF — hasta 10 MB cada uno
+            JPEG, JPG, PNG, WebP · máx. 10 MB
           </p>
           <Button variant='outline' onClick={() => fileInputRef.current?.click()}>
             Buscar archivos
@@ -271,7 +271,7 @@ export default function GalleryClient({
           <input
             ref={fileInputRef}
             type='file'
-            accept='image/jpeg,image/png,image/webp,image/avif'
+            accept='image/jpeg,image/png,image/webp'
             multiple
             className='hidden'
             onChange={handleFileInput}
@@ -399,7 +399,7 @@ export default function GalleryClient({
                   <Tooltip>
                     <TooltipTrigger asChild>
                       <button
-                        className={`absolute top-2 left-2 w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all ${
+                        className={`absolute top-2 left-2 w-8 h-8 rounded-full border-2 flex items-center justify-center transition-all ${
                           selectedIds.includes(image.id)
                             ? 'bg-primary-soft border-primary-soft opacity-100'
                             : 'bg-background/80 border-background/80 opacity-0 group-hover:opacity-100'
@@ -408,7 +408,7 @@ export default function GalleryClient({
                         aria-label='Seleccionar imagen'
                       >
                         {selectedIds.includes(image.id) && (
-                          <Check className='w-3 h-3 text-white' />
+                          <Check className='w-4 h-4 text-white' />
                         )}
                       </button>
                     </TooltipTrigger>
@@ -419,7 +419,7 @@ export default function GalleryClient({
                   <Tooltip>
                     <TooltipTrigger asChild>
                       <button
-                        className={`absolute top-2 right-2 w-7 h-7 rounded-full flex items-center justify-center transition-all ${
+                        className={`absolute top-2 right-2 w-8 h-8 rounded-full flex items-center justify-center transition-all ${
                           image.featured
                             ? 'bg-amber-400 opacity-100'
                             : 'bg-background/80 opacity-0 group-hover:opacity-100'
@@ -428,7 +428,7 @@ export default function GalleryClient({
                         aria-label={image.featured ? 'Quitar destacado' : 'Destacar'}
                       >
                         <Star
-                          className={`w-3.5 h-3.5 ${image.featured ? 'text-white fill-white' : 'text-foreground'}`}
+                          className={`w-4 h-4 ${image.featured ? 'text-white fill-white' : 'text-foreground'}`}
                         />
                       </button>
                     </TooltipTrigger>
@@ -442,7 +442,7 @@ export default function GalleryClient({
                         value={image.category ?? ''}
                         onChange={(e) => handleCategoryChange(image, e.target.value)}
                         onClick={(e) => e.stopPropagation()}
-                        className='text-xs bg-transparent text-white flex-1 min-w-0 outline-none cursor-pointer'
+                        className='text-sm bg-transparent text-white flex-1 min-w-0 outline-none cursor-pointer'
                         aria-label='Categoría'
                       >
                         <option value=''>Sin categoría</option>
@@ -456,10 +456,10 @@ export default function GalleryClient({
                         <TooltipTrigger asChild>
                           <button
                             onClick={() => openDeleteDialog(image)}
-                            className='shrink-0 text-white/80 hover:text-white transition-colors'
+                            className='shrink-0 text-white/80 hover:text-white transition-colors p-1'
                             aria-label='Eliminar'
                           >
-                            <Trash2 className='w-3.5 h-3.5' />
+                            <Trash2 className='w-4 h-4' />
                           </button>
                         </TooltipTrigger>
                         <TooltipContent>Eliminar</TooltipContent>

@@ -26,7 +26,7 @@ export default async function DashboardLayout({
       <AdminSidebar siteSettings={siteSettings} />
 
       <main className='flex-1 flex flex-col'>
-        <div className='flex-1 p-6'>{children}</div>
+        <div className='flex-1 p-6 pt-16 lg:pt-6'>{children}</div>
       </main>
     </div>
   )
