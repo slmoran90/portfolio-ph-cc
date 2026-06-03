@@ -5,28 +5,30 @@
 
 :root {
   /* Backgrounds */
-  --background: #FCF9EA;
+  --background: #FFFFFF;
   --surface: #FFFFFF;
-  --surface-alt: #FFFDF5;
+  --surface-alt: #F8F6F4;
   --surface-elevated: #FFFFFF;
 
   /* Text */
-  --foreground: #2D2926;
-  --foreground-muted: #6B6560;
+  --foreground: #2B2525;
+  --foreground-muted: #6F6464;
   --foreground-subtle: #9A948E;
 
-  /* Brand - Public (softer) */
-  --primary: #FFA4A4;
-  --primary-soft: #FFBDBD;
-  --champagne: #FCF9EA;
-  --cream: #FCF9EA;
+  /* Brand - Public */
+  --primary: #EE6983;
+  --primary-hover: #D85773;
+  --primary-soft: #FFC4C4;
+  --champagne: #FCF5EE;
+  --cream: #FCF5EE;
 
-  /* Brand - Admin (clearer) */
-  --admin-primary: #FFA4A4;
-  --admin-accent: #BADFDB;
+  /* Brand - Admin (muted) */
+  --admin-primary: #EE6983;
+  --admin-accent: #A84D63;
+  --admin-accent-soft: #C4788A;
 
   /* Functional */
-  --border: #E6DCD2;
+  --border: #E8DDD5;
   --border-subtle: #F0E8E0;
   --border-strong: #D4C4B0;
   --success: oklch(0.65 0.15 145);
@@ -43,11 +45,11 @@
   --secondary-foreground: var(--foreground);
   --muted: #F4EFE6;
   --muted-foreground: var(--foreground-muted);
-  --accent: #BADFDB;
-  --accent-foreground: var(--foreground);
+  --accent: #850E35;
+  --accent-foreground: #FFFFFF;
   --destructive-foreground: oklch(0.98 0 0);
   --input: var(--border);
-  --ring: #FFA4A4;
+  --ring: #EE6983;
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
@@ -55,11 +57,11 @@
   --chart-5: oklch(0.769 0.188 70.08);
 
   /* Sidebar - Premium Warm */
-  --sidebar: #FFFDF5;
+  --sidebar: #F8F6F4;
   --sidebar-foreground: var(--foreground);
   --sidebar-primary: var(--foreground);
   --sidebar-primary-foreground: #FFFFFF;
-  --sidebar-accent: var(--surface-alt);
+  --sidebar-accent: #F8F6F4;
   --sidebar-accent-foreground: var(--foreground);
   --sidebar-border: var(--border);
   --sidebar-ring: var(--ring);
@@ -156,6 +158,7 @@
   --color-primary-soft: var(--primary-soft);
   --color-admin-primary: var(--admin-primary);
   --color-admin-accent: var(--admin-accent);
+  --color-admin-accent-soft: var(--admin-accent-soft);
   --color-border-subtle: var(--border-subtle);
   --color-border-strong: var(--border-strong);
   --color-success: var(--success);
@@ -184,7 +187,7 @@
   
   /* Premium selection color */
   ::selection {
-    background-color: #FFA4A4 / 30%;
+    background-color: #EE6983 / 30%;
   }
 }
 
