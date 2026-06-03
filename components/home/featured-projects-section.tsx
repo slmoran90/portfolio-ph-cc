@@ -27,14 +27,14 @@ export function FeaturedProjectsSection({ projects }: FeaturedProjectsSectionPro
           viewport={{ once: true }}
           className='text-center mb-12'
         >
-          <span className='inline-block text-xs tracking-[0.15em] uppercase text-primary-soft font-medium mb-4'>
-            Trabajos
+          <span className='inline-block text-base tracking-[0.15em] uppercase text-primary font-medium mb-4'>
+            Proyectos
           </span>
           <h2 className='font-serif text-4xl md:text-5xl lg:text-6xl font-semibold text-foreground leading-tight mb-6 text-balance'>
-            Trabajos destacados
+            Proyectos destacados
           </h2>
           <p className='text-foreground-muted leading-relaxed max-w-xl mx-auto'>
-            Una selección curada de mis trabajos más significativos.
+            Una selección curada de mis proyectos más significativos.
           </p>
         </motion.div>
 
@@ -60,7 +60,7 @@ export function FeaturedProjectsSection({ projects }: FeaturedProjectsSectionPro
         >
           <Button asChild variant='outline' size='lg' className='text-sm tracking-wider uppercase'>
             <Link href='/projects'>
-              Ver todos los trabajos
+              Ver todos los proyectos
               <ArrowRight className='ml-2 h-4 w-4' />
             </Link>
           </Button>

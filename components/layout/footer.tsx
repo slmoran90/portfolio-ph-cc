@@ -7,7 +7,7 @@ import { Instagram, Mail } from "lucide-react"
 const footerLinks = [
   { href: "/", label: "Inicio" },
   { href: "/about", label: "Sobre mí" },
-  { href: "/projects", label: "Trabajos" },
+  { href: "/projects", label: "Proyectos" },
   { href: "/gallery", label: "Galería" },
   { href: "/#contact", label: "Contacto" },
 ]

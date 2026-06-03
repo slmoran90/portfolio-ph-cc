@@ -40,7 +40,7 @@ export function SectionHeader({ label, title, description, align = "center" }: S
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
           viewport={{ once: true }}
-          className="inline-block text-xs tracking-[0.15em] uppercase text-primary-soft font-medium mb-4"
+          className="inline-block text-base tracking-[0.15em] uppercase text-primary font-medium mb-4"
         >
           {label}
         </motion.span>

@@ -101,7 +101,7 @@ export function HeroSection() {
           >
             <Button asChild size="lg" className="text-sm tracking-wider uppercase px-8">
               <Link href="/projects">
-                Ver trabajos
+                Ver proyectos
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>
