@@ -1,18 +1,26 @@
 import type { Metadata } from 'next'
-import { Inter, Cormorant_Garamond } from 'next/font/google'
+import { Poppins, Source_Sans_3, Cormorant_Garamond } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 
-const inter = Inter({
+const poppins = Poppins({
   subsets: ['latin'],
-  variable: '--font-inter',
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-poppins',
+  display: 'swap'
+})
+
+const sourceSans3 = Source_Sans_3({
+  subsets: ['latin'],
+  weight: ['400', '500', '600'],
+  variable: '--font-source-sans',
   display: 'swap'
 })
 
 const cormorant = Cormorant_Garamond({
   subsets: ['latin'],
-  weight: ['300', '400', '500', '600', '700'],
-  variable: '--font-cormorant',
+  weight: ['500', '600', '700'],
+  variable: '--font-logo',
   display: 'swap'
 })
 
@@ -68,7 +76,7 @@ export default function RootLayout({
   return (
     <html
       lang='es'
-      className={`${inter.variable} ${cormorant.variable} bg-background`}
+      className={`${poppins.variable} ${sourceSans3.variable} ${cormorant.variable} bg-background`}
       data-scroll-behavior='smooth'
     >
       <body className='font-sans antialiased'>

@@ -107,11 +107,11 @@ export function ProjectDetailClient({
                 className='lg:sticky lg:top-32'
               >
                 {categoryLabel && (
-                  <span className='inline-block text-xs tracking-[0.3em] uppercase text-primary-soft font-medium mb-4'>
+                  <span className='inline-block text-xs tracking-[0.15em] uppercase text-primary-soft font-medium mb-4'>
                     {categoryLabel}
                   </span>
                 )}
-                <h1 className='font-serif text-3xl md:text-4xl lg:text-5xl font-medium text-foreground leading-tight mb-6 text-balance'>
+                <h1 className='font-serif text-4xl md:text-5xl lg:text-6xl font-semibold text-foreground leading-tight mb-6 text-balance'>
                   {project.title}
                 </h1>
 
@@ -194,7 +194,7 @@ export function ProjectDetailClient({
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
                 viewport={{ once: true }}
-                className='font-serif text-2xl md:text-3xl font-medium text-foreground text-center mb-12'
+                className='font-serif text-3xl md:text-4xl lg:text-5xl font-semibold text-foreground text-center mb-12'
               >
                 Trabajos relacionados
               </motion.h2>

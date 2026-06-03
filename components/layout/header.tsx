@@ -76,7 +76,7 @@ export function Header() {
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <Link href="/" className="group">
-            <span className="font-serif text-2xl lg:text-3xl font-medium tracking-wide text-foreground transition-colors group-hover:text-foreground-muted">
+            <span className="font-logo text-2xl lg:text-3xl font-medium tracking-wide text-foreground transition-colors group-hover:text-foreground-muted">
               Carla Cáceres
             </span>
           </Link>

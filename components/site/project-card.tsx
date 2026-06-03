@@ -74,7 +74,7 @@ export function ProjectCard({
         {isGrid ? (
           <div className='space-y-3'>
             {categoryLabel && (
-              <span className='text-xs tracking-[0.3em] uppercase text-primary-soft'>
+              <span className='text-xs tracking-[0.15em] uppercase text-primary-soft'>
                 {categoryLabel}
               </span>
             )}

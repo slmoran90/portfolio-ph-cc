@@ -38,8 +38,8 @@ export function CTASection({ whatsapp, instagram, email }: CTASectionProps) {
           className="relative bg-surface-alt rounded-3xl p-10 md:p-16 lg:p-20 text-center overflow-hidden"
         >
           {/* Decorative Elements */}
-          <div className="absolute top-0 right-0 w-64 h-64 bg-champagne/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-          <div className="absolute bottom-0 left-0 w-48 h-48 bg-primary-soft/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
+          <div className="absolute top-0 right-0 w-64 h-64 bg-accent/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+          <div className="absolute bottom-0 left-0 w-48 h-48 bg-primary/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
 
           <div className="relative z-10">
             <motion.span
@@ -47,7 +47,7 @@ export function CTASection({ whatsapp, instagram, email }: CTASectionProps) {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
               viewport={{ once: true }}
-              className="inline-block text-xs tracking-[0.3em] uppercase text-primary-soft font-medium mb-4"
+              className="inline-block text-xs tracking-[0.15em] uppercase text-primary-soft font-medium mb-4"
             >
               Contacto
             </motion.span>
@@ -57,7 +57,7 @@ export function CTASection({ whatsapp, instagram, email }: CTASectionProps) {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
               viewport={{ once: true }}
-              className="font-serif text-3xl md:text-4xl lg:text-5xl font-medium text-foreground leading-tight mb-6 text-balance"
+              className="font-serif text-4xl md:text-5xl lg:text-6xl font-semibold text-foreground leading-tight mb-6 text-balance"
             >
               Coordinemos tu sesión
             </motion.h2>
