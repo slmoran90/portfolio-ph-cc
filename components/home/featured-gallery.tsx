@@ -2,7 +2,11 @@
 
 import { motion } from "framer-motion"
 import Image from "next/image"
+import Link from "next/link"
 import { Section, SectionHeader, Container } from "@/components/layout"
+import { BlurFade } from "@/components/motion/blur-fade"
+import { Button } from "@/components/ui/button"
+import { mapServiceSlugToCategory } from "@/lib/data/services.constants"
 import type { Service } from "@/lib/data/services.types"
 
 export function FeaturedGallery({ services }: { services: Service[] }) {
@@ -19,14 +23,11 @@ export function FeaturedGallery({ services }: { services: Service[] }) {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
           {services.map((service, index) => (
-            <motion.div
-              key={service.id}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.15 }}
-              viewport={{ once: true }}
-            >
-              <div className="group">
+            <BlurFade key={service.id} duration={0.5} delay={index * 0.1} y={16} blur={4}>
+              <Link
+                href={`/projects?category=${mapServiceSlugToCategory(service.slug)}`}
+                className="group block cursor-pointer"
+              >
                 <div className="relative aspect-[3/4] overflow-hidden rounded-xl mb-6 bg-secondary/30">
                   {service.image_url ? (
                     <Image
@@ -50,9 +51,17 @@ export function FeaturedGallery({ services }: { services: Service[] }) {
                     {service.description}
                   </p>
                 )}
-              </div>
-            </motion.div>
+              </Link>
+            </BlurFade>
           ))}
+        </div>
+
+        <div className="text-center mt-12">
+          <Button asChild variant="outline" size="lg" className="text-sm tracking-wider uppercase">
+            <Link href="/projects">
+              Ver todos los trabajos
+            </Link>
+          </Button>
         </div>
       </Container>
     </Section>

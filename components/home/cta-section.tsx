@@ -5,6 +5,7 @@ import Link from "next/link"
 import { ArrowRight, MessageCircle, Instagram, Mail } from "lucide-react"
 import { Section, Container } from "@/components/layout"
 import { Button } from "@/components/ui/button"
+import { BlurFade } from "@/components/motion/blur-fade"
 
 interface CTASectionProps {
   whatsapp?: string | null
@@ -30,54 +31,25 @@ export function CTASection({ whatsapp, instagram, email }: CTASectionProps) {
   return (
     <Section id="contact">
       <Container size="narrow">
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-          className="relative bg-surface-alt rounded-3xl p-10 md:p-16 lg:p-20 text-center overflow-hidden"
-        >
-          {/* Decorative Elements */}
-          <div className="absolute top-0 right-0 w-64 h-64 bg-accent/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-          <div className="absolute bottom-0 left-0 w-48 h-48 bg-primary/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
+        <BlurFade duration={0.6} y={16} blur={4}>
+          <div className="relative bg-surface-alt rounded-3xl p-10 md:p-16 lg:p-20 text-center overflow-hidden">
+            {/* Decorative Elements */}
+            <div className="absolute top-0 right-0 w-64 h-64 bg-accent/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+            <div className="absolute bottom-0 left-0 w-48 h-48 bg-primary/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
 
-          <div className="relative z-10">
-            <motion.span
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              viewport={{ once: true }}
-              className="inline-block text-xs tracking-[0.15em] uppercase text-primary-soft font-medium mb-4"
-            >
-              Contacto
-            </motion.span>
+            <div className="relative z-10">
+              <span className="inline-block text-xs tracking-[0.15em] uppercase text-primary-soft font-medium mb-4">
+                Contacto
+              </span>
 
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              viewport={{ once: true }}
-              className="font-serif text-4xl md:text-5xl lg:text-6xl font-semibold text-foreground leading-tight mb-6 text-balance"
-            >
-              Coordinemos tu sesión
-            </motion.h2>
+              <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-semibold text-foreground leading-tight mb-6 text-balance">
+                Coordinemos tu sesión
+              </h2>
 
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              viewport={{ once: true }}
-              className="text-foreground-muted leading-relaxed mb-10 max-w-xl mx-auto"
-            >
-              Ya sea un baby shower, una celebración de cumpleaños o un bautismo, me encantaría escuchar sobre tu próximo evento y crear recuerdos duraderos juntos.
-            </motion.p>
+              <p className="text-foreground-muted leading-relaxed mb-10 max-w-xl mx-auto">
+                Ya sea un baby shower, una celebración de cumpleaños o un bautismo, me encantaría escuchar sobre tu próximo evento y crear recuerdos duraderos juntos.
+              </p>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              viewport={{ once: true }}
-            >
               {whatsappUrl ? (
                 <Button asChild size="lg" className="text-sm tracking-wider uppercase px-10">
                   <Link href={whatsappUrl} target="_blank" rel="noopener noreferrer">
@@ -107,9 +79,9 @@ export function CTASection({ whatsapp, instagram, email }: CTASectionProps) {
                   </Link>
                 </Button>
               )}
-            </motion.div>
+            </div>
           </div>
-        </motion.div>
+        </BlurFade>
       </Container>
     </Section>
   )
