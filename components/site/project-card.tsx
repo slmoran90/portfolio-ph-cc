@@ -5,6 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowUpRight } from 'lucide-react'
 import type { ProjectCardProject } from '@/lib/data/project-mappers'
+import { ClipImageReveal } from '@/components/motion/clip-image-reveal'
 
 interface ProjectCardProps {
   project: ProjectCardProject
@@ -42,8 +43,9 @@ export function ProjectCard({
         href={`/projects/${project.slug}`}
         className='group block'
       >
-        <div
+        <ClipImageReveal
           className={`relative aspect-[4/5] overflow-hidden rounded-xl bg-secondary/30 ${isGrid ? 'mb-5' : 'mb-4'} transition-transform duration-500 ease-out group-hover:-translate-y-1 group-hover:shadow-lg`}
+          delay={index * 0.05}
         >
           <Image
             src={project.coverImage}
@@ -70,7 +72,7 @@ export function ProjectCard({
               }
             />
           </div>
-        </div>
+        </ClipImageReveal>
         {isGrid ? (
           <div className='space-y-3'>
             {categoryLabel && (

@@ -6,6 +6,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { WordFadeText } from "@/components/motion/word-fade-text"
 
 export function HeroSection() {
   const { scrollY } = useScroll()
@@ -70,20 +71,18 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="inline-block text-xs tracking-[0.15em] uppercase text-foreground/80 font-medium mb-6"
+            className="block text-xs tracking-[0.15em] uppercase text-foreground/80 font-medium mb-6"
             style={{ textShadow: '0 1px 3px rgba(0,0,0,0.15)' }}
           >
             Fotografía profesional
           </motion.span>
           
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.1 }}
+          <WordFadeText
+            text="Capturando los momentos más preciosos de la vida"
             className="font-serif text-4xl md:text-5xl lg:text-7xl font-medium text-foreground leading-[1.1] mb-8 text-balance"
-          >
-            Capturando los momentos más preciosos de la vida
-          </motion.h1>
+            delay={0.1}
+            duration={0.8}
+          />
           
           <motion.p
             initial={{ opacity: 0, y: 30 }}
