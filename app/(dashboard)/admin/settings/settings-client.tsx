@@ -28,7 +28,7 @@ import {
 } from '@/lib/actions/site-settings'
 import type { SiteSettings } from '@/lib/data/site-settings.types'
 
-const ACCEPTED_MIME = ['image/jpeg', 'image/png', 'image/webp', 'image/avif']
+const ACCEPTED_MIME = ['image/jpeg', 'image/png', 'image/webp']
 const MAX_BYTES = 10 * 1024 * 1024
 
 type Tab = 'profile' | 'contact' | 'security'
@@ -262,13 +262,13 @@ export default function SettingsClient({
                         {profileImageUrl ? 'Cambiar foto' : 'Subir foto'}
                       </Button>
                       <p className='text-xs text-foreground-muted mt-2'>
-                        JPEG, PNG, WebP, AVIF · máx. 10 MB
+                        JPEG, JPG, PNG, WebP · máx. 10 MB
                       </p>
                     </div>
                     <input
                       ref={fileInputRef}
                       type='file'
-                      accept='image/jpeg,image/png,image/webp,image/avif'
+                      accept='image/jpeg,image/png,image/webp'
                       className='hidden'
                       onChange={handleImageSelect}
                     />
