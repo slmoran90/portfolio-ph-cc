@@ -70,7 +70,7 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="inline-block text-xs tracking-[0.3em] uppercase text-foreground/80 font-medium mb-6"
+            className="inline-block text-xs tracking-[0.15em] uppercase text-foreground/80 font-medium mb-6"
             style={{ textShadow: '0 1px 3px rgba(0,0,0,0.15)' }}
           >
             Fotografía profesional

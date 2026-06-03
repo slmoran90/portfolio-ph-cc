@@ -16,7 +16,7 @@ function StarRating({ rating }: { rating: number }) {
         <Star
           key={i}
           className={`w-4 h-4 ${
-            i < rating ? "fill-champagne text-champagne" : "text-border"
+            i < rating ? "fill-primary text-primary" : "text-border"
           }`}
         />
       ))}
@@ -27,8 +27,8 @@ function StarRating({ rating }: { rating: number }) {
 function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
   return (
     <div className="bg-card rounded-2xl p-8 shadow-sm border border-border/50 h-full flex flex-col">
-      <div className="w-12 h-12 bg-champagne/30 rounded-full flex items-center justify-center mb-6 shrink-0">
-        <Quote className="w-5 h-5 text-primary-soft" />
+      <div className="w-12 h-12 bg-primary-soft/30 rounded-full flex items-center justify-center mb-6 shrink-0">
+        <Quote className="w-5 h-5 text-primary" />
       </div>
 
       <StarRating rating={testimonial.rating} />

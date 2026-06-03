@@ -100,7 +100,7 @@ export function AdminSidebar({ siteSettings }: { siteSettings: SiteSettings | nu
                 />
               </div>
             ) : (
-              <div className="w-12 h-12 bg-champagne rounded-full flex items-center justify-center shrink-0">
+              <div className="w-12 h-12 bg-accent rounded-full flex items-center justify-center shrink-0">
                 <span className="font-medium text-foreground text-lg">{initials}</span>
               </div>
             )}

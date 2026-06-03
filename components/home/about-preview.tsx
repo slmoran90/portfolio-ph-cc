@@ -56,10 +56,10 @@ export function AboutPreview() {
               viewport={{ once: true }}
               className="relative z-10 lg:pl-8"
             >
-              <span className="inline-block text-xs tracking-[0.3em] uppercase text-primary-soft font-medium mb-4">
+              <span className="inline-block text-xs tracking-[0.15em] uppercase text-primary-soft font-medium mb-4">
                 Sobre mí
               </span>
-              <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-medium text-foreground leading-tight mb-6 text-balance">
+              <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-semibold text-foreground leading-tight mb-6 text-balance">
                 Hola, soy Carla
               </h2>
               <div className="space-y-4 text-foreground-muted leading-relaxed mb-8">
