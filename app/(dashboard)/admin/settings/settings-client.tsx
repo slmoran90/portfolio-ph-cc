@@ -176,7 +176,7 @@ export default function SettingsClient({
           title='Configuración'
           description='Administrá tu cuenta y preferencias'
         />
-        <main className='flex-1 p-6 flex items-center justify-center'>
+        <main className='flex-1 flex items-center justify-center'>
           <p className='text-foreground-muted text-sm'>
             No se encontró la fila de configuración. Insertá una fila inicial en la{' '}
             <code className='text-foreground'>site_settings</code> table.
@@ -193,7 +193,7 @@ export default function SettingsClient({
         description='Administrá tu cuenta y preferencias'
       />
 
-      <main className='flex-1 p-6 overflow-auto'>
+      <main className='flex-1 overflow-auto'>
         <div className='grid grid-cols-1 lg:grid-cols-4 gap-6'>
           {/* Sidebar Tabs */}
           <div className='lg:col-span-1'>
@@ -205,8 +205,8 @@ export default function SettingsClient({
                     onClick={() => setActiveTab(tab.id)}
                     className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all ${
                       activeTab === tab.id
-                        ? 'bg-champagne/30 text-foreground'
-                        : 'text-foreground-muted hover:bg-secondary/50 hover:text-foreground'
+                        ? 'bg-primary-soft/40 text-primary border-l-4 border-primary'
+                        : 'text-foreground-muted hover:bg-secondary/50 hover:text-foreground border-l-4 border-transparent'
                     }`}
                   >
                     <tab.icon className='w-5 h-5' />

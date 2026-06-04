@@ -278,7 +278,7 @@ export default function EditProjectClient({
                         name='category'
                         required
                         defaultValue={project.category ?? ''}
-                        className='w-full h-12 px-4 rounded-lg border border-border/50 bg-background text-foreground focus:border-primary-soft focus:outline-none focus:ring-1 focus:ring-primary-soft'
+                        className='w-full h-12 px-4 rounded-lg border border-border/50 bg-background text-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/20'
                       >
                         {categories.slice(1).map((category) => (
                           <option
