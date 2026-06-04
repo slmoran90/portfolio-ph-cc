@@ -14,7 +14,7 @@ import type { Metadata } from "next"
 
 export const metadata: Metadata = {
   title: "Inicio",
-  description: "Carla Cáceres Photography - Capturando los momentos más preciosos de la vida. Especializada en baby showers, cumpleaños infantiles y bautismos.",
+  description: "Carla Cáceres Fotografía - Capturando los momentos más preciosos de la vida. Especializada en baby showers, cumpleaños infantiles y bautismos.",
 }
 
 export default async function HomePage() {

@@ -23,9 +23,9 @@ export async function generateMetadata({
   const { slug } = await params
   const project = await getProjectBySlug(slug)
 
-  if (!project) return { title: 'Proyecto no encontrado | Carla Cáceres Photography' }
+  if (!project) return { title: 'Proyecto no encontrado | Carla Cáceres Fotografía' }
 
-  const baseUrl = 'https://portfolio-ph-cc-slmoran90s-projects.vercel.app'
+  const baseUrl = 'https://carlacaceresfotografia.vercel.app'
 
   return {
     title: project.title,
