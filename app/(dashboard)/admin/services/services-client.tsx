@@ -324,9 +324,29 @@ export default function ServicesClient({
         description='Administrá los servicios que se muestran en la página de inicio'
       />
 
-      <main className='flex-1 p-6 overflow-auto space-y-6'>
+      <main className='flex-1 overflow-auto space-y-6'>
+        {/* Actions Row */}
+        <div className='flex flex-col sm:flex-row gap-4 items-start sm:items-center'>
+          <div className='relative w-full sm:max-w-md'>
+            <Search className='absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-foreground-muted' />
+            <Input
+              type='search'
+              placeholder='Buscar servicios...'
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className='pl-10 bg-background border-border/50'
+            />
+          </div>
+          {!creating && (
+            <Button onClick={() => setCreating(true)} className='ml-auto w-full sm:w-auto'>
+              <Plus className='w-4 h-4 mr-2' />
+              Nuevo servicio
+            </Button>
+          )}
+        </div>
+
         {/* Create form */}
-        {creating ? (
+        {creating && (
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -437,27 +457,6 @@ export default function ServicesClient({
               </Button>
             </div>
           </motion.div>
-        ) : (
-          <div className='flex justify-end sm:justify-end'>
-            <Button onClick={() => setCreating(true)} className='w-full sm:w-auto'>
-              <Plus className='w-4 h-4 mr-2' />
-              Nuevo servicio
-            </Button>
-          </div>
-        )}
-
-        {/* Search */}
-        {services.length > 0 && (
-          <div className='relative'>
-            <Search className='absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-foreground-muted' />
-            <Input
-              type='search'
-              placeholder='Buscar servicios...'
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className='pl-10 bg-background border-border/50'
-            />
-          </div>
         )}
 
         {/* List */}

@@ -81,7 +81,7 @@ export default function DashboardClient({
 
   return (
     <>
-      <main className='flex-1 p-6 overflow-auto'>
+      <main className='flex-1 overflow-auto'>
         {/* Welcome Card */}
         <div className='bg-card rounded-2xl border border-border/50 p-6 mb-6'>
           <h1 className='font-serif text-2xl font-medium text-foreground'>
@@ -216,7 +216,7 @@ export default function DashboardClient({
                         {image.title ?? 'Sin título'}
                       </p>
                       {image.featured && (
-                        <Star className='w-3 h-3 text-amber-400 fill-amber-400 shrink-0' />
+                        <Star className='w-3 h-3 text-primary fill-primary shrink-0' />
                       )}
                     </div>
                     <p className='text-sm text-muted-foreground'>

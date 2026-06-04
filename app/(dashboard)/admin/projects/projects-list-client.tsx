@@ -24,7 +24,7 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { deleteProject } from "@/lib/actions/projects";
+import { deleteProject, updateProject } from "@/lib/actions/projects";
 import { ConfirmDeleteDialog } from "@/components/admin/confirm-delete-dialog";
 import type { Project } from "@/lib/data/projects.types";
 
@@ -39,8 +39,9 @@ export default function ProjectsListClient({
   const [dialogOpen, setDialogOpen] = useState(false);
   const [pendingDelete, setPendingDelete] = useState<Project | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [localProjects, setLocalProjects] = useState<Project[]>(projects);
 
-  const filteredProjects = projects.filter((project) => {
+  const filteredProjects = localProjects.filter((project) => {
     const matchesSearch = project.title
       .toLowerCase()
       .includes(searchQuery.toLowerCase());
@@ -48,6 +49,38 @@ export default function ProjectsListClient({
       selectedCategory === "all" || project.category === selectedCategory;
     return matchesSearch && matchesCategory;
   });
+
+  async function handleToggleFeatured(project: Project) {
+    const next = !(project.featured ?? false);
+    setLocalProjects((prev) =>
+      prev.map((p) => (p.id === project.id ? { ...p, featured: next } : p))
+    );
+    try {
+      const result = await updateProject(project.id, project.slug, {
+        title: project.title,
+        category: project.category,
+        event_date: project.event_date,
+        location: project.location,
+        short_description: project.short_description,
+        description: project.description,
+        published: project.published ?? false,
+        images: project.images,
+        cover_image: project.cover_image,
+        featured: next,
+      });
+      if (result.error) {
+        setLocalProjects((prev) =>
+          prev.map((p) => (p.id === project.id ? { ...p, featured: !next } : p))
+        );
+      } else {
+        router.refresh();
+      }
+    } catch (e) {
+      setLocalProjects((prev) =>
+        prev.map((p) => (p.id === project.id ? { ...p, featured: !next } : p))
+      );
+    }
+  }
 
   function openDeleteDialog(project: Project) {
     setPendingDelete(project);
@@ -82,26 +115,9 @@ export default function ProjectsListClient({
         description="Administrá tus proyectos de fotografía"
       />
 
-      <main className="flex-1 p-6 overflow-auto">
-        <div className="flex flex-col sm:flex-row gap-4 mb-6">
-          <select
-            value={selectedCategory}
-            onChange={(e) => setSelectedCategory(e.target.value)}
-            className="h-10 px-4 rounded-lg border border-border/50 bg-background text-foreground focus:border-primary-soft focus:outline-none focus:ring-1 focus:ring-primary-soft"
-          >
-            {categories.map((category) => (
-              <option key={category.value} value={category.value}>
-                {category.label}
-              </option>
-            ))}
-          </select>
-          <Button asChild>
-            <Link href="/admin/projects/new">
-              <Plus className="w-4 h-4 mr-2" />
-              Nuevo proyecto
-            </Link>
-          </Button>
-          <div className="relative flex-1">
+      <main className="flex-1 overflow-auto">
+        <div className="flex flex-col sm:flex-row gap-4 mb-6 items-start sm:items-center">
+          <div className="relative w-full sm:max-w-md">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
             <Input
               type="search"
@@ -111,6 +127,23 @@ export default function ProjectsListClient({
               className="pl-10 bg-background border-border/50"
             />
           </div>
+          <select
+            value={selectedCategory}
+            onChange={(e) => setSelectedCategory(e.target.value)}
+            className="h-10 px-4 rounded-lg border border-border/50 bg-background text-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/20 w-full sm:w-auto"
+          >
+            {categories.map((category) => (
+              <option key={category.value} value={category.value}>
+                {category.label}
+              </option>
+            ))}
+          </select>
+          <Button asChild className="ml-auto w-full sm:w-auto">
+            <Link href="/admin/projects/new">
+              <Plus className="w-4 h-4 mr-2" />
+              Nuevo proyecto
+            </Link>
+          </Button>
         </div>
 
         <AdminCard title={`Proyectos creados: ${filteredProjects.length}`}>
@@ -226,6 +259,24 @@ export default function ProjectsListClient({
                         </Button>
                       </TooltipTrigger>
                       <TooltipContent>Editar</TooltipContent>
+                    </Tooltip>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => handleToggleFeatured(project)}
+                          aria-label={project.featured ? "Quitar destacado" : "Destacar"}
+                          className="min-w-9 min-h-9 sm:min-w-10 sm:min-h-10"
+                        >
+                          <Star
+                            className={`w-3.5 h-3.5 ${
+                              project.featured ? "fill-primary text-primary" : ""
+                            }`}
+                          />
+                        </Button>
+                      </TooltipTrigger>
+                      <TooltipContent>{project.featured ? "Quitar destacado" : "Destacar"}</TooltipContent>
                     </Tooltip>
                     <Tooltip>
                       <TooltipTrigger asChild>

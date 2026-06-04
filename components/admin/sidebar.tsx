@@ -122,8 +122,8 @@ export function AdminSidebar({ siteSettings }: { siteSettings: SiteSettings | nu
               onClick={() => setIsMobileOpen(false)}
               className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 ${
                 isActive(link.href)
-                  ? "bg-sidebar-accent text-sidebar-foreground"
-                  : "text-foreground-muted hover:bg-sidebar-accent/50 hover:text-sidebar-foreground"
+                  ? "bg-primary-soft/40 text-primary border-l-4 border-primary"
+                  : "text-foreground-muted hover:bg-sidebar-accent/50 hover:text-sidebar-foreground border-l-4 border-transparent"
               }`}
             >
               <link.icon className="w-5 h-5" />

@@ -242,7 +242,7 @@ export default function GalleryClient({
     <>
       <AdminHeader title='Galería' description='Administrá tu biblioteca de medios' />
 
-      <main className='flex-1 p-6 overflow-auto'>
+      <main className='flex-1 overflow-auto'>
         {/* Upload Area */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -279,8 +279,8 @@ export default function GalleryClient({
         </motion.div>
 
         {/* Toolbar */}
-        <div className='flex flex-col sm:flex-row gap-4 mb-6'>
-          <div className='relative flex-1'>
+        <div className='flex flex-col sm:flex-row gap-4 mb-6 items-start sm:items-center'>
+          <div className='relative w-full sm:max-w-md'>
             <Search className='absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-foreground-muted' />
             <Input
               type='search'
@@ -290,8 +290,8 @@ export default function GalleryClient({
               className='pl-10 bg-background border-border/50'
             />
           </div>
-          <div className='flex gap-2'>
-            <Button variant='outline' onClick={toggleSelectAll}>
+          <div className='flex gap-2 ml-auto w-full sm:w-auto'>
+            <Button variant='outline' onClick={toggleSelectAll} className='flex-1 sm:flex-none'>
               {allSelected ? (
                 <><X className='w-4 h-4 mr-2' />Deseleccionar todo</>
               ) : (
@@ -301,7 +301,7 @@ export default function GalleryClient({
             {selectedIds.length > 0 && (
               <Button
                 variant='outline'
-                className='text-destructive border-destructive/50 hover:bg-destructive/10'
+                className='text-destructive border-destructive/50 hover:bg-destructive/10 flex-1 sm:flex-none'
                 onClick={openBulkDeleteDialog}
                 disabled={isDeleting}
               >
@@ -421,7 +421,7 @@ export default function GalleryClient({
                       <button
                         className={`absolute top-2 right-2 w-8 h-8 rounded-full flex items-center justify-center transition-all ${
                           image.featured
-                            ? 'bg-amber-400 opacity-100'
+                            ? 'bg-primary opacity-100'
                             : 'bg-background/80 opacity-0 group-hover:opacity-100'
                         }`}
                         onClick={() => handleToggleFeatured(image)}
