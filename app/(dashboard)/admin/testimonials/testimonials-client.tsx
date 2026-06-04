@@ -106,8 +106,8 @@ function StarRatingInput({
           <Star
             className={`w-5 h-5 transition-colors ${
               n <= value
-                ? 'fill-champagne text-champagne'
-                : 'text-border hover:text-champagne/60'
+                ? 'fill-primary text-primary'
+                : 'text-border hover:text-primary/60'
             }`}
           />
         </button>
@@ -330,7 +330,7 @@ function TestimonialForm({
           onClick={() => setDraft((d) => ({ ...d, featured: !d.featured }))}
           className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium border transition-colors ${
             draft.featured
-              ? 'bg-champagne/40 border-champagne/50 text-foreground'
+              ? 'bg-primary-soft/40 border-primary/50 text-primary'
               : 'bg-secondary border-border/50 text-muted-foreground'
           }`}
         >
@@ -638,8 +638,28 @@ export default function TestimonialsClient({
         description='Administrá los testimonios de clientes que se muestran en la página de inicio'
       />
 
-      <main className='flex-1 p-6 overflow-auto space-y-6'>
-        {creating ? (
+      <main className='flex-1 overflow-auto space-y-6'>
+        {/* Actions Row */}
+        <div className='flex flex-col sm:flex-row gap-4 items-start sm:items-center'>
+          <div className='relative w-full sm:max-w-md'>
+            <Search className='absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground' />
+            <Input
+              type='search'
+              placeholder='Buscar por nombre o comentario...'
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className='pl-10 bg-background border-border/50'
+            />
+          </div>
+          {!creating && (
+            <Button onClick={() => setCreating(true)} className='ml-auto w-full sm:w-auto'>
+              <Plus className='w-4 h-4 mr-2' />
+              Nuevo testimonio
+            </Button>
+          )}
+        </div>
+
+        {creating && (
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -667,27 +687,6 @@ export default function TestimonialsClient({
               submitLabel='Crear testimonio'
             />
           </motion.div>
-        ) : (
-          <div className='flex justify-end sm:justify-end'>
-            <Button onClick={() => setCreating(true)} className='w-full sm:w-auto'>
-              <Plus className='w-4 h-4 mr-2' />
-              Nuevo testimonio
-            </Button>
-          </div>
-        )}
-
-        {/* Search */}
-        {testimonials.length > 0 && (
-          <div className='relative'>
-            <Search className='absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground' />
-            <Input
-              type='search'
-              placeholder='Buscar por nombre o comentario...'
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className='pl-10 bg-background border-border/50'
-            />
-          </div>
         )}
 
         {/* List */}
@@ -765,7 +764,7 @@ export default function TestimonialsClient({
                             </span>
                           )}
                           {testimonial.featured && (
-                            <span className='text-xs px-2 py-0.5 rounded-full bg-champagne/40 text-foreground shrink-0'>
+                            <span className='text-xs px-2 py-0.5 rounded-full bg-primary-soft/40 text-primary shrink-0'>
                               Destacado
                             </span>
                           )}
@@ -785,7 +784,7 @@ export default function TestimonialsClient({
                               key={i}
                               className={`w-3 h-3 ${
                                 i < testimonial.rating
-                                  ? 'fill-champagne text-champagne'
+                                  ? 'fill-primary text-primary'
                                   : 'text-border'
                               }`}
                             />
@@ -823,7 +822,7 @@ export default function TestimonialsClient({
                               <Star
                                 className={`w-3.5 h-3.5 ${
                                   testimonial.featured
-                                    ? 'fill-current text-champagne'
+                                    ? 'fill-current text-primary'
                                     : ''
                                 }`}
                               />
