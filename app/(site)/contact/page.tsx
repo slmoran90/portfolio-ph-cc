@@ -2,6 +2,12 @@ import { getSiteSettings } from '@/lib/data/site-settings'
 import { Section, Container } from '@/components/layout'
 import { Button } from '@/components/ui/button'
 import { MessageCircle, Mail, Instagram } from 'lucide-react'
+import type { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "Contacto",
+  description: "¿Tenés una idea o querés agendar una sesión? Contactá a Carla Cáceres Photography para baby showers, cumpleaños infantiles y bautismos.",
+}
 
 export default async function ContactPage() {
   const siteSettings = await getSiteSettings()

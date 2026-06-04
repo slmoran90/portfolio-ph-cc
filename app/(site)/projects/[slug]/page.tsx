@@ -25,13 +25,18 @@ export async function generateMetadata({
 
   if (!project) return { title: 'Proyecto no encontrado | Carla Cáceres Photography' }
 
+  const baseUrl = 'https://portfolio-ph-cc-slmoran90s-projects.vercel.app'
+
   return {
     title: project.title,
     description: project.short_description ?? undefined,
     openGraph: {
       title: project.title,
       images: project.cover_image ? [project.cover_image] : []
-    }
+    },
+    alternates: {
+      canonical: `${baseUrl}/projects/${slug}`,
+    },
   }
 }
 
