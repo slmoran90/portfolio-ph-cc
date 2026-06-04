@@ -6,7 +6,7 @@ import type { Metadata } from "next"
 
 export const metadata: Metadata = {
   title: "Contacto",
-  description: "¿Tenés una idea o querés agendar una sesión? Contactá a Carla Cáceres Photography para baby showers, cumpleaños infantiles y bautismos.",
+  description: "¿Tenés una idea o querés agendar una sesión? Contactá a Carla Cáceres Fotografía para baby showers, cumpleaños infantiles y bautismos.",
 }
 
 export default async function ContactPage() {

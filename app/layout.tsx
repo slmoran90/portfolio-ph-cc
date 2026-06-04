@@ -25,10 +25,10 @@ const cormorant = Cormorant_Garamond({
 })
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://portfolio-ph-cc-slmoran90s-projects.vercel.app'),
+  metadataBase: new URL('https://carlacaceresfotografia.vercel.app'),
   title: {
-    default: "Carla Cáceres Photography | Capturando momentos preciosos de la vida",
-    template: "%s | Carla Cáceres Photography",
+    default: "Carla Cáceres Fotografía | Capturando momentos preciosos de la vida",
+    template: "%s | Carla Cáceres Fotografía",
   },
   description:
     'Estudio de fotografía profesional especializado en baby showers, cumpleaños infantiles y bautismos. Fotografía elegante, emotiva y atemporal.',
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     'fotografía familiar'
   ],
   openGraph: {
-    siteName: 'Carla Cáceres Photography',
+    siteName: 'Carla Cáceres Fotografía',
     locale: 'es_AR',
     type: 'website',
     images: [
@@ -49,7 +49,7 @@ export const metadata: Metadata = {
         url: '/opengraph-image.png',
         width: 1200,
         height: 630,
-        alt: 'Carla Cáceres Photography',
+        alt: 'Carla Cáceres Fotografía',
       },
     ],
   },
@@ -62,7 +62,7 @@ export const metadata: Metadata = {
     follow: true,
   },
   alternates: {
-    canonical: 'https://portfolio-ph-cc-slmoran90s-projects.vercel.app',
+    canonical: 'https://carlacaceresfotografia.vercel.app',
   },
   icons: {
     icon: '/favicon.png',
